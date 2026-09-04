@@ -2,7 +2,7 @@
  * The nine areas Eco Gas covers. Each one becomes a page at /areas/[slug].
  *
  * To add an area: copy a block, give it a new unique `slug` (lowercase, no spaces),
- * and write a fresh intro — never copy another town's intro.
+ * and write a fresh intro — never copy another town’s intro.
  *
  * The intro paragraphs and travel notes are written in build Phase 3 (120–180 words each,
  * naming 2–3 real districts or landmarks). The fields are here now so the data shape is fixed.

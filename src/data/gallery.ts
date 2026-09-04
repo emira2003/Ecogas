@@ -3,7 +3,7 @@
  *
  * To add a photo: put the file in /public/images/work/, then copy a block below and fill it in.
  *   `src`      path starting with /images/…
- *   `alt`      what is actually in the photo, for people who can't see it (a real description)
+ *   `alt`      what is actually in the photo, for people who can’t see it (a real description)
  *   `caption`  one line shown under the photo, e.g. "Combi boiler swap, Westhoughton"
  *   `category` one of "boilers" | "heating" | "bathrooms" | "plumbing"
  *   `town`     where the job was
@@ -11,7 +11,7 @@
  * BEFORE / AFTER PAIRS: give both photos the same `pairId` and set `pairRole` to "before" or "after".
  * They are shown as a slider at the top of the Our Work page.
  *
- * Everything below is a PLACEHOLDER until the client's real photos arrive (see TODO.md).
+ * Everything below is a PLACEHOLDER until the client’s real photos arrive (see TODO.md).
  * The placeholder image files are generated in build Phase 6.
  */
 

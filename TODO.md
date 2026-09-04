@@ -7,7 +7,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 | Phase | What | Status |
 |---|---|---|
 | 0 | Project setup | Done |
-| 1 | Design system, shell and motion foundation | Not started |
+| 1 | Design system, shell and motion foundation | Done |
 | 2 | Home page | Not started |
 | 3 | Services and Areas | Not started |
 | 4 | Instant Estimate tool | Not started |
@@ -41,7 +41,8 @@ Everything still needed before launch, in one place. Updated at the end of every
 
 ## Needed from Xhezmi
 
-- [ ] **Logo file** — `logo-ecogas.png` was not in the project folder, so nothing has been copied to `/public` yet. Add it to the project root (and the flyer as `flyer-ecogas.jpg` for reference) and it will be moved into place in Phase 1.
+- [ ] **Logo file** — `logo-ecogas.png` is still not in the project folder. The header and footer show a plain "Eco Gas" wordmark in the site font until it arrives (`src/components/layout/Logo.tsx`). Add it to the project root (and the flyer as `flyer-ecogas.jpg` for reference).
+- [ ] Remove the component showcase page (`src/app/showcase`) in Phase 9.
 - [ ] Web3Forms access key (create at web3forms.com with the client's email) → `.env.local` (`WEB3FORMS_ACCESS_KEY`)
 - [ ] Optional: a site or template he likes as a layout reference (PLAN.md Part F)
 

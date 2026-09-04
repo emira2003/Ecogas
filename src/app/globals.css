@@ -1,26 +1,729 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------------------------------------------------------------------------
+   Tokens — see DESIGN.md §3. The default Tailwind palette is switched off so
+   every colour on the site comes from this list.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-*: initial;
+  --color-flame: #f26b21;
+  --color-ember: #c2500f;
+  --color-water: #1f6fb2;
+  --color-cast-iron: #262b33;
+  --color-ink: #1b1f24;
+  --color-plaster: #f6f4f0;
+  --color-white: #ffffff;
+  --color-meadow: #2f7d4f;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* Derived mixes, not new colours */
+  --color-ink-soft: color-mix(in srgb, #1b1f24 72%, #ffffff);
+  --color-ink-mute: color-mix(in srgb, #1b1f24 56%, #ffffff);
+  --color-line: color-mix(in srgb, #1b1f24 12%, #ffffff);
+  --color-line-dark: color-mix(in srgb, #ffffff 14%, #262b33);
+  --color-plaster-deep: #edeae4;
+  --color-plaster-soft: color-mix(in srgb, #f6f4f0 80%, #262b33);
+
+  --font-sans: var(--font-archivo), "Archivo", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --container-site: 1200px;
+  --breakpoint-xs: 25rem; /* 400px — marquee/grid switch (F2-H7) */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+    color-scheme: light;
+    /* Keep anchors and focused elements clear of the fixed header */
+    scroll-padding-top: 5.5rem;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  html.menu-open {
+    overflow: hidden;
+  }
+
+  body {
+    background: var(--color-white);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+    font-stretch: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    max-width: 70ch;
+  }
+
+  a {
+    text-underline-offset: 0.15em;
+  }
+
+  button,
+  a {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  strong {
+    font-weight: 700;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-flame);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-flame);
+    color: var(--color-ink);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------------------------------------------------------------------------
+   Typography — DESIGN.md §3.2
+--------------------------------------------------------------------------- */
+@utility h1 {
+  font-weight: 800;
+  font-stretch: 115%;
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+@utility h2 {
+  font-weight: 700;
+  font-stretch: 100%;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+@utility h3 {
+  font-weight: 700;
+  font-stretch: 105%;
+  font-size: 1.375rem;
+  line-height: 1.25;
+}
+
+@utility lead {
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+@utility small-text {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+@utility price {
+  font-weight: 800;
+  font-stretch: 110%;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility wide {
+  font-stretch: 115%;
+}
+
+/* Page container: 1200px + gutters, left-aligned content inside */
+@utility container-site {
+  width: 100%;
+  max-width: calc(var(--container-site) + 3rem);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Components
+--------------------------------------------------------------------------- */
+@layer components {
+  /* Skip link — visible only when focused */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    background: var(--color-flame);
+    color: var(--color-ink);
+    font-weight: 600;
+    transform: translateY(-200%);
+    transition: transform 0.15s var(--ease-out-expo);
+  }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    outline-color: var(--color-ink);
+  }
+
+  /* ---- Buttons (G4) ---- */
+  .btn {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0.625rem 1.25rem;
+    border-radius: 6px;
+    border: 1.5px solid transparent;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    transform: translate(var(--mx, 0px), var(--my, 0px)) scale(var(--press, 1));
+    transition:
+      color 0.3s var(--ease-out-expo),
+      border-color 0.2s ease-out,
+      background-color 0.2s ease-out,
+      transform 0.15s ease-out;
+  }
+  .btn:active {
+    --press: 0.98;
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    --press: 1;
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .btn svg {
+    flex: none;
+  }
+
+  .btn-primary {
+    background: var(--color-flame);
+    color: var(--color-ink);
+  }
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    background: var(--color-ember);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  @media (hover: hover) {
+    .btn-primary:hover {
+      color: var(--color-white);
+    }
+    .btn-primary:hover::before {
+      transform: scaleX(1);
+    }
+  }
+  .btn-primary:focus-visible {
+    color: var(--color-white);
+  }
+  .btn-primary:focus-visible::before {
+    transform: scaleX(1);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: currentColor;
+  }
+  .btn-secondary.on-dark {
+    color: var(--color-white);
+  }
+  @media (hover: hover) {
+    .btn-secondary:hover {
+      border-color: var(--color-flame);
+    }
+  }
+  .btn-secondary:focus-visible {
+    border-color: var(--color-flame);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: inherit;
+    padding-inline: 0.75rem;
+  }
+  @media (hover: hover) {
+    .btn-ghost:hover {
+      color: var(--color-ember);
+    }
+    .btn-ghost.on-dark:hover {
+      color: var(--color-flame);
+    }
+  }
+
+  .btn-lg {
+    min-height: 56px;
+    padding: 0.875rem 1.625rem;
+    font-size: 1.0625rem;
+  }
+
+  /* ---- PriceTag (DESIGN.md §4) ---- */
+  .price-tag {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+    padding: 0.5em 0.9em 0.5em 1.2em;
+    border-radius: 6px;
+    background: var(--color-flame);
+    color: var(--color-ink);
+    font-weight: 600;
+    font-stretch: 110%;
+    line-height: 1;
+    white-space: nowrap;
+    /* A full rectangle with a small flame silhouette subtracted from the left edge */
+    -webkit-mask-image:
+      linear-gradient(#000, #000),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M0 1.2C3 1.2 5.4 2.2 6.9 3.6 8.2 3 9.3 3.3 12 6 9.3 8.7 8.2 9 6.9 8.4 5.4 9.8 3 10.8 0 10.8Z'/%3E%3C/svg%3E");
+    mask-image:
+      linear-gradient(#000, #000),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M0 1.2C3 1.2 5.4 2.2 6.9 3.6 8.2 3 9.3 3.3 12 6 9.3 8.7 8.2 9 6.9 8.4 5.4 9.8 3 10.8 0 10.8Z'/%3E%3C/svg%3E");
+    -webkit-mask-size:
+      100% 100%,
+      0.85em 0.85em;
+    mask-size:
+      100% 100%,
+      0.85em 0.85em;
+    -webkit-mask-position:
+      0 0,
+      left center;
+    mask-position:
+      0 0,
+      left center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  .price-tag--reversed {
+    background: var(--color-plaster);
+    color: var(--color-ember);
+  }
+  .price-tag--sm {
+    font-size: 0.875rem;
+  }
+  .price-tag--md {
+    font-size: 1.0625rem;
+  }
+  .price-tag--lg {
+    font-size: 1.375rem;
+  }
+  .price-tag__lead {
+    font-size: 0.8em;
+  }
+  .price-tag__amount {
+    font-weight: 800;
+    font-size: 1.25em;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .price-tag__note {
+    font-size: 0.8em;
+    font-weight: 500;
+  }
+  .price-tag__note::before {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 0.9em;
+    margin-right: 0.5em;
+    background: currentColor;
+    opacity: 0.4;
+    vertical-align: -0.1em;
+  }
+
+  /* ---- Header ---- */
+  .site-header {
+    --header-h: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    height: var(--header-h);
+    background: var(--color-cast-iron);
+    color: var(--color-white);
+    /* The header is fixed, so changing its height cannot move page content (CLS 0).
+       This is the only height transition on the site. */
+    transition: height 0.25s var(--ease-out-expo);
+  }
+  .site-header__logo {
+    transform-origin: left center;
+    transition: transform 0.25s var(--ease-out-expo);
+  }
+  @media (width >= 80rem) {
+    .site-header {
+      --header-h: 72px;
+    }
+    .site-header.is-shrunk {
+      height: 60px;
+    }
+    .site-header.is-shrunk .site-header__logo {
+      transform: scale(0.88);
+    }
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-height: 44px;
+    padding: 0.5rem 0.625rem;
+    border-radius: 6px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-white);
+    text-decoration: none;
+    transition: color 0.15s ease-out;
+  }
+  .nav-link:hover,
+  .nav-link[aria-expanded="true"] {
+    color: var(--color-flame);
+  }
+  .nav-link[aria-current="page"] {
+    box-shadow: inset 0 -2px 0 var(--color-flame);
+    border-radius: 0;
+  }
+
+  .nav-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 17rem;
+    padding: 0.5rem;
+    border-radius: 0 0 8px 8px;
+    background: var(--color-cast-iron);
+    border: 1px solid var(--color-line-dark);
+    border-top: 0;
+    transform-origin: top left;
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+    visibility: hidden;
+    transition:
+      opacity 0.15s ease-out,
+      transform 0.15s var(--ease-out-expo),
+      visibility 0s linear 0.15s;
+  }
+  .nav-dropdown.is-open {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .nav-dropdown a {
+    display: block;
+    padding: 0.625rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9375rem;
+    color: var(--color-white);
+    text-decoration: none;
+  }
+  .nav-dropdown a:hover {
+    background: var(--color-line-dark);
+    color: var(--color-flame);
+  }
+
+  /* ---- Mobile menu (G7) ---- */
+  .mobile-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-cast-iron);
+    color: var(--color-white);
+    transform: translateY(-100%);
+    visibility: hidden;
+    transition:
+      transform 0.3s var(--ease-out-expo),
+      visibility 0s linear 0.3s;
+  }
+  .mobile-nav.is-open {
+    transform: translateY(0);
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .mobile-nav nav {
+    overscroll-behavior: contain;
+  }
+  .mobile-nav__item {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.3s ease-out,
+      transform 0.4s var(--ease-out-expo);
+  }
+  .mobile-nav.is-open .mobile-nav__item {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(120ms + var(--i, 0) * 40ms);
+  }
+  .mobile-nav__link {
+    display: block;
+    padding: 0.625rem 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-stretch: 110%;
+    letter-spacing: -0.01em;
+    color: var(--color-white);
+    text-decoration: none;
+  }
+  .mobile-nav__sublink {
+    display: block;
+    padding: 0.5rem 0;
+    font-size: 1.0625rem;
+    color: var(--color-plaster-soft);
+    text-decoration: none;
+  }
+  .mobile-nav__link:hover,
+  .mobile-nav__sublink:hover {
+    color: var(--color-flame);
+  }
+
+  /* ---- Sticky mobile bar (G5) ---- */
+  .sticky-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+    background: var(--color-white);
+    border-top: 1px solid var(--color-line);
+    transform: translateY(110%);
+    transition: transform 0.2s var(--ease-out-expo);
+  }
+  .sticky-bar.is-visible {
+    transform: translateY(0);
+  }
+
+  /* ---- Reveal (G3) — hidden state only exists once JavaScript has run ---- */
+  .reveal-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+  }
+  .reveal-word__inner {
+    display: inline-block;
+    transition: transform 0.6s var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * 30ms);
+  }
+  html.js [data-reveal="pending"] .reveal-word__inner {
+    transform: translateY(110%);
+  }
+  .reveal-group {
+    transition:
+      opacity 0.6s var(--ease-out-expo),
+      transform 0.6s var(--ease-out-expo);
+  }
+  html.js .reveal-group[data-reveal="pending"] {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  /* ---- Trust strip icon draw (H2) ---- */
+  .draw-icon :is(path, circle, line, polyline, polygon, rect) {
+    transition: stroke-dashoffset 0.6s ease-out;
+    transition-delay: var(--d, 0ms);
+  }
+  html.js [data-draw="pending"] .draw-icon {
+    opacity: 0;
+  }
+  [data-draw="ready"] .draw-icon :is(path, circle, line, polyline, polygon, rect) {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  [data-draw="in"] .draw-icon :is(path, circle, line, polyline, polygon, rect) {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .draw-label {
+    transition: opacity 0.4s ease-out;
+    transition-delay: calc(var(--d, 0ms) + 250ms);
+  }
+  html.js [data-draw="pending"] .draw-label,
+  [data-draw="ready"] .draw-label {
+    opacity: 0;
+  }
+
+  /* ---- CTA band heat shimmer (H11) ---- */
+  .cta-band {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--color-cast-iron);
+  }
+  .cta-blob {
+    position: absolute;
+    z-index: -1;
+    width: min(40vw, 480px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.5;
+    will-change: transform;
+    animation: blob-drift 20s ease-in-out infinite alternate;
+  }
+  .cta-blob--flame {
+    background: var(--color-flame);
+    left: -10%;
+    top: -30%;
+  }
+  .cta-blob--ember {
+    background: var(--color-ember);
+    right: -10%;
+    bottom: -40%;
+    animation-duration: 26s;
+    animation-direction: alternate-reverse;
+  }
+  [data-paused] .cta-blob {
+    animation-play-state: paused;
+  }
+  @keyframes blob-drift {
+    from {
+      transform: translate3d(-8%, -6%, 0) scale(1);
+    }
+    to {
+      transform: translate3d(18%, 22%, 0) scale(1.18);
+    }
+  }
+
+  /* ---- FAQ (H10) ---- */
+  .faq {
+    border-bottom: 1px solid var(--color-line);
+  }
+  .faq > summary {
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.125rem 0;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    line-height: 1.4;
+  }
+  .faq > summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq > summary svg {
+    flex: none;
+    margin-top: 0.15em;
+    transition: transform 0.25s var(--ease-out-expo);
+  }
+  .faq[open] > summary svg {
+    transform: rotate(180deg);
+  }
+  .faq__body {
+    overflow: hidden;
+  }
+  .faq__inner {
+    padding-bottom: 1.25rem;
+    color: var(--color-ink-soft);
+  }
+
+  /* ---- Page transition (G2) ---- */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 250ms;
+  }
+  ::view-transition-old(root) {
+    animation-timing-function: ease-out;
+  }
+  ::view-transition-new(root) {
+    animation-timing-function: var(--ease-out-expo);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion (F2 rule 5): no reveals, no idle animation, no page crossfade.
+   User-driven transitions (buttons, menu, FAQ) keep short 150ms transitions.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal="pending"] .reveal-word__inner,
+  html.js .reveal-group[data-reveal="pending"] {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+  html.js [data-draw] .draw-icon,
+  html.js [data-draw] .draw-label {
+    opacity: 1;
+  }
+  [data-draw] .draw-icon :is(path, circle, line, polyline, polygon, rect) {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .cta-blob {
+    animation: none;
+  }
+  .cta-band {
+    background-image: radial-gradient(
+      ellipse 60% 80% at 15% 0%,
+      color-mix(in srgb, var(--color-flame) 35%, transparent),
+      transparent
+    );
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+  .btn,
+  .btn-primary::before,
+  .nav-dropdown,
+  .mobile-nav,
+  .mobile-nav__item,
+  .sticky-bar,
+  .site-header,
+  .site-header__logo,
+  .faq > summary svg {
+    transition-duration: 0.15s;
+    transition-delay: 0s;
+  }
 }

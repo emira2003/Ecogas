@@ -28,7 +28,7 @@ export const homeFaqs: Faq[] = [
     id: "warranty",
     question: "What warranty do I get on a new boiler?",
     answer:
-      "Up to a 10-year manufacturer's warranty on the boilers we fit [CONFIRM the £1,999 offer always includes 10 years].",
+      "Up to a 10-year manufacturer’s warranty on the boilers we fit [CONFIRM the £1,999 offer always includes 10 years].",
   },
   {
     id: "areas",
@@ -40,7 +40,7 @@ export const homeFaqs: Faq[] = [
     id: "estimate",
     question: "How does the instant estimate work?",
     answer:
-      "Pick your job from the list and you'll see our typical price straight away. It's an estimate, not a bill: we confirm the exact price once we've seen the job, and there's no obligation.",
+      "Pick your job from the list and you’ll see our typical price straight away. It’s an estimate, not a bill: we confirm the exact price once we’ve seen the job, and there’s no obligation.",
   },
   {
     id: "payment",

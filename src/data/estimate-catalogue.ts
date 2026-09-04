@@ -6,7 +6,7 @@
  *   Whole pounds only, no £ sign, no commas: 1999 not "£1,999".
  *
  * HOW TO ADD A JOB
- *   Copy an existing block inside the right category's `items` list and edit it.
+ *   Copy an existing block inside the right category’s `items` list and edit it.
  *   `priceType` is one of:
  *     "fixed" → shows "£90"            (needs `price`)
  *     "from"  → shows "from £350"      (needs `price`)
@@ -64,7 +64,7 @@ export const estimateCatalogue: EstimateCategory[] = [
       {
         id: "new-combi-boiler",
         name: "New combi boiler installation",
-        description: "Supply and fit an A-rated combi boiler with a 10-year manufacturer's warranty",
+        description: "Supply and fit an A-rated combi boiler with a 10-year manufacturer’s warranty",
         priceType: "from",
         price: 1999, // CONFIRMED by client
       },
@@ -130,7 +130,7 @@ export const estimateCatalogue: EstimateCategory[] = [
       {
         id: "new-radiator",
         name: "New radiator added",
-        description: "Add a radiator where there isn't one, including the pipework",
+        description: "Add a radiator where there isn’t one, including the pipework",
         priceType: "from",
         price: 250, // EXAMPLE
         unit: "each",
@@ -175,7 +175,7 @@ export const estimateCatalogue: EstimateCategory[] = [
       {
         id: "toilet-repair",
         name: "Toilet repair",
-        description: "Fix a toilet that's running, leaking or won't flush",
+        description: "Fix a toilet that’s running, leaking or won’t flush",
         priceType: "from",
         price: 85, // EXAMPLE
       },

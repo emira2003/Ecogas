@@ -4,7 +4,7 @@
  * To change a price: edit `price.amount` (whole pounds, no £ sign).
  * `price.confirmed: false` means it is an EXAMPLE price still to be confirmed by the client (see TODO.md).
  *
- * The long copy (intro paragraphs, what's included, good to know, FAQs) is written in
+ * The long copy (intro paragraphs, what’s included, good to know, FAQs) is written in
  * build Phase 3 — the fields are here now so the shape of the data is fixed.
  */
 import type { EstimateCategoryId } from "./estimate-catalogue";
@@ -40,7 +40,7 @@ export interface Service {
   name: string;
   /** Short name for menus and tiles. */
   shortName: string;
-  /** The page's single H1. */
+  /** The page’s single H1. */
   h1: string;
   heroImage: { src: string; alt: string };
   /** Two paragraphs, 120–180 words total, unique to this page. Mentions Bolton and 2–3 nearby towns. */
@@ -111,7 +111,7 @@ export const services: Service[] = [
     h1: "Boiler servicing, repairs and fault finding in Bolton",
     heroImage: {
       src: "/images/services/boiler-service.jpg",
-      alt: "An engineer's hands testing a boiler with a flue gas analyser",
+      alt: "An engineer’s hands testing a boiler with a flue gas analyser",
     },
     intro: [], // Phase 3
     included: [], // Phase 3

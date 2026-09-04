@@ -43,7 +43,7 @@ export const business = {
   /** WhatsApp number in international format without "+", e.g. "447700900000". Set NEXT_PUBLIC_WHATSAPP. */
   whatsapp: fromEnv(process.env.NEXT_PUBLIC_WHATSAPP, "[WHATSAPP NUMBER]"),
   /** Pre-filled text when someone taps the WhatsApp button. */
-  whatsappMessage: "Hi Eco Gas, I'd like to ask about ",
+  whatsappMessage: "Hi Eco Gas, I’d like to ask about ",
 
   email: "[EMAIL]",
   gasSafeNumber: "[GAS SAFE NUMBER]",
@@ -71,7 +71,7 @@ export const business = {
       includes: [
         "A-rated boiler from Worcester Bosch, Vaillant, Viessmann, Glow-worm or Ideal",
         "Fitted by a Gas Safe registered engineer",
-        "10-year manufacturer's warranty",
+        "10-year manufacturer’s warranty",
         "[other inclusions — CLIENT TO CONFIRM]",
       ],
     },
@@ -83,7 +83,7 @@ export const business = {
         "High-efficiency boiler",
         "Smart controls",
         "Power flush",
-        "Up to 10-year manufacturer's warranty",
+        "Up to 10-year manufacturer’s warranty",
         "Expert installation",
       ],
     },
@@ -99,9 +99,9 @@ export const business = {
         "Every job is done by a Gas Safe registered engineer, registration number [GAS SAFE NUMBER]. You can check us on the Gas Safe Register.",
     },
     {
-      title: "10-year manufacturer's warranty",
+      title: "10-year manufacturer’s warranty",
       detail:
-        "New boilers come with a 10-year manufacturer's warranty [CONFIRM: always included on the £1,999 offer], so you're covered long after we've left.",
+        "New boilers come with a 10-year manufacturer’s warranty [CONFIRM: always included on the £1,999 offer], so you’re covered long after we’ve left.",
     },
     {
       title: "High-quality products",
@@ -111,7 +111,7 @@ export const business = {
     {
       title: "Competitive prices",
       detail:
-        "A small team with low overheads, so our prices stay very competitive. New boilers from £1,999, and an honest estimate before we've even visited.",
+        "A small team with low overheads, so our prices stay very competitive. New boilers from £1,999, and an honest estimate before we’ve even visited.",
     },
     {
       title: "Reliable, friendly service",
@@ -149,6 +149,17 @@ export const business = {
 
 export type Business = typeof business;
 
-/** True once a real value has replaced the placeholder. Components use this to avoid dead links. */
+/** True while a value is still a [PLACEHOLDER] waiting on the client. */
 export const isPlaceholder = (value: string): boolean =>
   /^\[.*\]$/.test(value.trim()) || value.includes("[DOMAIN]");
+
+/** tel: link for the business phone. */
+export const telHref = `tel:${business.phoneTel}`;
+
+/** WhatsApp chat link with the pre-filled greeting. */
+export const whatsappHref = `https://wa.me/${business.whatsapp}?text=${encodeURIComponent(business.whatsappMessage)}`;
+
+/** Public site URL that is always a valid URL (falls back to localhost until the domain is set). */
+export const siteUrl = isPlaceholder(business.siteUrl)
+  ? "http://localhost:3000"
+  : business.siteUrl;
