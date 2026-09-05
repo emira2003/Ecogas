@@ -10,6 +10,7 @@ import { Faq } from "@/components/ui/Faq";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { TrustStrip } from "@/components/ui/TrustStrip";
+import { AboutSummary } from "@/components/home/AboutSummary";
 import { Brands } from "@/components/home/Brands";
 import { CoverageMap } from "@/components/home/CoverageMap";
 import { Hero } from "@/components/home/Hero";
@@ -57,6 +58,9 @@ export default function HomePage() {
 
       {/* 5. Why Eco Gas */}
       <WhyUs />
+
+      {/* About — added when About was removed from the header */}
+      <AboutSummary />
 
       {/* 6. Brands */}
       <Brands />
