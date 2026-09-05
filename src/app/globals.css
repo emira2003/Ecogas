@@ -107,6 +107,22 @@
     background: var(--color-flame);
     color: var(--color-ink);
   }
+
+  /*
+   * A fine grain over the whole page. This is the difference between a flat colour field and a
+   * surface: it gives white and Plaster something to catch, so large empty areas stop looking
+   * like unpainted background. Very low opacity, fixed so it never scrolls, and it cannot be
+   * clicked through. Native <dialog> renders above it, so the lightbox is unaffected.
+   */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -721,6 +737,22 @@
     z-index: 1;
     background: var(--color-white);
   }
+  /* Warm ambient light in the top-left, as though the pilot flame is lighting the room.
+     Monochrome and inside the palette, so it reads as depth rather than decoration. */
+  .hero__lit::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 70% at 8% 12%, color-mix(in srgb, var(--color-flame) 13%, transparent), transparent 68%),
+      radial-gradient(50% 60% at 96% 100%, color-mix(in srgb, var(--color-cast-iron) 7%, transparent), transparent 70%);
+  }
+  .hero__lit > * {
+    position: relative;
+    z-index: 1;
+  }
   .hero__flame-anchor {
     position: relative;
     display: block;
@@ -901,11 +933,94 @@
     color: var(--color-water);
   }
 
-  /* Pilot flame canvas */
+  /* Pilot flame: drawn, with a slow flicker so it feels alight without drawing the eye */
   .pilot-flame {
     display: block;
     width: 100%;
     height: 100%;
+    overflow: visible;
+  }
+  .pilot-flame__glow {
+    fill: var(--color-flame);
+    opacity: 0.16;
+    filter: blur(9px);
+    transform-box: fill-box;
+    transform-origin: 50% 70%;
+    animation: flame-breathe 3.4s ease-in-out infinite;
+  }
+  .pilot-flame__body,
+  .pilot-flame__core {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+  }
+  .pilot-flame__body {
+    animation: flame-sway 3.1s ease-in-out infinite;
+  }
+  .pilot-flame__core {
+    animation: flame-flicker 1.9s ease-in-out infinite;
+  }
+  @keyframes flame-sway {
+    0%,
+    100% {
+      transform: scaleY(1) skewX(0deg);
+    }
+    35% {
+      transform: scaleY(1.05) skewX(-2.5deg);
+    }
+    70% {
+      transform: scaleY(0.97) skewX(2deg);
+    }
+  }
+  @keyframes flame-flicker {
+    0%,
+    100% {
+      transform: scaleY(1) scaleX(1);
+      opacity: 1;
+    }
+    40% {
+      transform: scaleY(0.88) scaleX(1.04);
+      opacity: 0.9;
+    }
+    75% {
+      transform: scaleY(1.06) scaleX(0.97);
+      opacity: 1;
+    }
+  }
+  @keyframes flame-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.16;
+    }
+    50% {
+      transform: scale(1.14);
+      opacity: 0.24;
+    }
+  }
+  [data-paused] .pilot-flame__body,
+  [data-paused] .pilot-flame__core,
+  [data-paused] .pilot-flame__glow {
+    animation-play-state: paused;
+  }
+
+  /* ---- Section surfaces ----
+     Each band is lit slightly from above and separated by a hairline, so the page reads as
+     stacked surfaces rather than flat blocks of colour. Kept within the palette: no new hues. */
+  .section--plaster,
+  .section--white,
+  .section--dark {
+    position: relative;
+  }
+  .section--plaster {
+    background-image: linear-gradient(180deg, color-mix(in srgb, var(--color-white) 60%, transparent), transparent 42%);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-white) 70%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--color-ink) 7%, transparent);
+  }
+  .section--white {
+    background-image: linear-gradient(180deg, color-mix(in srgb, var(--color-plaster) 55%, transparent), transparent 30%);
+  }
+  .section--dark {
+    background-image: linear-gradient(180deg, color-mix(in srgb, var(--color-white) 6%, transparent), transparent 45%);
   }
 
   /* ---- Services grid (H3) ---- */
@@ -920,6 +1035,18 @@
     border-radius: 12px;
     overflow: hidden;
     background: var(--color-plaster-deep);
+    /* Sits on the surface rather than being cut out of it */
+    box-shadow:
+      0 1px 2px color-mix(in srgb, var(--color-ink) 6%, transparent),
+      0 10px 26px -14px color-mix(in srgb, var(--color-ink) 30%, transparent);
+    transition: box-shadow 0.25s var(--ease-out-expo);
+  }
+  @media (hover: hover) {
+    .tile:hover .tile__media {
+      box-shadow:
+        0 2px 4px color-mix(in srgb, var(--color-ink) 8%, transparent),
+        0 18px 38px -16px color-mix(in srgb, var(--color-flame) 40%, transparent);
+    }
   }
   .tile--wide .tile__media {
     aspect-ratio: 4 / 3;
@@ -972,6 +1099,9 @@
     border: 1px solid var(--color-ink);
     border-radius: 4px;
     background: var(--color-white);
+    box-shadow:
+      0 1px 2px color-mix(in srgb, var(--color-ink) 6%, transparent),
+      0 14px 30px -18px color-mix(in srgb, var(--color-ink) 35%, transparent);
     transition: transform 0.25s var(--ease-out-expo);
   }
   .package::after {
@@ -2494,6 +2624,11 @@
   }
   .hero__glow {
     display: none;
+  }
+  .pilot-flame__body,
+  .pilot-flame__core,
+  .pilot-flame__glow {
+    animation: none;
   }
   .tile__media img,
   .why--staged .why__item,

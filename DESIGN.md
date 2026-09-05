@@ -283,6 +283,15 @@ _None yet. Ideas that come up during the build go here, not into the code._
   - Text is at least 16px on phones: the small-text style, price-tag small size, chips, captions, table headings and before/after labels are 16px under 640px and 15px above. Two accepted exceptions: the lifted floating labels (≈13px, a standard pattern, the field itself stays 17px) and the "from" word inside a price tag (14px, sitting beside a 20px amount). Town names on the coverage map are hidden on phones, where the list beside it carries them.
   - Showcase page removed; robots no longer mentions it.
   - Console, CLS and Lighthouse targets: see Phase 7 (unchanged by this phase's fixes; re-checked on the home page: 96 / 100 / 100 / 100).
+- **After Phase 10 — depth pass.** Feedback: the design looked plain and the backgrounds flat. It was: the palette is white and Plaster, and large areas of flat colour with no light in them read as unpainted rather than minimal. Four changes, all inside the existing palette — no new hues, no decorative gradient washes:
+
+  1. **A fine grain over the whole page** (fixed overlay, 4.5% opacity, `feTurbulence`). This is the single biggest change. It gives white and Plaster a surface to catch light on, so empty areas stop looking like bare background. It cannot be clicked through, and native `<dialog>` renders above it so the lightbox is unaffected.
+  2. **Warm ambient light in the hero**, top-left, as though the pilot flame is lighting the room, with a cool counterweight bottom-right.
+  3. **Sections read as stacked surfaces**: each band is lit slightly from above with a hairline edge, instead of being a flat block of colour butted against the next one.
+  4. **Real elevation on cards.** Service tiles and package cards now sit *on* the page with a soft resting shadow (warming to orange on hover for the tiles) rather than looking cut out of it.
+
+  **The pilot flame is now drawn, not a particle canvas.** At the size it renders — 48×72px beside a 60px headline — ~120 canvas particles read as a small grey smudge, which looked like a rendering fault. It is now a crisp SVG flame with a slow CSS flicker and heat glow: unmistakable at any size, no canvas, no animation loop, still under reduced motion, and the easter-egg click still works.
+
 - **After Phase 10 — scrolling fixed.** Reported as "the scroller is not working well", mainly on the home page. Five separate faults, all fixed:
 
   1. **Lenis and GSAP ran on two separate animation loops.** The comment in `motion.ts` claimed Lenis was driven from GSAP's ticker; the code never did it. With two loops, a pinned or scrubbed section is positioned by GSAP on one clock while the scroll position is smoothed by Lenis on another, so they drift a frame apart and the section judders. Lenis is now driven from `gsap.ticker` with `lagSmoothing(0)`, which is the library's documented integration.
