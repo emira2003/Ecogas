@@ -1023,21 +1023,22 @@
     opacity: 1;
     transition: opacity 0.3s ease-out;
   }
-  .why--pinned .why__item {
+  /* "staged" = JavaScript is running, so the reasons start dim and light as they scroll past.
+     Without it (no JS) everything is simply shown lit. */
+  .why--staged .why__item {
     color: var(--color-ink-mute);
     transition: color 0.3s ease-out;
   }
-  .why--pinned .why__item::before {
+  .why--staged .why__item::before {
     opacity: 0;
   }
-  .why--pinned .why__item.is-lit {
+  .why--staged .why__item.is-lit {
     color: var(--color-ink);
   }
-  .why--pinned .why__item.is-lit::before {
+  .why--staged .why__item.is-lit::before {
     opacity: 1;
   }
   .why__photo {
-    --warmth: 1;
     position: relative;
     aspect-ratio: 4 / 5;
     border-radius: 12px;
@@ -1049,7 +1050,14 @@
   }
   .why__photo-warm {
     filter: sepia(0.18) saturate(1.15);
-    opacity: var(--warmth);
+  }
+  /* Cross-fade cool → warm once the section is on screen */
+  .why--staged .why__photo-warm {
+    opacity: 0;
+    transition: opacity 1.2s var(--ease-out-expo);
+  }
+  .why--staged.is-warm .why__photo-warm {
+    opacity: 1;
   }
 
   /* ---- Reviews marquee (H7) ---- */
@@ -2501,7 +2509,8 @@
     display: none;
   }
   .tile__media img,
-  .why--pinned .why__item {
+  .why--staged .why__item,
+  .why--staged .why__photo-warm {
     transition: none;
   }
   html.js .stamp-in {

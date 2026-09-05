@@ -48,7 +48,8 @@ export function DayTimelineMotion() {
           scrollTrigger: {
             trigger: section,
             start: "top 72px",
-            end: () => `+=${distance + 400}`,
+            // Just enough tail to let the last stage settle before the pin releases
+            end: () => `+=${distance + 200}`,
             pin: true,
             scrub: 0.5,
             invalidateOnRefresh: true,
@@ -56,6 +57,7 @@ export function DayTimelineMotion() {
           },
         });
         trigger = tween.scrollTrigger!;
+        ScrollTrigger.refresh();
       } else {
         trigger = ScrollTrigger.create({
           trigger: track,

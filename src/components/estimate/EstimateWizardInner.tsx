@@ -12,7 +12,7 @@ import {
   sanitizeSelections,
   type Selections,
 } from "@/lib/estimate";
-import { prefersReducedMotion } from "@/lib/motion";
+import { prefersReducedMotion, scrollToElement } from "@/lib/motion";
 import { Button } from "@/components/ui/Button";
 import { CategoryCard } from "./CategoryCard";
 import { EnquiryForm } from "./EnquiryForm";
@@ -126,10 +126,13 @@ export function EstimateWizardInner() {
     headingRef.current?.focus();
   }, [shown.step]);
 
-  // When the visitor asks to send the quote, bring the hand-off panel into view
+  // When the visitor asks to send the quote, bring the hand-off panel into view.
+  // Routed through the smooth scroller when it is running, so the two don't fight each other.
   useEffect(() => {
     if (!showForm) return;
-    const id = requestAnimationFrame(() => formRef.current?.scrollIntoView({ block: "start", behavior: "smooth" }));
+    const id = requestAnimationFrame(() => {
+      if (formRef.current) scrollToElement(formRef.current);
+    });
     return () => cancelAnimationFrame(id);
   }, [showForm]);
 

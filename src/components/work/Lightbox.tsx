@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useEffect, useRef, type KeyboardEvent, type MouseEvent, type TouchEvent } from "react";
 import type { GalleryImage } from "@/data/gallery";
-import { prefersReducedMotion } from "@/lib/motion";
+import { lockScroll, prefersReducedMotion } from "@/lib/motion";
 
 interface LightboxProps {
   images: GalleryImage[];
@@ -30,10 +30,12 @@ export function Lightbox({ images, index, from, onClose, onStep }: LightboxProps
   const open = index !== null;
   const image = open ? images[index] : null;
 
-  // Open / close the native dialog in step with `index`
+  // Open / close the native dialog in step with `index`.
+  // Smooth scroll is stopped while it is open, or Lenis keeps scrolling the page behind it.
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
+    lockScroll(open);
     if (open && !dialog.open) {
       dialog.showModal();
       const img = imgRef.current;

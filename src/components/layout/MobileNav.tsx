@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Phone, X } from "lucide-react";
 import { useEffect, useRef, type CSSProperties, type KeyboardEvent } from "react";
 import { business, telHref } from "@/data/business";
+import { lockScroll } from "@/lib/motion";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "./Logo";
 import { mainNav } from "./nav";
@@ -25,16 +26,20 @@ export function MobileNav({ id, open, onClose }: MobileNavProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const openerRef = useRef<Element | null>(null);
 
-  // Lock scrolling and move focus in/out
+  // Lock scrolling and move focus in/out.
+  // Smooth scroll has to be stopped too: `overflow: hidden` does not stop Lenis, so without
+  // this the page carries on scrolling behind the open menu.
   useEffect(() => {
     const html = document.documentElement;
     if (open) {
       openerRef.current = document.activeElement;
       html.classList.add("menu-open");
+      lockScroll(true);
       const t = window.setTimeout(() => closeButtonRef.current?.focus(), 50);
       return () => window.clearTimeout(t);
     }
     html.classList.remove("menu-open");
+    lockScroll(false);
     if (openerRef.current instanceof HTMLElement) openerRef.current.focus();
     return undefined;
   }, [open]);

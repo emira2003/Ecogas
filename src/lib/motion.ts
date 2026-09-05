@@ -65,14 +65,63 @@ let gsapPromise: Promise<{
   ScrollTrigger: ScrollTriggerModule["ScrollTrigger"];
 }> | null = null;
 
-type LenisLike = { on: (event: "scroll", cb: () => void) => void };
-let lenisInstance: LenisLike | null = null;
+type LenisInstance = InstanceType<(typeof import("lenis"))["default"]>;
 
-/** Keep ScrollTrigger informed of Lenis scroll positions, whichever loads first. */
-const linkLenisToScrollTrigger = () => {
-  if (!lenisInstance || !gsapPromise) return;
-  const lenis = lenisInstance;
-  gsapPromise.then(({ ScrollTrigger }) => lenis.on("scroll", ScrollTrigger.update));
+let lenisInstance: LenisInstance | null = null;
+let lenisRafId = 0;
+let lenisOnGsapTicker = false;
+
+/** Own animation loop, used only until GSAP is available (or on pages that never load it). */
+const ownRafTick = (time: number) => {
+  if (!lenisInstance || lenisOnGsapTicker) return;
+  lenisInstance.raf(time);
+  lenisRafId = requestAnimationFrame(ownRafTick);
+};
+
+/** GSAP's ticker reports seconds; Lenis wants milliseconds. */
+const gsapTick = (time: number) => lenisInstance?.raf(time * 1000);
+
+/**
+ * Move Lenis onto GSAP's ticker.
+ *
+ * This matters: with two separate requestAnimationFrame loops, a pinned or scrubbed section is
+ * positioned by GSAP on one clock while the scroll position is being smoothed by Lenis on
+ * another. They drift by a frame and the pinned content judders. One ticker keeps them exact.
+ * `lagSmoothing(0)` stops GSAP rewriting time on a slow frame, which would desync them again.
+ *
+ * Safe to call repeatedly and from either side, since Lenis and GSAP can load in either order.
+ */
+const syncLenisWithGsap = () => {
+  if (!lenisInstance || !gsapPromise || lenisOnGsapTicker) return;
+  gsapPromise.then(({ gsap, ScrollTrigger }) => {
+    if (!lenisInstance || lenisOnGsapTicker) return;
+    lenisOnGsapTicker = true;
+    cancelAnimationFrame(lenisRafId);
+    gsap.ticker.add(gsapTick);
+    gsap.ticker.lagSmoothing(0);
+    lenisInstance.on("scroll", ScrollTrigger.update);
+    // Measurements taken before smooth scroll started are stale
+    ScrollTrigger.refresh();
+  });
+};
+
+/**
+ * Stop or restart smooth scrolling. Modals (the mobile menu, the photo lightbox) must lock it,
+ * otherwise Lenis keeps scrolling the page behind them even though `overflow: hidden` is set.
+ * Harmless when Lenis is not running.
+ */
+export const lockScroll = (locked: boolean): void => {
+  if (locked) lenisInstance?.stop();
+  else lenisInstance?.start();
+};
+
+/**
+ * Scroll an element into view. Routed through Lenis when it is running, because a native
+ * `scrollIntoView` fights the smooth scroller, which is left animating toward its own target.
+ */
+export const scrollToElement = (element: HTMLElement, offset = -80): void => {
+  if (lenisInstance) lenisInstance.scrollTo(element, { offset });
+  else element.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
 /**
@@ -88,12 +137,20 @@ export const loadGsap = () => {
         gsap.registerPlugin(ScrollTrigger);
         gsap.defaults({ ease: EASE_ENTRANCE_GSAP, duration: DURATION.reveal });
         ScrollTrigger.defaults({ start: "top 80%" });
-        // Motion should never start with a layout that is still settling.
         ScrollTrigger.config({ ignoreMobileResize: true });
+
+        // Re-measure once the page has settled. Without this, triggers keep the positions they
+        // were given on mount — before the web font swaps and the images finish — so pinned
+        // sections sit at the wrong scroll position and never play.
+        const refresh = () => ScrollTrigger.refresh();
+        if (document.readyState === "complete") refresh();
+        else window.addEventListener("load", refresh, { once: true });
+        document.fonts?.ready.then(refresh).catch(() => {});
+
         return { gsap, ScrollTrigger };
       },
     );
-    linkLenisToScrollTrigger();
+    syncLenisWithGsap();
   }
   return gsapPromise;
 };
@@ -114,23 +171,16 @@ export const startSmoothScroll = async (): Promise<() => void> => {
   const { default: Lenis } = await import("lenis");
   const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, autoRaf: false });
 
-  // Drive Lenis from GSAP's ticker when GSAP is present so ScrollTrigger stays in sync;
-  // otherwise use our own requestAnimationFrame loop.
-  let stopped = false;
-  let rafId = 0;
-  const tick = (time: number) => {
-    if (stopped) return;
-    lenis.raf(time);
-    rafId = requestAnimationFrame(tick);
-  };
-  rafId = requestAnimationFrame(tick);
-
   lenisInstance = lenis;
-  linkLenisToScrollTrigger();
+  lenisOnGsapTicker = false;
+  // Run on our own loop for now; syncLenisWithGsap moves it onto GSAP's ticker if GSAP appears
+  lenisRafId = requestAnimationFrame(ownRafTick);
+  syncLenisWithGsap();
 
   return () => {
-    stopped = true;
-    cancelAnimationFrame(rafId);
+    cancelAnimationFrame(lenisRafId);
+    if (lenisOnGsapTicker && gsapPromise) gsapPromise.then(({ gsap }) => gsap.ticker.remove(gsapTick));
+    lenisOnGsapTicker = false;
     lenisInstance = null;
     lenis.destroy();
   };

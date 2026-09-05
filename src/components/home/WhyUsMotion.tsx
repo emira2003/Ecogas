@@ -1,55 +1,67 @@
 "use client";
 
 import { useEffect } from "react";
-import { loadGsap, prefersReducedMotion } from "@/lib/motion";
-
-const DESKTOP = "(min-width: 64rem)";
+import { prefersReducedMotion } from "@/lib/motion";
 
 /**
- * Desktop-only pinned scroll for the Why Eco Gas section (F2-H5). GSAP + ScrollTrigger
- * are downloaded here and only here on the home page, and only on desktop without
- * reduced motion. Renders nothing.
+ * "Why people in Bolton choose us" (F2-H5): the five reasons light up one by one and the photo
+ * warms from cool to warm as the section comes into view.
+ *
+ * The plan asked for this as a *pinned* section on desktop. It was built that way and then taken
+ * out, because pinning held the page still for over a screen of scrolling — 1,080px of nothing
+ * moving, in the middle of an already long home page — which reads as broken scrolling.
+ *
+ * This version uses IntersectionObserver only. No pinning, no scroll listeners, no measuring the
+ * page, and GSAP is no longer loaded on the home page at all. Same idea, nothing can freeze or
+ * mis-measure. Trade-off recorded in DESIGN.md.
  */
 export function WhyUsMotion() {
   useEffect(() => {
-    if (prefersReducedMotion() || !window.matchMedia(DESKTOP).matches) return;
+    if (prefersReducedMotion()) return;
 
-    let cancelled = false;
-    let cleanup: (() => void) | undefined;
+    const section = document.getElementById("why");
+    const wrap = section?.querySelector<HTMLElement>("[data-why]");
+    const items = section ? Array.from(section.querySelectorAll<HTMLElement>(".why__item")) : [];
+    if (!section || !wrap || items.length === 0) return;
 
-    loadGsap().then(({ ScrollTrigger }) => {
-      if (cancelled) return;
-      const section = document.getElementById("why");
-      const wrap = section?.querySelector<HTMLElement>("[data-why]");
-      const items = section ? Array.from(section.querySelectorAll<HTMLElement>(".why__item")) : [];
-      const photo = section?.querySelector<HTMLElement>(".why__photo");
-      if (!section || !wrap || items.length === 0 || !photo) return;
+    // No IntersectionObserver means no way to know when to light them, so leave everything lit
+    // rather than dimming content we might never be able to reveal.
+    if (typeof IntersectionObserver === "undefined") return;
 
-      wrap.classList.add("why--pinned");
-      const trigger = ScrollTrigger.create({
-        trigger: section,
-        start: "top 72px",
-        end: "+=120%",
-        pin: true,
-        scrub: 0.4,
-        onUpdate: (self) => {
-          const lit = Math.min(items.length, Math.floor(self.progress * (items.length + 1)));
-          items.forEach((item, i) => item.classList.toggle("is-lit", i < lit));
-          photo.style.setProperty("--warmth", Math.min(1, self.progress * 1.25).toFixed(3));
-        },
-      });
+    // Only now dim things down: without JavaScript everything is simply shown lit
+    wrap.classList.add("why--staged");
 
-      cleanup = () => {
-        trigger.kill();
-        wrap.classList.remove("why--pinned");
-        items.forEach((item) => item.classList.remove("is-lit"));
-        photo.style.removeProperty("--warmth");
-      };
-    });
+    // Each reason lights once it is properly in view
+    const itemObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add("is-lit");
+          itemObserver.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.5 },
+    );
+    items.forEach((item) => itemObserver.observe(item));
+
+    // The photo warms once the section is on screen; CSS handles the fade
+    const photoObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          wrap.classList.add("is-warm");
+          photoObserver.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    photoObserver.observe(section);
 
     return () => {
-      cancelled = true;
-      cleanup?.();
+      itemObserver.disconnect();
+      photoObserver.disconnect();
+      wrap.classList.remove("why--staged", "is-warm");
+      items.forEach((item) => item.classList.remove("is-lit"));
     };
   }, []);
 
