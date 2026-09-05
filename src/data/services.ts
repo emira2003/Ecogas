@@ -71,7 +71,7 @@ export const services: Service[] = [
     shortName: "Boiler replacement",
     h1: "Boiler replacement and installation in Bolton",
     heroImage: {
-      src: "/images/services/boiler-replacement.jpg",
+      src: "/images/placeholders/service-boiler.svg",
       alt: "A new combi boiler fitted neatly on a kitchen wall with tidy copper pipework",
     },
     intro: [], // Phase 3
@@ -91,7 +91,7 @@ export const services: Service[] = [
     shortName: "Central heating",
     h1: "Central heating installation in Bolton",
     heroImage: {
-      src: "/images/services/central-heating.jpg",
+      src: "/images/placeholders/service-heating.svg",
       alt: "A new white radiator with a thermostatic valve on a freshly painted wall",
     },
     intro: [], // Phase 3
@@ -110,7 +110,7 @@ export const services: Service[] = [
     shortName: "Boiler service & repairs",
     h1: "Boiler servicing, repairs and fault finding in Bolton",
     heroImage: {
-      src: "/images/services/boiler-service.jpg",
+      src: "/images/placeholders/service-service.svg",
       alt: "An engineer’s hands testing a boiler with a flue gas analyser",
     },
     intro: [], // Phase 3
@@ -129,7 +129,7 @@ export const services: Service[] = [
     shortName: "Landlord certificates",
     h1: "Landlord gas safety certificates (CP12) in Bolton",
     heroImage: {
-      src: "/images/services/gas-safety.jpg",
+      src: "/images/placeholders/service-gas-safety.svg",
       alt: "A gas hob being safety-checked in a rental property kitchen",
     },
     intro: [], // Phase 3
@@ -148,7 +148,7 @@ export const services: Service[] = [
     shortName: "Power flushing",
     h1: "Power flushing in Bolton",
     heroImage: {
-      src: "/images/services/power-flushing.jpg",
+      src: "/images/placeholders/service-power-flush.svg",
       alt: "Close-up of a radiator valve and copper pipework during a power flush",
     },
     intro: [], // Phase 3
@@ -167,7 +167,7 @@ export const services: Service[] = [
     shortName: "Bathrooms",
     h1: "Bathroom installation in Bolton",
     heroImage: {
-      src: "/images/services/bathroom.jpg",
+      src: "/images/placeholders/service-bathroom.svg",
       alt: "A clean, newly fitted bathroom with a walk-in shower and white tiles",
     },
     intro: [], // Phase 3
@@ -186,7 +186,7 @@ export const services: Service[] = [
     shortName: "Plumbing",
     h1: "Plumbers in Bolton for everyday domestic plumbing",
     heroImage: {
-      src: "/images/services/plumbing.jpg",
+      src: "/images/placeholders/service-plumbing.svg",
       alt: "A plumber fitting a new kitchen tap with a spanner",
     },
     intro: [], // Phase 3

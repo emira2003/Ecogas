@@ -8,7 +8,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 |---|---|---|
 | 0 | Project setup | Done |
 | 1 | Design system, shell and motion foundation | Done |
-| 2 | Home page | Not started |
+| 2 | Home page | Done |
 | 3 | Services and Areas | Not started |
 | 4 | Instant Estimate tool | Not started |
 | 5 | Enquiry form and email | Not started |
@@ -80,8 +80,10 @@ Service-page hero prices that are examples: central heating from £3,500 · boil
 
 ## Placeholder content in the code
 
-- Gallery (`src/data/gallery.ts`): all 12 photos, 2 before/after pairs and their captions/towns are placeholders until real photos arrive.
-- Service hero images (`src/data/services.ts`): paths point to free stock photos to be sourced in Phase 2/3, logged in `IMAGE-CREDITS.md`.
+- **All images are generated SVG drawings** in `/public/images/placeholders/` (see `IMAGE-CREDITS.md`): the hero photo, the 7 service tiles, the team/van photo, the 12 work photos and the 2 before/after pairs. They are tiny files, so page-speed numbers will change once real photos go in — re-check in Phase 7 and again when the client's photos arrive.
+- Gallery (`src/data/gallery.ts`): all captions and towns are made-up examples until real photos arrive.
+- The "Why Eco Gas" photo is a placeholder for a team/van photo (PLAN.md Part K).
+- The coverage map (`src/components/home/CoverageMap.tsx`) uses a simplified, stylised outline of the North West — it is a diagram, not an accurate map. Town positions are real (from map coordinates).
 - One-line job descriptions in the estimate catalogue were written by us — client to check they're accurate.
 - Gas leak investigation has a small-print note pointing to the National Gas Emergency line (0800 111 999). Xhezmi to confirm he's happy to show it.
 

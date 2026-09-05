@@ -42,8 +42,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-GB" className={archivo.variable} suppressHydrationWarning>
       <body className="flex min-h-dvh flex-col">
-        {/* Marks that JavaScript is running, so motion can hide things safely (F2 rule 1). */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/* Marks that JavaScript is running, so motion can hide things safely (F2 rule 1),
+            and whether the hero intro has already played this session (F2-H1). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.classList.add('js');try{if(sessionStorage.getItem('eg-intro'))document.documentElement.classList.add('intro-seen')}catch(e){}",
+          }}
+        />
         <SkipLink />
         <Header />
         {/* Space for the fixed header: 60px, 72px from 1280px */}

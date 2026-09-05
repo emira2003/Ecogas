@@ -1,0 +1,102 @@
+import Image from "next/image";
+import { Phone } from "lucide-react";
+import type { CSSProperties } from "react";
+import { business, telHref } from "@/data/business";
+import { Button } from "@/components/ui/Button";
+import { PriceTag } from "@/components/ui/PriceTag";
+import { HeroIgnition } from "./HeroIgnition";
+import { HeroQuickStart } from "./HeroQuickStart";
+import { PilotFlame } from "./PilotFlame";
+
+const TITLE = "Boiler replacement in Bolton, done properly.";
+const SUBLINE =
+  "Gas Safe engineers since 2000. New boilers from £1,999 with a 10-year manufacturer’s warranty — and an honest estimate before we’ve even knocked on your door.";
+
+/**
+ * Home hero (PLAN.md D3 §1): 7/5 split on desktop, stacked on mobile.
+ * The headline, sub-line, price and buttons are all in the HTML, so the page works
+ * (and ranks) without JavaScript. Motion is layered on by HeroIgnition (F2-H1).
+ */
+export function Hero() {
+  const words = TITLE.split(" ");
+
+  return (
+    <HeroIgnition>
+      <div className="hero__dark" aria-hidden="true" />
+
+      <div className="hero__lit">
+        <div className="container-site grid gap-10 py-10 sm:py-14 lg:grid-cols-12 lg:items-center lg:gap-12 lg:py-24">
+          <div className="hero__copy lg:col-span-7">
+            <div className="hero__title-wrap">
+              <span className="hero__flame-anchor" aria-hidden="true">
+                <PilotFlame />
+              </span>
+              <h1 id="hero-title" className="h1 max-w-[12ch]">
+                {words.map((word, i) => (
+                  <span key={i}>
+                    <span className="hero__word">
+                      <span className="hero__word__inner" style={{ "--i": i } as CSSProperties}>
+                        {word}
+                      </span>
+                    </span>
+                    {i < words.length - 1 ? " " : null}
+                  </span>
+                ))}
+              </h1>
+            </div>
+
+            <p className="lead mt-6 max-w-xl text-ink-soft">{SUBLINE}</p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+              <Button href="/estimate" size="lg">
+                Get an instant estimate
+              </Button>
+              <Button
+                href={telHref}
+                variant="secondary"
+                size="lg"
+                icon={<Phone size={20} strokeWidth={1.75} aria-hidden="true" />}
+              >
+                Call {business.phone}
+              </Button>
+            </div>
+
+            <HeroQuickStart />
+          </div>
+
+          <div className="hero__media relative lg:col-span-5">
+            <div className="hero__photo">
+              <Image
+                src="/images/placeholders/hero-boiler.svg"
+                alt="A new combi boiler fitted neatly on a kitchen wall with tidy copper pipework"
+                fill
+                priority
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="hero__img object-cover"
+              />
+            </div>
+            {/* Full tag on desktop; a shorter one on phones so it never overflows the screen */}
+            <div className="hero__tag">
+              <PriceTag
+                lead="New boiler from"
+                amount={business.offers.boiler.fromPrice}
+                note="10-year warranty"
+                size="lg"
+                className="hidden lg:inline-flex"
+              />
+              <PriceTag
+                lead="from"
+                amount={business.offers.boiler.fromPrice}
+                note="10-year warranty"
+                size="md"
+                className="lg:hidden"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="hero__glow" aria-hidden="true" />
+    </HeroIgnition>
+  );
+}

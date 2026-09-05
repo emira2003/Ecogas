@@ -12,7 +12,7 @@
  * They are shown as a slider at the top of the Our Work page.
  *
  * Everything below is a PLACEHOLDER until the client’s real photos arrive (see TODO.md).
- * The placeholder image files are generated in build Phase 6.
+ * The placeholder images are generated SVG drawings (see IMAGE-CREDITS.md).
  */
 
 export type GalleryCategory = "boilers" | "heating" | "bathrooms" | "plumbing";
@@ -21,6 +21,9 @@ export interface GalleryImage {
   id: string;
   src: string;
   alt: string;
+  /** Pixel size of the file, so the page never jumps while it loads */
+  width: number;
+  height: number;
   caption: string;
   category: GalleryCategory;
   town: string;
@@ -33,7 +36,9 @@ export const gallery: GalleryImage[] = [
   // ---- Before / after pairs (placeholders) ----
   {
     id: "pair-1-before",
-    src: "/images/placeholders/pair-1-before.jpg",
+    src: "/images/placeholders/pair-1-before.svg",
+    width: 800,
+    height: 600,
     alt: "Placeholder: an old boiler before replacement",
     caption: "Old boiler out, new combi in, Bolton",
     category: "boilers",
@@ -43,7 +48,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "pair-1-after",
-    src: "/images/placeholders/pair-1-after.jpg",
+    src: "/images/placeholders/pair-1-after.svg",
+    width: 800,
+    height: 600,
     alt: "Placeholder: the new combi boiler in the same position",
     caption: "Old boiler out, new combi in, Bolton",
     category: "boilers",
@@ -53,7 +60,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "pair-2-before",
-    src: "/images/placeholders/pair-2-before.jpg",
+    src: "/images/placeholders/pair-2-before.svg",
+    width: 800,
+    height: 600,
     alt: "Placeholder: a tired bathroom before refitting",
     caption: "Bathroom refit, before and after, Manchester",
     category: "bathrooms",
@@ -63,7 +72,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "pair-2-after",
-    src: "/images/placeholders/pair-2-after.jpg",
+    src: "/images/placeholders/pair-2-after.svg",
+    width: 800,
+    height: 600,
     alt: "Placeholder: the finished bathroom from the same angle",
     caption: "Bathroom refit, before and after, Manchester",
     category: "bathrooms",
@@ -75,7 +86,9 @@ export const gallery: GalleryImage[] = [
   // ---- Grid photos (placeholders) ----
   {
     id: "work-01",
-    src: "/images/placeholders/work-01.jpg",
+    src: "/images/placeholders/work-01.svg",
+    width: 800,
+    height: 600,
     alt: "Placeholder: a new combi boiler on a kitchen wall",
     caption: "Combi boiler swap, Westhoughton",
     category: "boilers",
@@ -83,7 +96,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-02",
-    src: "/images/placeholders/work-02.jpg",
+    src: "/images/placeholders/work-02.svg",
+    width: 800,
+    height: 1000,
     alt: "Placeholder: a new boiler with tidy pipework",
     caption: "New combi boiler and pipework, Horwich",
     category: "boilers",
@@ -91,7 +106,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-03",
-    src: "/images/placeholders/work-03.jpg",
+    src: "/images/placeholders/work-03.svg",
+    width: 800,
+    height: 700,
     alt: "Placeholder: a boiler relocated to a garage wall",
     caption: "Boiler relocation to the garage, Farnworth",
     category: "boilers",
@@ -99,7 +116,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-04",
-    src: "/images/placeholders/work-04.jpg",
+    src: "/images/placeholders/work-04.svg",
+    width: 800,
+    height: 900,
     alt: "Placeholder: a new radiator in a living room",
     caption: "Full central heating system, Bromley Cross",
     category: "heating",
@@ -107,7 +126,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-05",
-    src: "/images/placeholders/work-05.jpg",
+    src: "/images/placeholders/work-05.svg",
+    width: 800,
+    height: 600,
     alt: "Placeholder: a smart thermostat on a hallway wall",
     caption: "Radiators and smart thermostat, Kearsley",
     category: "heating",
@@ -115,7 +136,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-06",
-    src: "/images/placeholders/work-06.jpg",
+    src: "/images/placeholders/work-06.svg",
+    width: 800,
+    height: 800,
     alt: "Placeholder: a thermostatic radiator valve close up",
     caption: "Power flush and new valves, Little Lever",
     category: "heating",
@@ -123,7 +146,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-07",
-    src: "/images/placeholders/work-07.jpg",
+    src: "/images/placeholders/work-07.svg",
+    width: 800,
+    height: 1000,
     alt: "Placeholder: a finished family bathroom",
     caption: "Family bathroom refit, Egerton",
     category: "bathrooms",
@@ -131,7 +156,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-08",
-    src: "/images/placeholders/work-08.jpg",
+    src: "/images/placeholders/work-08.svg",
+    width: 800,
+    height: 700,
     alt: "Placeholder: a walk-in shower with glass screen",
     caption: "Walk-in shower installation, Atherton",
     category: "bathrooms",
@@ -139,7 +166,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-09",
-    src: "/images/placeholders/work-09.jpg",
+    src: "/images/placeholders/work-09.svg",
+    width: 800,
+    height: 600,
     alt: "Placeholder: a new basin and toilet",
     caption: "New basin and toilet, Leigh",
     category: "bathrooms",
@@ -147,7 +176,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-10",
-    src: "/images/placeholders/work-10.jpg",
+    src: "/images/placeholders/work-10.svg",
+    width: 800,
+    height: 900,
     alt: "Placeholder: an outside tap on a brick wall",
     caption: "Outside tap installation, Radcliffe",
     category: "plumbing",
@@ -155,7 +186,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-11",
-    src: "/images/placeholders/work-11.jpg",
+    src: "/images/placeholders/work-11.svg",
+    width: 800,
+    height: 600,
     alt: "Placeholder: neat copper pipework under a sink",
     caption: "Pipework tidy-up under the sink, Stockport",
     category: "plumbing",
@@ -163,7 +196,9 @@ export const gallery: GalleryImage[] = [
   },
   {
     id: "work-12",
-    src: "/images/placeholders/work-12.jpg",
+    src: "/images/placeholders/work-12.svg",
+    width: 800,
+    height: 800,
     alt: "Placeholder: a new boiler and flue",
     caption: "New boiler and flue, Wigan",
     category: "boilers",

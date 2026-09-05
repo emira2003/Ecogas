@@ -212,9 +212,16 @@ _None yet. Ideas that come up during the build go here, not into the code._
 ## 10. Known trade-offs (checked against the Web Interface Guidelines audit)
 
 - **CTA band blobs** move for longer than 5 seconds without a pause button. The plan specifies this moment (F2-H11); it is decorative, sits behind the text, pauses off screen, and is replaced by a still gradient under reduced motion. Accepted.
+- **Reviews marquee and map marker pulses** also loop for longer than 5 seconds. Both are specified by the plan (F2-H7, F2-H9). The marquee pauses on hover and touch and becomes a static grid under reduced motion; the pulses stop under reduced motion; both pause off screen. Accepted.
 - **Sentence case** for headings and buttons, not Title Case. The plan's typography rules win over the guideline.
 - **Reveal-on-scroll** content stays hidden if a visitor jumps straight past it with an anchor link, until it scrolls into view. Standard behaviour; the hero and above-the-fold content never use it.
 
 ## 11. Change log
 
 - **Phase 1** — first version. Design system, shell components, motion foundation, showcase page.
+- **Phase 2** — home page. Notes on the Ignition hero (F2-H1) as built:
+  - The hero's finished state is in the HTML. The dim state only exists once JavaScript has run, and never on a repeat visit in the same session (a class set by the inline script before first paint) or with reduced motion.
+  - The light starts as a small pool around the pilot flame (so the flame is visible in the dark) and spreads as a growing circle (`clip-path`), revealing the lit hero. Headline words rise as the light passes, the PriceTag stamps in, then the chips.
+  - **LCP rule as built:** the intro plays only if the hero image has decoded within **700ms** of first paint (the plan says 900ms; 700ms was chosen so the "H1 readable within 700ms" rule holds on the slow path too). If not, the hero shows fully lit at once. A CSS-only safety net also lights the hero from 700ms if JavaScript is slow, so the headline never depends on script.
+  - On desktop the text column is indented 60px so the flame burns in the margin to the left of the headline; on mobile it sits above the headline.
+  - The pilot flame is one canvas loop with pre-rendered particle sprites; pixel ratio capped at 1.5; ~30fps on touch devices; pauses off screen and in hidden tabs.

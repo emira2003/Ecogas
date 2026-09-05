@@ -28,6 +28,8 @@ export interface Area {
   region: "Greater Manchester" | "Lancashire" | "Merseyside" | "Cheshire";
   /** true for Bolton — where the business is based. */
   isBase?: boolean;
+  /** Position on the coverage map drawing (0–600 across, 0–500 down). */
+  map: { x: number; y: number };
   /** Unique intro, 120–180 words, in paragraphs. */
   intro: string[];
   /** One line on how far / how often we travel here. */
@@ -51,6 +53,7 @@ export const areas: Area[] = [
     postcodeArea: "BL",
     region: "Greater Manchester",
     isBase: true,
+    map: { x: 360, y: 226 },
     intro: [], // Phase 3
     travelNote: "", // Phase 3
     h1: h1For("Bolton"),
@@ -62,6 +65,7 @@ export const areas: Area[] = [
     town: "Manchester",
     postcodeArea: "M",
     region: "Greater Manchester",
+    map: { x: 454, y: 308 },
     intro: [], // Phase 3
     travelNote: "", // Phase 3
     h1: h1For("Manchester"),
@@ -73,6 +77,7 @@ export const areas: Area[] = [
     town: "Blackburn",
     postcodeArea: "BB",
     region: "Lancashire",
+    map: { x: 334, y: 85 },
     intro: [], // Phase 3
     travelNote: "", // Phase 3
     h1: h1For("Blackburn"),
@@ -84,6 +89,7 @@ export const areas: Area[] = [
     town: "Oldham",
     postcodeArea: "OL",
     region: "Greater Manchester",
+    map: { x: 519, y: 258 },
     intro: [], // Phase 3
     travelNote: "", // Phase 3
     h1: h1For("Oldham"),
@@ -95,6 +101,7 @@ export const areas: Area[] = [
     town: "Stockport",
     postcodeArea: "SK",
     region: "Greater Manchester",
+    map: { x: 496, y: 366 },
     intro: [], // Phase 3
     travelNote: "", // Phase 3
     h1: h1For("Stockport"),
@@ -106,6 +113,7 @@ export const areas: Area[] = [
     town: "Warrington",
     postcodeArea: "WA",
     region: "Cheshire",
+    map: { x: 277, y: 383 },
     intro: [], // Phase 3
     travelNote: "", // Phase 3
     h1: h1For("Warrington"),
@@ -117,6 +125,7 @@ export const areas: Area[] = [
     town: "Wigan",
     postcodeArea: "WN",
     region: "Greater Manchester",
+    map: { x: 259, y: 254 },
     intro: [], // Phase 3
     travelNote: "", // Phase 3
     h1: h1For("Wigan"),
@@ -128,6 +137,7 @@ export const areas: Area[] = [
     town: "Liverpool",
     postcodeArea: "L",
     region: "Merseyside",
+    map: { x: 79, y: 368 },
     intro: [], // Phase 3
     travelNote: "", // Phase 3
     h1: h1For("Liverpool"),
@@ -139,6 +149,7 @@ export const areas: Area[] = [
     town: "Preston",
     postcodeArea: "PR",
     region: "Lancashire",
+    map: { x: 224, y: 72 },
     intro: [], // Phase 3
     travelNote: "", // Phase 3
     h1: h1For("Preston"),

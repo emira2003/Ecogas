@@ -65,6 +65,16 @@ let gsapPromise: Promise<{
   ScrollTrigger: ScrollTriggerModule["ScrollTrigger"];
 }> | null = null;
 
+type LenisLike = { on: (event: "scroll", cb: () => void) => void };
+let lenisInstance: LenisLike | null = null;
+
+/** Keep ScrollTrigger informed of Lenis scroll positions, whichever loads first. */
+const linkLenisToScrollTrigger = () => {
+  if (!lenisInstance || !gsapPromise) return;
+  const lenis = lenisInstance;
+  gsapPromise.then(({ ScrollTrigger }) => lenis.on("scroll", ScrollTrigger.update));
+};
+
 /**
  * Load GSAP + ScrollTrigger once, register the plugin and set sane defaults.
  * Call from a client component's effect. Safe to call many times.
@@ -77,12 +87,13 @@ export const loadGsap = () => {
         const { ScrollTrigger } = stMod;
         gsap.registerPlugin(ScrollTrigger);
         gsap.defaults({ ease: EASE_ENTRANCE_GSAP, duration: DURATION.reveal });
-        ScrollTrigger.defaults({ start: "top 80%", once: true });
+        ScrollTrigger.defaults({ start: "top 80%" });
         // Motion should never start with a layout that is still settling.
         ScrollTrigger.config({ ignoreMobileResize: true });
         return { gsap, ScrollTrigger };
       },
     );
+    linkLenisToScrollTrigger();
   }
   return gsapPromise;
 };
@@ -114,15 +125,13 @@ export const startSmoothScroll = async (): Promise<() => void> => {
   };
   rafId = requestAnimationFrame(tick);
 
-  if (gsapPromise) {
-    gsapPromise.then(({ ScrollTrigger }) => {
-      lenis.on("scroll", ScrollTrigger.update);
-    });
-  }
+  lenisInstance = lenis;
+  linkLenisToScrollTrigger();
 
   return () => {
     stopped = true;
     cancelAnimationFrame(rafId);
+    lenisInstance = null;
     lenis.destroy();
   };
 };
