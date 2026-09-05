@@ -469,3 +469,38 @@ _None yet. Ideas that come up during the build go here, not into the code._
 
   Build, lint and the 16 unit tests pass. **The performance budget has not been re-measured
   since the photographs went in** — that check is still outstanding and is noted in TODO.md.
+
+- **After Phase 10 — the coverage map is now a real map.** Xhezmi asked for "a real map instead
+  with the lines on top of it". The stylised blob outline is gone.
+
+  **What it is.** 41 actual local authority districts of the North West, from Ordnance Survey /
+  ONS boundary data, projected Web Mercator into the existing 600×500 viewBox (3.28°W–1.86°W,
+  53.20°N–53.94°N), clipped to the frame and simplified to about 1.2px. The coastline, the
+  Ribble estuary, the Mersey and the Wirral are where they really are. The nine town markers
+  were re-derived from real latitude and longitude through the same projection, so they now sit
+  on the actual towns rather than at hand-picked positions — `areas.ts` coordinates changed
+  accordingly, and the comment on that field says where they come from.
+
+  **Two things it gained beyond looking real.** The nine districts Eco Gas covers are tinted, so
+  the map now *states* the coverage instead of decorating it; and hovering a town in the list
+  lights up the borough it sits in, not just the dot. The orange spokes from Bolton and the
+  marker pulse are unchanged.
+
+  **Why not map tiles.** Google or Leaflet with OpenStreetMap would have been quicker, but it
+  would mean a map library, a tile server on every page view, third-party cookies on the two
+  pages that carry the map, and a look that fights the rest of the site. The inline SVG is
+  **~11.8 KB gzipped**, loads with the HTML, works offline and sets no cookies.
+
+  **Licence obligation, worth knowing about.** The boundary data is Open Government Licence v3.
+  It is free for commercial use *but the attribution is mandatory*, so there is now a line of
+  small print under the map — "Boundaries contain National Statistics and OS data © Crown
+  copyright and database right 2013". **Do not delete it.** It is recorded in IMAGE-CREDITS.md.
+
+  **Regenerating.** `scripts/generate-map.mjs` does the whole thing: download, project, clip
+  (Sutherland–Hodgman against the viewBox), simplify (Douglas–Peucker), emit. Clipping is what
+  makes this practical — without it, districts that merely touch a corner of the frame, like
+  Leeds and Lancaster, still contribute their entire outline, and the data came to 101 KB
+  instead of 30 KB. The 9.6 MB source file is not committed.
+
+  Build, lint and the 16 tests pass, and the contrast audit still reports 0 failures with the
+  new attribution line (Ink Mute at 12px, 5.19:1).

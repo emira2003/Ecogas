@@ -1485,12 +1485,38 @@
     height: auto;
     overflow: visible;
   }
-  .map__outline {
-    fill: var(--color-plaster-deep);
+  /* ---- The real map underneath the markers ----
+     Land sits over a sea rectangle, so estuaries and the coast come out of the district
+     shapes themselves rather than being drawn. The nine districts we cover are tinted. */
+  .map__sea {
+    fill: color-mix(in srgb, var(--color-water) 17%, var(--color-surface));
+  }
+  .map__district {
+    fill: color-mix(in srgb, var(--color-plaster-deep) 70%, var(--color-white));
     stroke: var(--color-ink);
-    stroke-opacity: 0.18;
-    stroke-width: 1.5;
+    stroke-opacity: 0.14;
+    stroke-width: 0.6;
     stroke-linejoin: round;
+    transition:
+      fill 0.2s ease-out,
+      stroke-opacity 0.2s ease-out;
+  }
+  .map__district.is-covered {
+    fill: color-mix(in srgb, var(--color-flame) 15%, var(--color-plaster-deep));
+    stroke-opacity: 0.22;
+  }
+  /* Hovering a town in the list, or its marker, lights the borough it sits in */
+  .map__district.is-hot {
+    fill: color-mix(in srgb, var(--color-flame) 34%, var(--color-plaster-deep));
+    stroke-opacity: 0.4;
+  }
+  /* The Open Government Licence attribution. Small, but it has to be readable: 5.2:1. */
+  .map__credit {
+    margin-top: 0.75rem;
+    max-width: none;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--color-ink-mute);
   }
   .map__water {
     fill: none;

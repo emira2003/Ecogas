@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { AreaSlug, MapTown } from "@/data/areas";
+import { COVERED_DISTRICTS, districts } from "@/data/nw-map";
 import { onceInView, pauseWhenOffscreen } from "@/lib/motion";
 
 /** Where each town's label sits relative to its marker, so none overlap. */
@@ -18,14 +19,30 @@ const labels: Record<AreaSlug, { dx: number; dy: number; anchor?: "end" }> = {
   preston: { dx: -14, dy: -10, anchor: "end" },
 };
 
-/** A simplified outline of the North West: coast on the left, hills on the right. */
-const OUTLINE =
-  "M180 18C150 40 138 80 132 120C128 160 122 200 105 232C90 262 70 290 52 322C38 346 28 372 42 386L118 392C100 404 70 406 40 400C22 420 20 450 34 472C60 490 110 484 160 478C240 470 320 466 400 476C470 484 530 478 566 440C590 400 592 320 582 240C574 170 556 110 512 66C470 34 400 22 330 18C280 14 220 14 180 18Z";
+/** Which local authority each town sits in, so hovering a town lights up its borough. */
+const districtFor: Record<AreaSlug, string> = {
+  bolton: "Bolton",
+  manchester: "Manchester",
+  blackburn: "Blackburn with Darwen",
+  oldham: "Oldham",
+  stockport: "Stockport",
+  warrington: "Warrington",
+  wigan: "Wigan",
+  liverpool: "Liverpool",
+  preston: "Preston",
+};
 
 const STAGGER_MS = 110;
 
 /**
- * The coverage map (PLAN.md D3 §9, F2-H9): inline SVG of the North West with nine markers.
+ * The coverage map (PLAN.md D3 §9, F2-H9): nine markers over a real map of the North West.
+ *
+ * The land is 41 actual local authority districts (data/nw-map.ts), drawn from Ordnance
+ * Survey boundaries and projected into this viewBox — so the coastline, the Mersey and the
+ * Ribble are where they really are, and the markers sit on the real towns. The nine districts
+ * we cover are tinted, which makes the map state the coverage rather than just decorate it.
+ * It is inline SVG: no tile server, no map library, no third-party cookies.
+ *
  * On first view a line draws from Bolton to each town, then the markers pulse. Hovering a
  * town name highlights its marker and vice versa; clicking either opens the area page.
  * Still with reduced motion.
@@ -63,7 +80,21 @@ export function CoverageMap({ areas }: { areas: MapTown[] }) {
           <desc id="map-desc">
             Based in Bolton, covering {others.map((a) => a.town).join(", ")}.
           </desc>
-          <path className="map__outline" d={OUTLINE} />
+          {/* Sea first, then land over it: anything the districts don't cover reads as water. */}
+          <rect className="map__sea" x="0" y="0" width="600" height="500" rx="10" />
+          <g className="map__land">
+            {districts.map((d) => {
+              const covered = COVERED_DISTRICTS.has(d.name);
+              const lit = hot !== null && districtFor[hot] === d.name;
+              return (
+                <path
+                  key={d.name}
+                  className={`map__district ${covered ? "is-covered" : ""} ${lit ? "is-hot" : ""}`.replace(/\s+/g, " ").trim()}
+                  d={d.d}
+                />
+              );
+            })}
+          </g>
           <g>
             {others.map((a, i) => (
               <line
@@ -106,6 +137,10 @@ export function CoverageMap({ areas }: { areas: MapTown[] }) {
             })}
           </g>
         </svg>
+        {/* Required by the Open Government Licence on the boundary data. See IMAGE-CREDITS.md. */}
+        <p className="map__credit">
+          Boundaries contain National Statistics and OS data © Crown copyright and database right 2013.
+        </p>
       </div>
 
       <ul className="lg:col-span-5" aria-label="Towns we cover">

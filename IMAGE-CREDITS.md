@@ -73,6 +73,22 @@ misrepresent the business, so they stay as illustrations until the client sends 
 `hero-boiler.svg` and the five `service-*.svg` panels are no longer referenced by any page,
 because those slots now hold photographs. They are kept in the repository as a fallback.
 
+## Map data — attribution required
+
+The coverage map (`src/data/nw-map.ts`) is a real map. Its 41 local authority outlines come
+from Ordnance Survey / Office for National Statistics boundary data (Local Authority Districts,
+December 2013), taken from github.com/martinjc/UK-GeoJSON and projected into the map's viewBox.
+
+That data is published under the **Open Government Licence v3**, which allows commercial use
+but **does require the attribution below to appear**. It is on the page, in small print under
+the map — do not remove it:
+
+> Contains National Statistics data © Crown copyright and database right 2013.
+> Contains OS data © Crown copyright and database right 2013.
+
+No map tiles, no map library and no third-party requests are involved, so the map sets no
+cookies and works offline. To regenerate it, see the note at the top of `src/data/nw-map.ts`.
+
 ## Client's own photos
 
 Listed here once received, so it is clear which images belong to Eco Gas.
