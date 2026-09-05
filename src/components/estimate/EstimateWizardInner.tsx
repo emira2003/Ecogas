@@ -1,13 +1,21 @@
 "use client";
 
-import { MessageCircle, Phone } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { business, telHref, whatsappHref } from "@/data/business";
 import { estimateCatalogue, findEstimateCategory, type EstimateCategoryId } from "@/data/estimate-catalogue";
-import { calculateTotal, clampQty, isCategoryId, linesFrom, sanitizeSelections, type Selections } from "@/lib/estimate";
+import {
+  calculateTotal,
+  clampQty,
+  formatLine,
+  formatTotal,
+  isCategoryId,
+  linesFrom,
+  sanitizeSelections,
+  type Selections,
+} from "@/lib/estimate";
 import { prefersReducedMotion } from "@/lib/motion";
 import { Button } from "@/components/ui/Button";
 import { CategoryCard } from "./CategoryCard";
+import { EnquiryForm } from "./EnquiryForm";
 import { EstimateSummary } from "./EstimateSummary";
 import { JobRow } from "./JobRow";
 import { RunningTotal } from "./RunningTotal";
@@ -245,20 +253,26 @@ export function EstimateWizardInner() {
 
             {showForm ? (
               <div ref={formRef} id="enquiry" className="mt-10 rounded-lg border border-ink bg-plaster p-6 sm:p-8">
-                <h3 className="h3">Send us your enquiry</h3>
-                {/* Phase 5 replaces this panel with the enquiry form, pre-filled with the jobs above. */}
-                <p className="mt-3 max-w-xl text-ink-soft">
-                  The enquiry form is the next part of the site to be built. Until then, call us or send a WhatsApp and
-                  mention the jobs above.
+                <h3 className="h3">{state.somethingElse ? "Send us your enquiry" : "Send us this estimate"}</h3>
+                <p className="mt-2 max-w-xl text-ink-soft">
+                  {state.somethingElse
+                    ? "Your details and your message, and we’ll call you back with a price."
+                    : "Your details and the jobs above, and we’ll call you back to confirm the price."}
                 </p>
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <Button href={telHref} icon={<Phone size={20} strokeWidth={1.75} aria-hidden="true" />}>
-                    Call {business.phone}
-                  </Button>
-                  <Button href={whatsappHref} variant="secondary" icon={<MessageCircle size={20} strokeWidth={1.75} aria-hidden="true" />} rel="noopener">
-                    WhatsApp us
-                  </Button>
-                </div>
+                <EnquiryForm
+                  mode="estimate"
+                  page="/estimate"
+                  className="mt-6"
+                  messagePrompt={state.somethingElse ? "Describe the job" : "Anything else we should know?"}
+                  estimate={
+                    count > 0
+                      ? {
+                          lines: lines.map((l) => ({ name: l.item.name, qty: l.qty, price: formatLine(l) })),
+                          total: formatTotal(total),
+                        }
+                      : undefined
+                  }
+                />
               </div>
             ) : null}
           </section>
