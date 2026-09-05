@@ -280,4 +280,5 @@ _None yet. Ideas that come up during the build go here, not into the code._
   - Name, address and phone are identical everywhere because they are rendered from `business.ts`; the crawl found no variant spellings of the address.
   - Text is at least 16px on phones: the small-text style, price-tag small size, chips, captions, table headings and before/after labels are 16px under 640px and 15px above. Two accepted exceptions: the lifted floating labels (≈13px, a standard pattern, the field itself stays 17px) and the "from" word inside a price tag (14px, sitting beside a 20px amount). Town names on the coverage map are hidden on phones, where the list beside it carries them.
   - Showcase page removed; robots no longer mentions it.
-  - Console, CLS and Lighthouse targets: see Phase 7 (unchanged by this phase's fixes; re-checked on the home page).
+  - Console, CLS and Lighthouse targets: see Phase 7 (unchanged by this phase's fixes; re-checked on the home page: 96 / 100 / 100 / 100).
+- **Phase 10** — handover. README.md rewritten in plain English: running the site, every routine content change with a worked example, replacing placeholders and the logo, the Web3Forms key, deployment and Search Console. Build complete.

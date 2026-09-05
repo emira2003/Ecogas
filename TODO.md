@@ -2,6 +2,8 @@
 
 Everything still needed before launch, in one place. Updated at the end of every build phase.
 
+**The build is complete (Phases 0–10).** What remains is the client's information and files, the live email test, and deployment (README.md section 5). Re-run the Lighthouse checks once real photos are in (DESIGN.md Phase 7 has the method and the numbers to beat).
+
 ## Build progress
 
 | Phase | What | Status |
@@ -16,7 +18,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 | 7 | Motion polish and performance budget | Done — Lighthouse numbers in DESIGN.md. Re-run once real photos replace the tiny placeholders. |
 | 8 | SEO | Done |
 | 9 | Quality | Done — checks recorded in DESIGN.md. The client-supplied items below are what remain before launch. |
-| 10 | Handover | Not started |
+| 10 | Handover | Done — see README.md |
 
 ## Needed from the client (mirrors Part J of the plan)
 
