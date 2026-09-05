@@ -14,6 +14,10 @@ const linkClass = "inline-block py-1 text-plaster-soft no-underline hover:text-f
 /**
  * Four-column footer (PLAN.md D2). The address, phone and email come from business.ts
  * so they are identical to the header, contact page and structured data.
+ *
+ * Since the header was shortened, this footer is the only place some pages are linked from
+ * every page: the services and areas overviews, About and Reviews. Don't remove those links
+ * without putting them somewhere else first, or the pages become unreachable.
  */
 export function Footer() {
   const year = new Date().getFullYear();
@@ -44,6 +48,11 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/services" className={`${linkClass} font-semibold`}>
+                All services
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -59,6 +68,11 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/areas" className={`${linkClass} font-semibold`}>
+                All areas
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -106,11 +120,26 @@ export function Footer() {
           <p>
             © {year} {business.name}
           </p>
-          <p>
-            <Link href="/privacy-policy" className={linkClass}>
-              Privacy policy
-            </Link>
-          </p>
+          {/* About and Reviews live here now that they are not in the header */}
+          <nav aria-label="More pages">
+            <ul className="flex flex-wrap items-center gap-x-6">
+              <li>
+                <Link href="/about" className={linkClass}>
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="/reviews" className={linkClass}>
+                  Reviews
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy-policy" className={linkClass}>
+                  Privacy policy
+                </Link>
+              </li>
+            </ul>
+          </nav>
           {/* Website credit — ready to switch on:
           <p>
             Website by{" "}

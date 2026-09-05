@@ -13,13 +13,17 @@ export interface NavLink {
   href: string;
 }
 
+/**
+ * The header menu, on desktop and in the mobile menu.
+ *
+ * Xhezmi asked for a short header: Services, Reviews, Areas and About were removed because
+ * the home page already covers them. Those pages still exist and are linked from the footer
+ * on every page (see Footer.tsx), so nothing is left without a way in.
+ */
 export const mainNav: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Instant Estimate", href: "/estimate" },
   { label: "Our Work", href: "/our-work" },
-  { label: "Reviews", href: "/reviews" },
-  { label: "Areas", href: "/areas" },
-  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
