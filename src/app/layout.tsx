@@ -3,11 +3,9 @@ import { Archivo } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { business, siteUrl } from "@/data/business";
-import { services } from "@/data/services";
 import { localBusinessJsonLd } from "@/lib/schema";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { Header } from "@/components/layout/Header";
-import { serviceLinksFrom } from "@/components/layout/nav";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
@@ -57,10 +55,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             and whether the hero intro has already played this session (F2-H1).
             beforeInteractive = injected into the initial HTML, runs before first paint. */}
         <Script id="eg-js-flags" strategy="beforeInteractive">
-          {"document.documentElement.classList.add('js');try{if(sessionStorage.getItem('eg-intro'))document.documentElement.classList.add('intro-seen')}catch(e){}"}
+          {"document.documentElement.classList.add('js');try{if(sessionStorage.getItem('eg-intro'))document.documentElement.classList.add('intro-seen')}catch(e){};if(typeof Node!=='undefined'&&Node.prototype){var r=Node.prototype.removeChild;Node.prototype.removeChild=function(c){if(c&&c.parentNode!==this){return c.parentNode?c.parentNode.removeChild(c):c}return r.call(this,c)};var i=Node.prototype.insertBefore;Node.prototype.insertBefore=function(n,ref){if(ref&&ref.parentNode!==this){return ref.parentNode?ref.parentNode.insertBefore(n,ref):n}return i.call(this,n,ref)};}"}
         </Script>
         <SkipLink />
-        <Header serviceLinks={serviceLinksFrom(services)} />
+        <Header />
         {/* Space for the fixed header: 60px, 72px from 1280px */}
         <div className="h-[60px] xl:h-[72px]" aria-hidden="true" />
         <main id="main" className="flex-1">

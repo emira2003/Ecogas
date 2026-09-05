@@ -437,6 +437,8 @@
     border-radius: 0;
   }
 
+  /* Currently unused: the header's Services dropdown was replaced by a Home link at Xhezmi's
+     request. Kept so the dropdown can be restored by putting Services back in nav.ts. */
   .nav-dropdown {
     position: absolute;
     top: 100%;
@@ -520,6 +522,7 @@
     color: var(--color-white);
     text-decoration: none;
   }
+  /* Currently unused, as above: the mobile menu no longer nests the service links. */
   .mobile-nav__sublink {
     display: block;
     padding: 0.5rem 0;

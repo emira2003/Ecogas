@@ -175,8 +175,8 @@ export function EstimateWizardInner() {
 
       <div className={`step-panel mt-8 ${panelClass}`.trim()}>
         {shown.step === 1 ? (
-          <section aria-labelledby="step-heading">
-            <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="h2">
+          <section key="step-1" aria-labelledby="step-1-heading">
+            <h2 id="step-1-heading" ref={headingRef} tabIndex={-1} className="h2">
               What do you need help with?
             </h2>
             {count > 0 ? (
@@ -199,8 +199,8 @@ export function EstimateWizardInner() {
         ) : null}
 
         {shown.step === 2 && category ? (
-          <section aria-labelledby="step-heading">
-            <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="h2">
+          <section key="step-2" aria-labelledby="step-2-heading">
+            <h2 id="step-2-heading" ref={headingRef} tabIndex={-1} className="h2">
               Pick the jobs you need
             </h2>
             <p className="mt-3 flex flex-wrap items-baseline gap-x-3 text-ink-soft">
@@ -239,8 +239,8 @@ export function EstimateWizardInner() {
         ) : null}
 
         {shown.step === 3 ? (
-          <section aria-labelledby="step-heading">
-            <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="h2">
+          <section key="step-3" aria-labelledby="step-3-heading">
+            <h2 id="step-3-heading" ref={headingRef} tabIndex={-1} className="h2">
               {state.somethingElse ? "Tell us what you need" : "Your estimate"}
             </h2>
 
