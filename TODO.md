@@ -12,7 +12,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 | 3 | Services and Areas | Done |
 | 4 | Instant Estimate tool | Done |
 | 5 | Enquiry form and email | Built and tested locally. **Live email test still to do** — needs `WEB3FORMS_ACCESS_KEY` in `.env.local` (see below) |
-| 6 | Remaining pages | Not started |
+| 6 | Remaining pages | Done |
 | 7 | Motion polish and performance budget | Not started |
 | 8 | SEO | Not started |
 | 9 | Quality | Not started |
@@ -34,7 +34,9 @@ Everything still needed before launch, in one place. Updated at the end of every
 - [ ] How customers pay (for the "How do I pay?" FAQ) → `src/data/faqs.ts`
 - [ ] How long enquiry emails are kept (for the privacy policy)
 - [ ] The domain name → `.env.local` (`NEXT_PUBLIC_SITE_URL`)
-- [ ] Approval (or not) for the 404 alien plumber → `src/data/site.config.ts` (`alien404`)
+- [ ] Approval (or not) for the 404 alien plumber → `src/data/site.config.ts` (`alien404`). See it at any wrong address, e.g. /nothing-here.
+- [ ] Privacy policy: how long enquiry emails are kept (`src/app/privacy-policy/page.tsx`, currently "[12 months — CLIENT TO CONFIRM]"). Note the Google map on the contact page may set Google's own cookies; the policy says so. If the client would rather have no third-party cookies at all, the map can be replaced by a plain link to Google Maps.
+- [ ] About page photo slots: owner/engineer, van, workshop (`src/app/about/page.tsx`), and confirm the "Warranty registered" step.
 - [ ] Map coordinates for the address (for Google structured data) → `business.ts` (`geo`)
 - [ ] Confirm: does the £1,999 offer *always* include the 10-year warranty? (FAQ 3 and "Why choose us")
 - [ ] Service page wording to check (`src/data/services.ts`, search for "CLIENT TO CONFIRM"): whether prices include VAT; bathrooms — are tiling, electrics and decorating arranged by Eco Gas or by the customer, and can Eco Gas supply the suite; plumbing — is there a call-out fee.
