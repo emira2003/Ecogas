@@ -419,3 +419,53 @@ _None yet. Ideas that come up during the build go here, not into the code._
   shipped, and applied to nobody. The photo rendered at full brightness over the heading. When
   a rule appears in the stylesheet but `getComputedStyle` disagrees, check which at-rule it
   landed in before changing the rule itself.
+
+- **After Phase 10 — "still too dark ... still too plain". The scheme is now light with dark
+  anchors, and three new pieces of motion were added.**
+
+  **Light, but not the white page that was rejected earlier.** The whole palette inverted:
+  Surface is warm paper `#f6f3ee`, the alternating band is `#eae4da`, cards are pure white and
+  `--color-ink` is now the dark `#1e242e`. What stops it reading as bare is that the page is
+  *bracketed* in Cast Iron — the header, the hero, the "Why people in Bolton choose us" band,
+  the closing call to action and the footer are all dark. The first attempt at a light scheme
+  had no such anchors and no photographs, which is why it read as empty.
+
+  **Flame and Ember are no longer interchangeable.** Flame `#f26b21` on warm paper is 2.75:1,
+  which fails as text. Flame is now the fill colour (buttons, borders) and the text orange on
+  the dark bands, where it clears 5.3:1; Ember was re-cut from `#ff8a4c` to `#a8430b` as the
+  text orange for the light bands, at 5.5:1. Water and Meadow were darkened for the same
+  reason. `--color-ink-mute` moved from a 62% to a 68% mix: 5.19:1 on Surface, 4.54:1 on
+  Plaster.
+
+  **`section--dark` is in use for the first time.** It was defined during the dark phase and
+  never applied to anything, because every band was dark already. "Why people in Bolton choose
+  us" now uses it, which puts one dark band in the middle of the light run. Its grid lines and
+  top highlight invert, and the F2-H5 staged lighting effect inverts with it — unlit reasons
+  use Plaster Soft (7.9:1) rather than Ink Mute, and lit ones go to white.
+
+  **Verified rather than reasoned about.** A contrast audit was injected into the running page
+  — it walks every element with a text node, finds the nearest opaque background, and reports
+  anything under 4.5:1 (3:1 for large text). It caught one real regression, the hero's "Call"
+  button, which had lost `tone="dark"` when the hero stayed dark while the page around it went
+  light. Home, Estimate and Our Work now report **0 failures**.
+
+  **Motion added.** Three pieces, all of which honour `prefers-reduced-motion`:
+
+  1. **A reading-progress line** across the top of the header. It is a scroll-driven CSS
+     animation (`animation-timeline: scroll(root block)`), so there is no scroll listener, no
+     JavaScript and nothing to keep in sync. It is `display: none` by default and only appears
+     inside `@supports (animation-timeline: scroll())`, so unsupported browsers show nothing
+     rather than a bar stuck at zero.
+  2. **The hero photograph is never still** — a 28s drift, plus a scroll parallax under
+     `@supports (animation-timeline: view())`. The parallax is on `.hero__media`, not the
+     photo, so the price tag travels with the image it sits on instead of sliding off it.
+  3. **Three counters in the trust strip** roll up on first view (F2-G6, already in the plan,
+     just never used here): 25+ years, the 4.9 rating and the review count. The founding year
+     is deliberately left alone — a date counting up from zero reads as a glitch.
+
+  **What was NOT changed, and why.** F2-G3 says cards reveal as one group, never per card.
+  Staggering the service tiles would be the obvious way to add more visible motion, and it was
+  left alone because that rule is explicit. It is a one-line change if it is wanted.
+
+  Build, lint and the 16 unit tests pass. **The performance budget has not been re-measured
+  since the photographs went in** — that check is still outstanding and is noted in TODO.md.

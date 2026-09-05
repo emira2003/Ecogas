@@ -1,9 +1,10 @@
 "use client";
 
 import { BadgeCheck, CalendarCheck, ShieldCheck, Star } from "lucide-react";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { business } from "@/data/business";
 import { onceInView, prefersReducedMotion } from "@/lib/motion";
+import { CountUp } from "./CountUp";
 
 interface TrustStripProps {
   /** Background the strip sits on. Only changes the divider colour. */
@@ -40,7 +41,9 @@ export function TrustStrip({ bg = "white", className = "" }: TrustStripProps) {
     return onceInView(el, () => setState("in"), 0.4);
   }, [state]);
 
-  const items = [
+  // The three numbers roll up when the strip scrolls into view (F2-G6). The founding year is
+  // left alone: a date counting from zero reads as a glitch, not as a flourish.
+  const items: { icon: typeof ShieldCheck; iconClass: string; title: ReactNode; detail: ReactNode }[] = [
     {
       icon: ShieldCheck,
       iconClass: "text-meadow",
@@ -51,7 +54,11 @@ export function TrustStrip({ bg = "white", className = "" }: TrustStripProps) {
       icon: CalendarCheck,
       iconClass: "text-ink",
       title: `Trading since ${business.foundingYear}`,
-      detail: "25+ years in Bolton",
+      detail: (
+        <>
+          <CountUp value={25} />+ years in Bolton
+        </>
+      ),
     },
     {
       icon: BadgeCheck,
@@ -62,8 +69,16 @@ export function TrustStrip({ bg = "white", className = "" }: TrustStripProps) {
     {
       icon: Star,
       iconClass: "text-flame",
-      title: `Rated ${business.reviews.rating}/${business.reviews.outOf}`,
-      detail: `${business.reviews.count} reviews on ${business.reviews.platform}`,
+      title: (
+        <>
+          Rated <CountUp value={business.reviews.rating} decimals={1} />/{business.reviews.outOf}
+        </>
+      ),
+      detail: (
+        <>
+          <CountUp value={business.reviews.count} /> reviews on {business.reviews.platform}
+        </>
+      ),
     },
   ];
 
@@ -78,7 +93,7 @@ export function TrustStrip({ bg = "white", className = "" }: TrustStripProps) {
     >
       {items.map(({ icon: Icon, iconClass, title, detail }, i) => (
         <li
-          key={title}
+          key={i}
           className={`flex items-start gap-3 lg:border-l lg:pl-5 first:border-l-0 first:pl-0 ${divider}`}
           style={{ "--d": `${i * STAGGER_MS}ms` } as CSSProperties}
         >

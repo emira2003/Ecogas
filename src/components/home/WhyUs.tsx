@@ -14,7 +14,7 @@ const PHOTO_ALT = "The Eco Gas team beside their van outside a customer’s home
  */
 export function WhyUs() {
   return (
-    <Section id="why" bg="plaster" aria-labelledby="why-title">
+    <Section id="why" bg="cast-iron" aria-labelledby="why-title">
       <Reveal as="h2" split id="why-title" className="h2">
         Why people in Bolton choose us
       </Reveal>
@@ -24,7 +24,7 @@ export function WhyUs() {
           {business.whyChooseUs.map((item) => (
             <li key={item.title} className="why__item">
               <h3 className="h3">{item.title}</h3>
-              <p className="mt-2 text-ink-soft">{item.detail}</p>
+              <p className="mt-2 text-plaster-soft">{item.detail}</p>
             </li>
           ))}
         </Reveal>

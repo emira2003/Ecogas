@@ -46,7 +46,7 @@ export function Hero() {
               </h1>
             </div>
 
-            <p className="lead mt-6 max-w-xl text-ink-soft">{SUBLINE}</p>
+            <p className="lead mt-6 max-w-xl text-plaster-soft">{SUBLINE}</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
               <Button href="/estimate" size="lg">
@@ -55,6 +55,7 @@ export function Hero() {
               <Button
                 href={telHref}
                 variant="secondary"
+                tone="dark"
                 size="lg"
                 icon={<Phone size={20} strokeWidth={1.75} aria-hidden="true" />}
               >

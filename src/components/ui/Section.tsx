@@ -17,13 +17,13 @@ interface SectionProps extends Omit<ComponentProps<"section">, "className"> {
 
 /*
  * `section--*` carries both the background colour and its surface treatment (light from above,
- * hairline edge) — see globals.css. The names are historical: since the site went dark, "white"
- * is the deepest band, "plaster" the lighter alternating one, and "cast-iron" the darkest.
+ * hairline edge) — see globals.css. "white" is the main warm-paper band, "plaster" the slightly
+ * deeper alternating one, and "cast-iron" the dark feature band, which carries light text.
  */
 const bgClasses: Record<Background, string> = {
   white: "text-ink section--white",
   plaster: "text-ink section--plaster",
-  "cast-iron": "text-ink section--dark",
+  "cast-iron": "text-white section--dark",
 };
 
 const paddingClasses = {

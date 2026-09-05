@@ -58,6 +58,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {"document.documentElement.classList.add('js');try{if(sessionStorage.getItem('eg-intro'))document.documentElement.classList.add('intro-seen')}catch(e){};if(typeof Node!=='undefined'&&Node.prototype){var r=Node.prototype.removeChild;Node.prototype.removeChild=function(c){if(c&&c.parentNode!==this){return c.parentNode?c.parentNode.removeChild(c):c}return r.call(this,c)};var i=Node.prototype.insertBefore;Node.prototype.insertBefore=function(n,ref){if(ref&&ref.parentNode!==this){return ref.parentNode?ref.parentNode.insertBefore(n,ref):n}return i.call(this,n,ref)};}"}
         </Script>
         <SkipLink />
+        {/* Reading progress. Pure CSS (scroll-driven animation), so it costs no JavaScript
+            and simply does not appear in browsers that don't support it. */}
+        <div className="scroll-progress" aria-hidden="true" />
         <Header />
         {/* Space for the fixed header: 60px, 72px from 1280px */}
         <div className="h-[60px] xl:h-[72px]" aria-hidden="true" />

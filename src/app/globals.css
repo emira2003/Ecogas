@@ -23,32 +23,42 @@
  */
 @theme {
   --color-*: initial;
+  /*
+   * Flame is the brand orange. It is used as a fill (buttons, borders) anywhere, and as text
+   * ONLY on the dark bands, where it clears 5.3:1. Ember is the same orange darkened until it
+   * works as text on the light bands — 2.75:1 vs 5.5:1, so the two are not interchangeable.
+   */
   --color-flame: #f26b21;
-  --color-ember: #ff8a4c; /* lightened: Ember had to work as text on dark, not on white */
-  --color-water: #55a8e3; /* lightened for the same reason */
-  --color-meadow: #56c184;
+  --color-ember: #a8430b;
+  --color-water: #1c6ea4;
+  --color-meadow: #1f7a45;
 
-  /* Lifted and given a blue-slate cast: flat neutral black felt heavy and dead */
-  --color-surface: #242b36;
-  --color-surface-2: #2f3745;
-  --color-raised: #3a4351;
-  --color-cast-iron: #171d26;
+  /*
+   * Warm paper with dark anchors, not a flat white page: the hero, header, closing band and
+   * footer stay Cast Iron and the content bands between them are light. The earlier all-dark
+   * scheme read as heavy, and the all-white one before it read as bare; the contrast between
+   * the two is what gives the page its shape.
+   */
+  --color-surface: #f6f3ee;
+  --color-surface-2: #eae4da;
+  --color-raised: #ffffff;
+  --color-cast-iron: #1a212c;
 
-  --color-ink: #ece9e4; /* primary text */
+  --color-ink: #1e242e; /* primary text on the light bands */
   --color-white: #ffffff; /* light text / the reversed price tag */
   --color-on-flame: #14171b; /* text on orange */
-  --color-plaster: #262d38; /* kept so existing bg-plaster utilities land on surface-2 */
+  --color-plaster: #eae4da; /* kept so existing bg-plaster utilities land on surface-2 */
 
   --color-transparent: transparent;
   --color-current: currentColor;
 
   /* Derived mixes, not new colours */
-  --color-ink-soft: color-mix(in srgb, #ece9e4 76%, #242b36);
-  --color-ink-mute: color-mix(in srgb, #ece9e4 62%, #242b36); /* passes AA on the page */
-  --color-line: color-mix(in srgb, #ece9e4 15%, #242b36);
-  --color-line-dark: color-mix(in srgb, #ece9e4 18%, #171d26);
-  --color-plaster-deep: #3a4351; /* behind images while they load */
-  --color-plaster-soft: color-mix(in srgb, #ece9e4 74%, #171d26); /* secondary text on the darkest bands */
+  --color-ink-soft: color-mix(in srgb, #1e242e 78%, #f6f3ee);
+  --color-ink-mute: color-mix(in srgb, #1e242e 68%, #f6f3ee); /* 5.19:1 on Surface, 4.54:1 on Plaster */
+  --color-line: color-mix(in srgb, #1e242e 15%, #f6f3ee);
+  --color-line-dark: color-mix(in srgb, #ece9e4 18%, #1a212c); /* hairlines ON the dark bands */
+  --color-plaster-deep: #e2dcd2; /* behind images while they load */
+  --color-plaster-soft: color-mix(in srgb, #ece9e4 74%, #1a212c); /* secondary text on the dark bands */
 
   --font-sans: var(--font-archivo), "Archivo", ui-sans-serif, system-ui, sans-serif;
 
@@ -87,9 +97,9 @@
   body {
     background-color: var(--color-surface);
     background-image:
-      radial-gradient(75% 55% at 10% -5%, color-mix(in srgb, var(--color-flame) 20%, transparent), transparent 62%),
-      radial-gradient(55% 45% at 92% 18%, color-mix(in srgb, var(--color-water) 13%, transparent), transparent 66%),
-      radial-gradient(70% 50% at 60% 108%, color-mix(in srgb, var(--color-flame) 12%, transparent), transparent 68%);
+      radial-gradient(75% 55% at 10% -5%, color-mix(in srgb, var(--color-flame) 9%, transparent), transparent 62%),
+      radial-gradient(55% 45% at 92% 18%, color-mix(in srgb, var(--color-water) 5%, transparent), transparent 66%),
+      radial-gradient(70% 50% at 60% 108%, color-mix(in srgb, var(--color-flame) 6%, transparent), transparent 68%);
     background-attachment: fixed;
     color: var(--color-ink);
     font-family: var(--font-sans);
@@ -156,8 +166,8 @@
     inset: 0;
     z-index: 200;
     pointer-events: none;
-    /* Lower than it was on white: grain shows more against dark */
-    opacity: 0.03;
+    /* Paper needs more tooth than a dark ground did, or the light bands go flat */
+    opacity: 0.055;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
@@ -661,6 +671,35 @@
     opacity: 0;
   }
 
+  /* ---- Reading progress ----
+     A flame line across the top of the header that fills as the page scrolls. It is driven
+     by a scroll-driven CSS animation, so there is no scroll listener and nothing to keep in
+     sync; browsers without support simply never show it, which is why it starts hidden. */
+  .scroll-progress {
+    display: none;
+  }
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 51;
+      height: 3px;
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      background: linear-gradient(90deg, var(--color-flame), #ffb066);
+      animation: scroll-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+  @keyframes scroll-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
   /* ---- CTA band heat shimmer (H11) ---- */
   .cta-band {
     position: relative;
@@ -794,10 +833,18 @@
       radial-gradient(circle at var(--fx) var(--fy), color-mix(in srgb, var(--color-flame) 32%, transparent), transparent 28%),
       color-mix(in srgb, var(--color-cast-iron) 88%, var(--color-ember));
   }
+  /*
+   * The hero stays Cast Iron while the content bands below it are light. It carries its own
+   * text colours rather than inheriting the page's, because `--color-ink` is now dark.
+   */
   .hero__lit {
     position: relative;
     z-index: 1;
-    background: var(--color-surface);
+    background: var(--color-cast-iron);
+    color: var(--color-white);
+  }
+  .hero__lit .lead {
+    color: var(--color-plaster-soft);
   }
   /* Warm ambient light in the top-left, as though the pilot flame is lighting the room.
      Monochrome and inside the palette, so it reads as depth rather than decoration. */
@@ -861,6 +908,37 @@
       0 1px 0 rgb(255 255 255 / 10%) inset,
       0 2px 6px rgb(0 0 0 / 30%),
       0 30px 60px -28px rgb(0 0 0 / 85%);
+  }
+  /*
+   * The hero photograph is never quite still: a very slow drift across 28s keeps the page
+   * alive before the visitor has scrolled at all, and on browsers with scroll-driven
+   * animations it also shifts against the scroll. Both are transform-only, so they run on
+   * the compositor and cost nothing in layout.
+   */
+  .hero__img {
+    transform: scale(1.08);
+    animation: hero-drift 28s ease-in-out infinite alternate;
+  }
+  /* The whole media group, so the price tag travels with the photo it sits on */
+  @supports (animation-timeline: view()) {
+    .hero__media {
+      animation: hero-parallax linear both;
+      animation-timeline: view(block);
+      animation-range: entry 20% exit 100%;
+    }
+  }
+  @keyframes hero-drift {
+    from {
+      transform: scale(1.08) translate3d(-1.2%, -0.8%, 0);
+    }
+    to {
+      transform: scale(1.08) translate3d(1.2%, 0.8%, 0);
+    }
+  }
+  @keyframes hero-parallax {
+    to {
+      transform: translate3d(0, -5%, 0);
+    }
   }
   /*
    * Warms the photograph towards the palette and darkens its lower third, so the price tag
@@ -1101,14 +1179,14 @@
   .section--plaster,
   .section--dark {
     background-image:
-      linear-gradient(to right, rgb(255 255 255 / 4.5%) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(255 255 255 / 4.5%) 1px, transparent 1px),
-      linear-gradient(180deg, rgb(255 255 255 / 7%), transparent 38%);
+      linear-gradient(to right, rgb(30 36 46 / 4%) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(30 36 46 / 4%) 1px, transparent 1px),
+      linear-gradient(180deg, rgb(255 255 255 / 55%), transparent 38%);
     background-size:
       68px 68px,
       68px 68px,
       100% 100%;
-    border-top: 1px solid rgb(255 255 255 / 8%);
+    border-top: 1px solid rgb(30 36 46 / 8%);
   }
   /*
    * The three bands are opaque and a full tonal step apart. They used to be semi-transparent
@@ -1122,8 +1200,28 @@
   .section--plaster {
     background-color: var(--color-surface-2);
   }
+  /*
+   * The one dark band between the hero and the closing call to action. Its grid and top
+   * highlight have to invert — the light bands draw both in ink, which would be invisible
+   * here, and the 55% white highlight would read as a glare across the top of the section.
+   */
   .section--dark {
     background-color: var(--color-cast-iron);
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 4.5%) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 4.5%) 1px, transparent 1px),
+      linear-gradient(180deg, rgb(255 255 255 / 7%), transparent 38%);
+    border-top-color: rgb(255 255 255 / 10%);
+  }
+  /* The staged "reasons light up" effect (F2-H5) reads inverted on the dark band */
+  .section--dark .why__item {
+    color: var(--color-white);
+  }
+  .section--dark .why--staged .why__item {
+    color: var(--color-plaster-soft);
+  }
+  .section--dark .why--staged .why__item.is-lit {
+    color: var(--color-white);
   }
 
   /* ---- Services grid (H3) ---- */
@@ -2676,6 +2774,18 @@
    User-driven transitions (buttons, menu, FAQ) keep short 150ms transitions.
 --------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
+  /* The hero photo stops drifting and stops parallaxing; the progress bar goes entirely,
+     because a bar that tracks the scroll is motion whether or not it is subtle. */
+  .hero__img {
+    animation: none;
+  }
+  .hero__media {
+    animation: none;
+  }
+  .scroll-progress {
+    display: none;
+  }
+
   html.js [data-reveal="pending"] .reveal-word__inner,
   html.js .reveal-group[data-reveal="pending"] {
     transform: none;
