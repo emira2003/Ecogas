@@ -13,6 +13,11 @@ interface RevealProps {
   split?: boolean;
   /** Delay before the reveal starts, in ms */
   delay?: number;
+  /**
+   * For content at the top of a page (a page H1): if JavaScript is slow, CSS reveals it
+   * anyway after ~0.7s so the headline never waits on script.
+   */
+  eager?: boolean;
   /** How much of the element must be visible: 0.2 = 20% (F2-G3) */
   threshold?: number;
   id?: string;
@@ -20,6 +25,14 @@ interface RevealProps {
   style?: CSSProperties;
   children: ReactNode;
 }
+
+/** Flattens JSX children like ["What we do in ", "Wigan"] into one string. */
+const toText = (node: ReactNode): string =>
+  Array.isArray(node)
+    ? node.map(toText).join("")
+    : typeof node === "string" || typeof node === "number"
+      ? String(node)
+      : "";
 
 /**
  * Reveals content once, when it scrolls into view. Headings split into words; anything
@@ -30,12 +43,14 @@ export function Reveal({
   as: Tag = "div",
   split = false,
   delay = 0,
+  eager = false,
   threshold = 0.2,
   id,
   className = "",
   style,
   children,
 }: RevealProps) {
+  const eagerClass = eager ? "reveal--eager" : "";
   const ref = useRef<HTMLElement>(null);
   const [state, setState] = useState<"pending" | "in">("pending");
 
@@ -53,10 +68,9 @@ export function Reveal({
   }, [delay, threshold]);
 
   if (split) {
-    const text = typeof children === "string" ? children : "";
-    const words = text.split(/\s+/).filter(Boolean);
+    const words = toText(children).split(/\s+/).filter(Boolean);
     return (
-      <Tag ref={ref} id={id} data-reveal={state} className={className} style={style}>
+      <Tag ref={ref} id={id} data-reveal={state} className={`${eagerClass} ${className}`.trim()} style={style}>
         {words.map((word, i) => (
           <span key={i}>
             <span className="reveal-word">
@@ -72,7 +86,7 @@ export function Reveal({
   }
 
   return (
-    <Tag ref={ref} id={id} data-reveal={state} className={`reveal-group ${className}`.trim()} style={style}>
+    <Tag ref={ref} id={id} data-reveal={state} className={`reveal-group ${eagerClass} ${className}`.trim()} style={style}>
       {children}
     </Tag>
   );

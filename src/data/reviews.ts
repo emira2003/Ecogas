@@ -26,6 +26,8 @@ export interface Review {
   text: string;
   /** Where the review was left, e.g. "Google" or "Checkatrade". Shown as "via [platform]". */
   platform: string;
+  /** What kind of job it was, so service pages can show relevant reviews. Leave out if unsure. */
+  category?: "boilers" | "heating" | "plumbing" | "bathrooms" | "gas-safety";
   date?: string;
 }
 
@@ -35,6 +37,7 @@ export const reviews: Review[] = [
     name: "Martyn",
     town: "Bolton",
     jobType: "Boiler change",
+    category: "boilers",
     rating: 5,
     text: "Good communication and price. Neat job, did what I asked regarding positioning of the filter.",
     platform: "[REVIEW PLATFORM]",
@@ -44,6 +47,7 @@ export const reviews: Review[] = [
     name: "Robin",
     town: "Stockport",
     jobType: "Boiler relocation and pipe change",
+    category: "boilers",
     rating: 5,
     text: "[review text TODO]",
     platform: "[REVIEW PLATFORM]",

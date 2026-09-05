@@ -565,6 +565,24 @@
     transform: translateY(24px);
   }
 
+  /* Eager reveals (page H1s): CSS lights them after 0.7s even if JavaScript is slow */
+  html.js .reveal--eager[data-reveal="pending"] .reveal-word__inner {
+    animation: hero-word 0.6s var(--ease-out-expo) calc(0.7s + var(--i, 0) * 30ms) both;
+  }
+  html.js .reveal--eager.reveal-group[data-reveal="pending"] {
+    animation: reveal-group-in 0.6s var(--ease-out-expo) 0.7s both;
+  }
+  @keyframes reveal-group-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   /* ---- Trust strip icon draw (H2) ---- */
   .draw-icon :is(path, circle, line, polyline, polygon, rect) {
     transition: stroke-dashoffset 0.6s ease-out;
@@ -1246,6 +1264,181 @@
     text-underline-offset: 0.2em;
   }
 
+  /* =========================================================================
+     SERVICE PAGES
+     ========================================================================= */
+
+  /* ---- Service hero (S1) ---- */
+  .service-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--color-cast-iron);
+    color: var(--color-white);
+  }
+  .service-hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .service-hero__shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-cast-iron) 94%, transparent) 0%,
+      color-mix(in srgb, var(--color-cast-iron) 82%, transparent) 50%,
+      color-mix(in srgb, var(--color-cast-iron) 45%, transparent) 100%
+    );
+  }
+  @media (width < 64rem) {
+    .service-hero__shade {
+      background: color-mix(in srgb, var(--color-cast-iron) 88%, transparent);
+    }
+  }
+
+  /* PriceTag stamps in on load (S1). Only with JS; still with reduced motion. */
+  html.js .stamp-in {
+    animation: hero-stamp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.55s both;
+  }
+
+  /* Faster icon draw for checklists (S2: 400ms, 60ms stagger) */
+  .draw-fast .draw-icon :is(path, circle, line, polyline, polygon, rect) {
+    transition-duration: 0.4s;
+  }
+
+  /* ---- How the day goes (S3) ---- */
+  .timeline {
+    --progress: 1;
+  }
+  .timeline__viewport {
+    position: relative;
+  }
+  .timeline__track {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  /* The connecting line: ::before is the grey rail, ::after the orange fill that draws along it */
+  .timeline__track::before,
+  .timeline__track::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+  .timeline__track::before {
+    background: var(--color-line);
+  }
+  .timeline__track::after {
+    background: var(--color-flame);
+    transform-origin: left top;
+  }
+  .stage {
+    position: relative;
+  }
+  .stage__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--color-cast-iron);
+    color: var(--color-white);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    flex: none;
+  }
+  .stage__art {
+    width: 6rem;
+    height: 6rem;
+    margin: 1rem 0 0.75rem;
+  }
+  .stage__art svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .stage__art path {
+    transition: stroke-dashoffset 0.8s ease-out;
+    transition-delay: calc(var(--j, 0) * 120ms);
+  }
+  /* Hidden strokes only once the motion controller is active */
+  .timeline[data-motion] .stage:not(.is-on) .stage__art path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .timeline[data-motion] .stage.is-on .stage__art path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .timeline[data-motion] .stage.is-on .stage__num {
+    background: var(--color-flame);
+    color: var(--color-ink);
+  }
+
+  /* Mobile / tablet: vertical timeline, line draws downward */
+  @media (width < 64rem) {
+    .timeline__track {
+      display: grid;
+      gap: 2.5rem;
+      padding-left: 3.25rem;
+    }
+    .timeline__track::before,
+    .timeline__track::after {
+      left: calc(1.125rem - 1.5px);
+      top: 1.125rem;
+      bottom: 1.125rem;
+      width: 3px;
+    }
+    .timeline__track::after {
+      transform: scaleY(var(--progress));
+    }
+    .stage__num {
+      position: absolute;
+      left: -3.25rem;
+      top: 0;
+    }
+  }
+
+  /* Desktop: horizontal track that scrolls sideways while the section is pinned */
+  @media (width >= 64rem) {
+    .timeline__viewport {
+      overflow: hidden;
+    }
+    .timeline__track {
+      display: flex;
+      gap: 2.5rem;
+      width: max-content;
+      padding: 0 0 1rem;
+    }
+    .stage {
+      width: 21rem;
+      flex: none;
+    }
+    .stage__head {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .timeline__track::before,
+    .timeline__track::after {
+      left: 0;
+      right: 0;
+      top: calc(1.125rem - 1.5px);
+      height: 3px;
+    }
+    .timeline__track::after {
+      transform: scaleX(var(--progress));
+    }
+  }
+
   /* ---- Page transition (G2) ---- */
   ::view-transition-old(root),
   ::view-transition-new(root) {
@@ -1312,6 +1505,17 @@
   .tile__media img,
   .why--pinned .why__item {
     transition: none;
+  }
+  html.js .stamp-in {
+    animation: none;
+  }
+  html.js .reveal--eager[data-reveal="pending"] .reveal-word__inner,
+  html.js .reveal--eager.reveal-group[data-reveal="pending"] {
+    animation: none;
+  }
+  .timeline[data-motion] .stage:not(.is-on) .stage__art path {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
   }
   .map__line {
     stroke-dashoffset: 0;

@@ -225,3 +225,8 @@ _None yet. Ideas that come up during the build go here, not into the code._
   - **LCP rule as built:** the intro plays only if the hero image has decoded within **700ms** of first paint (the plan says 900ms; 700ms was chosen so the "H1 readable within 700ms" rule holds on the slow path too). If not, the hero shows fully lit at once. A CSS-only safety net also lights the hero from 700ms if JavaScript is slow, so the headline never depends on script.
   - On desktop the text column is indented 60px so the flame burns in the margin to the left of the headline; on mobile it sits above the headline.
   - The pilot flame is one canvas loop with pre-rendered particle sprites; pixel ratio capped at 1.5; ~30fps on touch devices; pauses off screen and in hidden tabs.
+- **Phase 3** — services and areas.
+  - Service hero (S1): full-bleed photo with a charcoal shade on the left so white text stays readable over any photo; the PriceTag is the reversed (plaster) tone on the dark ground; H1 uses an "eager" reveal that lights itself from CSS after 0.7s if script is slow.
+  - "How the day goes" (S3): a numbered `<ol>` (a real sequence). The connecting line is the list's own `::before`/`::after`, filled by a `--progress` variable set from ScrollTrigger, so only a transform animates. Desktop pins the section and slides the track sideways; below 1024px it is vertical and the line draws downward. Each stage drawing is stroke paths with `pathLength=1` so CSS draws them in.
+  - Page H1s on the services and areas overview pages sit on a plaster band rather than a photo, keeping the photo-hero treatment special to the seven service pages.
+  - The boiler page title is the plan's exact wording and is 61 characters, one over the guideline. Kept as written in the plan.

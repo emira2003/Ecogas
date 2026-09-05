@@ -9,7 +9,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 | 0 | Project setup | Done |
 | 1 | Design system, shell and motion foundation | Done |
 | 2 | Home page | Done |
-| 3 | Services and Areas | Not started |
+| 3 | Services and Areas | Done |
 | 4 | Instant Estimate tool | Not started |
 | 5 | Enquiry form and email | Not started |
 | 6 | Remaining pages | Not started |
@@ -37,6 +37,8 @@ Everything still needed before launch, in one place. Updated at the end of every
 - [ ] Approval (or not) for the 404 alien plumber → `src/data/site.config.ts` (`alien404`)
 - [ ] Map coordinates for the address (for Google structured data) → `business.ts` (`geo`)
 - [ ] Confirm: does the £1,999 offer *always* include the 10-year warranty? (FAQ 3 and "Why choose us")
+- [ ] Service page wording to check (`src/data/services.ts`, search for "CLIENT TO CONFIRM"): whether prices include VAT; bathrooms — are tiling, electrics and decorating arranged by Eco Gas or by the customer, and can Eco Gas supply the suite; plumbing — is there a call-out fee.
+- [ ] Service and area copy was written by us from the facts in PLAN.md. The client should read every service page and every area page once and correct anything that isn't how they actually work (e.g. "we cover the floors", "we plan Liverpool jobs in advance", typical job durations).
 - [ ] Confirm "How we work" step 4 on the About page: "Warranty registered"
 
 ## Needed from Xhezmi
