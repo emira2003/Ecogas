@@ -163,14 +163,23 @@ export const loadGsap = () => {
  * Start Lenis smooth scrolling. Returns a cleanup function.
  * Does nothing (and returns a no-op) on touch devices, with reduced motion,
  * or when `siteConfig.smoothScroll` is off.
+ *
+ * Only ever one instance. React mounts effects twice in development, and the import below is
+ * async, so two calls can be in flight at once. Whichever finishes first owns the scroller;
+ * the other stands down, and a cleanup only tears down the instance it actually created.
+ * Getting this wrong kills scrolling completely: Lenis swallows the wheel event, and if its
+ * animation loop has been cancelled by the other instance's cleanup, nothing moves.
  */
 export const startSmoothScroll = async (): Promise<() => void> => {
   if (!siteConfig.smoothScroll || !isPointerDevice() || prefersReducedMotion()) {
     return () => {};
   }
   const { default: Lenis } = await import("lenis");
-  const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, autoRaf: false });
 
+  // Another call won the race while this one was importing
+  if (lenisInstance) return () => {};
+
+  const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, autoRaf: false });
   lenisInstance = lenis;
   lenisOnGsapTicker = false;
   // Run on our own loop for now; syncLenisWithGsap moves it onto GSAP's ticker if GSAP appears
@@ -178,6 +187,8 @@ export const startSmoothScroll = async (): Promise<() => void> => {
   syncLenisWithGsap();
 
   return () => {
+    // A later instance owns the scroller now, so leave its loop alone
+    if (lenisInstance !== lenis) return;
     cancelAnimationFrame(lenisRafId);
     if (lenisOnGsapTicker && gsapPromise) gsapPromise.then(({ gsap }) => gsap.ticker.remove(gsapTick));
     lenisOnGsapTicker = false;

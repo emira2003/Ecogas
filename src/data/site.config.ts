@@ -14,8 +14,18 @@ export const siteConfig = {
   /** The "Ignition" hero intro on the home page. Plays once per visit session. */
   heroIntro: true,
 
-  /** Smooth scrolling (Lenis) on desktop / mouse devices only. Never used on touch screens. */
-  smoothScroll: true,
+  /**
+   * Smooth scrolling (Lenis) on desktop / mouse devices only. Never used on touch screens.
+   *
+   * OFF by default. Smooth scrolling takes the mouse wheel away from the browser and animates
+   * the page itself, so if anything goes wrong with it the page stops scrolling completely —
+   * which is exactly what happened during the build. With it off, the browser does the
+   * scrolling and that can never fail.
+   *
+   * The known bug behind that failure is fixed. Set this to `true` to try it again, then check
+   * the wheel, a trackpad, the mobile menu and the photo lightbox before keeping it on.
+   */
+  smoothScroll: false,
 
   /** The scrolling reviews marquee on the home page. `false` shows a static grid instead. */
   marquee: true,
