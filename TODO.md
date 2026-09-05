@@ -15,7 +15,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 | 6 | Remaining pages | Done |
 | 7 | Motion polish and performance budget | Done — Lighthouse numbers in DESIGN.md. Re-run once real photos replace the tiny placeholders. |
 | 8 | SEO | Done |
-| 9 | Quality | Not started |
+| 9 | Quality | Done — checks recorded in DESIGN.md. The client-supplied items below are what remain before launch. |
 | 10 | Handover | Not started |
 
 ## Needed from the client (mirrors Part J of the plan)
@@ -51,7 +51,8 @@ Everything still needed before launch, in one place. Updated at the end of every
 - [ ] Decide whether to switch the easter egg on (`easterEgg` in `src/data/site.config.ts`): seven mouse clicks on the hero's pilot flame send the alien across the screen in a boiler-shaped UFO.
 
 - [ ] **Logo file** — `logo-ecogas.png` is still not in the project folder. The header and footer show a plain "Eco Gas" wordmark in the site font until it arrives (`src/components/layout/Logo.tsx`). Add it to the project root (and the flyer as `flyer-ecogas.jpg` for reference).
-- [ ] Remove the component showcase page (`src/app/showcase`) in Phase 9.
+- [x] Component showcase page removed (Phase 9).
+- [ ] The WhatsApp button links to `wa.me/[WHATSAPP NUMBER]` and the call buttons to `tel:[PHONE_TEL]` until the numbers are in `.env.local` — they are the only links on the site that don't work yet.
 - [ ] Web3Forms access key (create at web3forms.com with the client's email) → `.env.local` (`WEB3FORMS_ACCESS_KEY`). Then send one test enquiry from `/contact` and one from `/estimate` and check both emails arrive, with the jobs and total listed in the second one. Until the key is set, the form shows "Email sending isn't switched on yet" with the phone number.
 - [ ] Optional: a site or template he likes as a layout reference (PLAN.md Part F)
 
