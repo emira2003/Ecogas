@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { business, siteUrl } from "@/data/business";
+import { services } from "@/data/services";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { Header } from "@/components/layout/Header";
+import { serviceLinksFrom } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
 import { PageTransition } from "@/components/layout/PageTransition";
@@ -43,15 +46,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en-GB" className={archivo.variable} suppressHydrationWarning>
       <body className="flex min-h-dvh flex-col">
         {/* Marks that JavaScript is running, so motion can hide things safely (F2 rule 1),
-            and whether the hero intro has already played this session (F2-H1). */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "document.documentElement.classList.add('js');try{if(sessionStorage.getItem('eg-intro'))document.documentElement.classList.add('intro-seen')}catch(e){}",
-          }}
-        />
+            and whether the hero intro has already played this session (F2-H1).
+            beforeInteractive = injected into the initial HTML, runs before first paint. */}
+        <Script id="eg-js-flags" strategy="beforeInteractive">
+          {"document.documentElement.classList.add('js');try{if(sessionStorage.getItem('eg-intro'))document.documentElement.classList.add('intro-seen')}catch(e){}"}
+        </Script>
         <SkipLink />
-        <Header />
+        <Header serviceLinks={serviceLinksFrom(services)} />
         {/* Space for the fixed header: 60px, 72px from 1280px */}
         <div className="h-[60px] xl:h-[72px]" aria-hidden="true" />
         <main id="main" className="flex-1">
@@ -60,7 +61,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <StickyMobileBar />
         <SmoothScroll />
-        <Analytics />
+        {/* Vercel's cookie-free analytics: only on Vercel, where its script exists (avoids a 404 locally) */}
+        {process.env.VERCEL ? <Analytics /> : null}
       </body>
     </html>
   );

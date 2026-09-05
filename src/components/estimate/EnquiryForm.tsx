@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Phone } from "lucide-react";
 import { useId, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { business, telHref } from "@/data/business";
-import { services } from "@/data/services";
 import { BEST_TIMES, enquirySchema, fieldErrors, type EnquiryInput } from "@/lib/validation";
 import { Button } from "@/components/ui/Button";
 
@@ -22,20 +21,21 @@ interface EnquiryFormProps {
   page: string;
   /** Prompt shown above the message box on the "Something else" route */
   messagePrompt?: string;
+  /** Names for the "Service needed" dropdown (contact mode), passed in from the server */
+  serviceNames?: string[];
   className?: string;
 }
 
 type Status = "idle" | "sending" | "success" | "error";
-
-const SERVICE_OPTIONS = [...services.map((s) => s.name), "Something else"];
 
 /**
  * The enquiry form (PLAN.md D5). Floating labels (F2-C1), inline errors next to the field
  * that has the problem, the first error focused, a progress fill on the button while sending
  * (F2-E5), a thank-you with one warm glow pulse on success, and the form kept on error.
  */
-export function EnquiryForm({ mode, estimate, page, messagePrompt, className = "" }: EnquiryFormProps) {
+export function EnquiryForm({ mode, estimate, page, messagePrompt, serviceNames = [], className = "" }: EnquiryFormProps) {
   const id = useId();
+  const serviceOptions = [...serviceNames, "Something else"];
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -146,7 +146,7 @@ export function EnquiryForm({ mode, estimate, page, messagePrompt, className = "
           <Field id={`${id}-service`} label="Service needed" error={errors.service} errorId={describedBy("service")} select>
             <select id={`${id}-service`} name="service" defaultValue="" aria-describedby={describedBy("service")}>
               <option value="">Choose one…</option>
-              {SERVICE_OPTIONS.map((name) => (
+              {serviceOptions.map((name) => (
                 <option key={name} value={name}>
                   {name}
                 </option>

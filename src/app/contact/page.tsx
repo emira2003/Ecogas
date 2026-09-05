@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { business, telHref, whatsappHref } from "@/data/business";
+import { services } from "@/data/services";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
@@ -75,7 +76,7 @@ export default function ContactPage() {
           <div className="lg:col-span-7">
             <h2 className="h3">Send an enquiry</h2>
             <p className="mt-2 text-ink-soft">Tell us what you need and we’ll call you back.</p>
-            <EnquiryForm mode="contact" page="/contact" className="mt-6" />
+            <EnquiryForm mode="contact" page="/contact" className="mt-6" serviceNames={services.map((s) => s.name)} />
           </div>
         </div>
       </Section>

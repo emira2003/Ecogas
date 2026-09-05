@@ -6,12 +6,13 @@ import { useEffect, useRef, type CSSProperties, type KeyboardEvent } from "react
 import { business, telHref } from "@/data/business";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "./Logo";
-import { mainNav, serviceLinks } from "./nav";
+import { mainNav, type NavLink } from "./nav";
 
 interface MobileNavProps {
   id: string;
   open: boolean;
   onClose: () => void;
+  serviceLinks: NavLink[];
 }
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -20,7 +21,7 @@ const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1
  * Full-screen mobile menu (PLAN.md D2, motion F2-G7): slides down, links stagger in,
  * the two buttons rise last. Body scroll locked, focus trapped, Escape closes.
  */
-export function MobileNav({ id, open, onClose }: MobileNavProps) {
+export function MobileNav({ id, open, onClose, serviceLinks }: MobileNavProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const openerRef = useRef<Element | null>(null);

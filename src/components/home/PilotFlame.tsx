@@ -1,7 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type PointerEvent as ReactPointerEvent } from "react";
+import { siteConfig } from "@/data/site.config";
 import { isPointerDevice, prefersReducedMotion, useReducedMotion } from "@/lib/motion";
+import { UFO_EVENT } from "@/components/fun/UfoFlyby";
+
+/** Easter egg: seven mouse clicks on the flame within ten seconds */
+const EGG_CLICKS = 7;
+const EGG_WINDOW_MS = 10_000;
 
 interface Particle {
   x: number;
@@ -38,7 +44,19 @@ const makeSprite = (rgb: string) => {
  */
 export function PilotFlame({ className = "" }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const clicks = useRef<number[]>([]);
   const reduced = useReducedMotion();
+
+  // Easter egg counter: only real mouse clicks count, never touch, never scrolling
+  const onPointerUp = (e: ReactPointerEvent<HTMLCanvasElement>) => {
+    if (!siteConfig.easterEgg || e.pointerType !== "mouse") return;
+    const now = Date.now();
+    clicks.current = [...clicks.current.filter((t) => now - t < EGG_WINDOW_MS), now];
+    if (clicks.current.length >= EGG_CLICKS) {
+      clicks.current = [];
+      window.dispatchEvent(new Event(UFO_EVENT));
+    }
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -147,7 +165,14 @@ export function PilotFlame({ className = "" }: { className?: string }) {
   }, []);
 
   if (reduced) return <StaticFlame className={className} />;
-  return <canvas ref={canvasRef} className={`pilot-flame ${className}`.trim()} aria-hidden="true" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className={`pilot-flame ${siteConfig.easterEgg ? "pilot-flame--clickable" : ""} ${className}`.trim()}
+      aria-hidden="true"
+      onPointerUp={onPointerUp}
+    />
+  );
 }
 
 /** Still flame for reduced motion — same colours, no movement. */

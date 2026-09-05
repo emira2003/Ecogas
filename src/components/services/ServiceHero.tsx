@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Phone } from "lucide-react";
+import { ViewTransition } from "react";
 import { business, telHref } from "@/data/business";
 import type { Service } from "@/data/services";
 import { Button } from "@/components/ui/Button";
@@ -23,7 +24,10 @@ export function ServiceHero({ service }: { service: Service }) {
   return (
     <section className="service-hero" aria-labelledby="service-title">
       <div className="service-hero__media">
-        <Image src={service.heroImage.src} alt={service.heroImage.alt} fill priority sizes="100vw" className="object-cover" />
+        {/* Shares its identity with the tile photo, so the tile grows into this hero (F2-S1) */}
+        <ViewTransition name={`service-photo-${service.slug}`} share="morph" default="none">
+          <Image src={service.heroImage.src} alt={service.heroImage.alt} fill priority sizes="100vw" className="object-cover" />
+        </ViewTransition>
       </div>
       <div className="service-hero__shade" aria-hidden="true" />
 

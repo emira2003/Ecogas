@@ -192,3 +192,9 @@ export const areas: Area[] = [
 
 /** Find an area by its URL slug. */
 export const findArea = (slug: string): Area | undefined => areas.find((a) => a.slug === slug);
+
+/** Only the fields the coverage map needs, so the page copy never reaches the browser bundle. */
+export type MapTown = Pick<Area, "slug" | "town" | "postcodeArea" | "isBase" | "map">;
+
+export const mapTowns = (): MapTown[] =>
+  areas.map(({ slug, town, postcodeArea, isBase, map }) => ({ slug, town, postcodeArea, isBase, map }));

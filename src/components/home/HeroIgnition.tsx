@@ -5,18 +5,19 @@ import { siteConfig } from "@/data/site.config";
 import { isPointerDevice, prefersReducedMotion } from "@/lib/motion";
 
 const INTRO_KEY = "eg-intro";
-/** The intro only plays if the hero image has decoded this soon after first paint (F2-H1 LCP rule). */
-const DECODE_BUDGET_MS = 700;
-/** Length of the whole choreography, after which the hero is simply "lit". */
-const INTRO_LENGTH_MS = 1600;
+/** The CSS choreography starts spreading light this long after first paint (F2-H1: 300ms). */
+const LIGHT_STARTS_MS = 300;
+/** Length of the whole choreography from first paint, after which the hero is simply "lit". */
+const INTRO_LENGTH_MS = 1700;
 
 /**
- * Controls the Ignition hero (F2-H1). The section starts as data-intro="pending"
- * (dim, only once JavaScript is running). This component decides, once, whether to
- * play the intro ("play") or skip straight to the finished state ("lit"):
- *  - skip if the intro is switched off, reduced motion is on, or it already played this session
- *  - skip if the hero image hasn't decoded within the budget after first paint
- * It also drives the faint warm glow that follows the pointer on desktop.
+ * Controls the Ignition hero (F2-H1). The choreography itself is CSS, running from first
+ * paint (see globals.css), so it never waits for JavaScript. This component:
+ *  - skips it ("lit") when the intro is off, reduced motion is on, or it already played this session
+ *  - LCP rule: if it runs before the light starts spreading and the hero image has not decoded
+ *    by then, it skips the intro so nothing waits on the photo
+ *  - freezes the finished state ("lit") once the choreography is over
+ *  - drives the faint warm glow that follows the pointer on desktop
  */
 export function HeroIgnition({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLElement>(null);
@@ -52,7 +53,7 @@ export function HeroIgnition({ children, className = "" }: { children: ReactNode
 
       const firstPaint =
         performance.getEntriesByName("first-contentful-paint")[0]?.startTime ?? performance.now();
-      const budget = DECODE_BUDGET_MS - (performance.now() - firstPaint);
+      const sincePaint = performance.now() - firstPaint;
       const img = hero.querySelector<HTMLImageElement>("img.hero__img");
 
       let settled = false;
@@ -60,7 +61,7 @@ export function HeroIgnition({ children, className = "" }: { children: ReactNode
         if (settled) return;
         settled = true;
         setIntro("play");
-        timers.push(window.setTimeout(() => setIntro("lit"), INTRO_LENGTH_MS));
+        timers.push(window.setTimeout(() => setIntro("lit"), Math.max(0, INTRO_LENGTH_MS - sincePaint)));
       };
       const skip = () => {
         if (settled) return;
@@ -68,13 +69,13 @@ export function HeroIgnition({ children, className = "" }: { children: ReactNode
         setIntro("lit");
       };
 
-      if (budget <= 0 || !img) skip();
-      else {
-        timers.push(window.setTimeout(skip, budget));
-        img
-          .decode()
-          .then(play)
-          .catch(skip);
+      if (sincePaint < LIGHT_STARTS_MS && img) {
+        // Early enough to apply the LCP rule: play only if the photo is ready before the light starts
+        timers.push(window.setTimeout(skip, LIGHT_STARTS_MS - sincePaint));
+        img.decode().then(play).catch(skip);
+      } else {
+        // The CSS choreography is already under way — let it finish, then freeze the lit state
+        play();
       }
       markSeen();
     }

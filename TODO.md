@@ -13,7 +13,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 | 4 | Instant Estimate tool | Done |
 | 5 | Enquiry form and email | Built and tested locally. **Live email test still to do** — needs `WEB3FORMS_ACCESS_KEY` in `.env.local` (see below) |
 | 6 | Remaining pages | Done |
-| 7 | Motion polish and performance budget | Not started |
+| 7 | Motion polish and performance budget | Done — Lighthouse numbers in DESIGN.md. Re-run once real photos replace the tiny placeholders. |
 | 8 | SEO | Not started |
 | 9 | Quality | Not started |
 | 10 | Handover | Not started |
@@ -44,6 +44,8 @@ Everything still needed before launch, in one place. Updated at the end of every
 - [ ] Confirm "How we work" step 4 on the About page: "Warranty registered"
 
 ## Needed from Xhezmi
+
+- [ ] Decide whether to switch the easter egg on (`easterEgg` in `src/data/site.config.ts`): seven mouse clicks on the hero's pilot flame send the alien across the screen in a boiler-shaped UFO.
 
 - [ ] **Logo file** — `logo-ecogas.png` is still not in the project folder. The header and footer show a plain "Eco Gas" wordmark in the site font until it arrives (`src/components/layout/Logo.tsx`). Add it to the project root (and the flyer as `flyer-ecogas.jpg` for reference).
 - [ ] Remove the component showcase page (`src/app/showcase`) in Phase 9.

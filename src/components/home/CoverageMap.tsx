@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { areas, type AreaSlug } from "@/data/areas";
+import type { AreaSlug, MapTown } from "@/data/areas";
 import { onceInView, pauseWhenOffscreen } from "@/lib/motion";
 
 /** Where each town's label sits relative to its marker, so none overlap. */
@@ -30,7 +30,7 @@ const STAGGER_MS = 110;
  * town name highlights its marker and vice versa; clicking either opens the area page.
  * Still with reduced motion.
  */
-export function CoverageMap() {
+export function CoverageMap({ areas }: { areas: MapTown[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   const [hot, setHot] = useState<AreaSlug | null>(null);

@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { business, telHref } from "@/data/business";
 import { Button } from "@/components/ui/Button";
 import { PriceTag } from "@/components/ui/PriceTag";
+import { UfoFlyby } from "@/components/fun/UfoFlyby";
 import { HeroIgnition } from "./HeroIgnition";
 import { HeroQuickStart } from "./HeroQuickStart";
 import { PilotFlame } from "./PilotFlame";
@@ -97,6 +98,7 @@ export function Hero() {
       </div>
 
       <div className="hero__glow" aria-hidden="true" />
+      <UfoFlyby />
     </HeroIgnition>
   );
 }

@@ -34,8 +34,10 @@ interface WizardState {
 type Phase = "idle" | "out" | "in";
 type Direction = "forward" | "back";
 
-/** Restore from this session, then let a ?cat= link override the category (PLAN.md D4 rules). */
-const initialState = (): WizardState => {
+const FRESH: WizardState = { step: 1, category: null, selections: {}, somethingElse: false };
+
+/** Restore from this session, then let a ?cat= link override the category (PLAN.md D4 rules). Browser only. */
+const restoredState = (): WizardState => {
   let saved: Partial<WizardState> = {};
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
@@ -58,19 +60,36 @@ const initialState = (): WizardState => {
 };
 
 export function EstimateWizardInner() {
-  const [state, setState] = useState<WizardState>(initialState);
+  // Step 1 renders on the server; saved progress / ?cat= is applied once running in the browser
+  const [state, setState] = useState<WizardState>(FRESH);
   const [shown, setShown] = useState<{ step: Step; phase: Phase; dir: Direction }>({
-    step: state.step,
+    step: 1,
     phase: "idle",
     dir: "forward",
   });
   const [showForm, setShowForm] = useState(false);
+  const [restored, setRestored] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
-  const focusedStep = useRef<Step>(state.step);
+  const focusedStep = useRef<Step>(1);
+
+  // Restore saved progress or a deep link (reads storage now, applies right after this render)
+  useEffect(() => {
+    const saved = restoredState();
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (cancelled) return;
+      setState(saved);
+      setRestored(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Remember everything for the session and keep ?cat= in the URL in step with the choice
   useEffect(() => {
+    if (!restored) return;
     try {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {
@@ -80,7 +99,7 @@ export function EstimateWizardInner() {
     if (state.category) url.searchParams.set("cat", state.category);
     else url.searchParams.delete("cat");
     if (url.href !== window.location.href) window.history.replaceState(window.history.state, "", url);
-  }, [state]);
+  }, [state, restored]);
 
   // Step change: current panel slides out, the next slides in (F2-E2)
   useEffect(() => {

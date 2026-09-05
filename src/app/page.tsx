@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { mapTowns } from "@/data/areas";
 import { business, isPlaceholder } from "@/data/business";
 import { homeFaqs } from "@/data/faqs";
 import { Button } from "@/components/ui/Button";
@@ -89,7 +90,7 @@ export default function HomePage() {
         </Reveal>
         <p className="lead mt-4 max-w-2xl text-ink-soft">{business.coverageSentence}</p>
         <div className="mt-10">
-          <CoverageMap />
+          <CoverageMap areas={mapTowns()} />
         </div>
       </Section>
 

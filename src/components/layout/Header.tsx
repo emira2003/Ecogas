@@ -8,14 +8,19 @@ import { business, telHref } from "@/data/business";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
-import { mainNav, serviceLinks } from "./nav";
+import { mainNav, type NavLink } from "./nav";
+
+interface HeaderProps {
+  /** The seven service links, built on the server so the data file never reaches the browser */
+  serviceLinks: NavLink[];
+}
 
 /**
  * Cast Iron header bar (PLAN.md D2): logo, nav with a Services dropdown, phone and the
  * primary estimate button. Sticky, shrinks slightly once the page has scrolled.
  * Below 1280px it becomes logo + phone icon + hamburger with a full-screen menu.
  */
-export function Header() {
+export function Header({ serviceLinks }: HeaderProps) {
   const pathname = usePathname();
   const [shrunk, setShrunk] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -157,7 +162,7 @@ export function Header() {
         </div>
       </header>
 
-      <MobileNav id={mobileNavId} open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <MobileNav id={mobileNavId} open={menuOpen} onClose={() => setMenuOpen(false)} serviceLinks={serviceLinks} />
     </>
   );
 }

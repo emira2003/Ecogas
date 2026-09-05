@@ -1,10 +1,15 @@
 import Link from "next/link";
 import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { areas } from "@/data/areas";
 import { business, telHref, whatsappHref } from "@/data/business";
+import { services } from "@/data/services";
 import { Logo } from "./Logo";
-import { areaLinks, serviceLinks } from "./nav";
+import { areaLinksFrom, serviceLinksFrom } from "./nav";
 
-const linkClass = "text-plaster-soft no-underline hover:text-flame hover:underline";
+const serviceLinks = serviceLinksFrom(services);
+const areaLinks = areaLinksFrom(areas);
+
+const linkClass = "inline-block py-1 text-plaster-soft no-underline hover:text-flame hover:underline";
 
 /**
  * Four-column footer (PLAN.md D2). The address, phone and email come from business.ts

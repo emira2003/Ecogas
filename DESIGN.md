@@ -87,7 +87,7 @@ Icons: lucide, **1.75px stroke**, never inside coloured circles. Icons sit direc
    ╰──────────────────────────────╯      cut into the left edge (mask, scales with the tag)
 ```
 
-- Orange (Flame) tag with Ink text on light backgrounds. **Reversed** on dark: Plaster tag with Ember text.
+- Orange (Flame) tag with Ink text on light backgrounds. **Reversed** on dark: white tag with Ember text (white rather than Plaster, because Ember on Plaster is 4.3:1 and just fails AA).
 - The notch is a 12×12px flame silhouette subtracted from the left edge with a CSS mask, so it works over photos and any background.
 - The amount is 800 weight, tabular numerals. The word "from" is 600, one step smaller. A note after the price ("10-year warranty") is 500 and separated by space, not a middle dot.
 - Sizes: `sm` (estimate rows), `md` (packages, service heroes), `lg` (home hero).
@@ -248,3 +248,24 @@ _None yet. Ideas that come up during the build go here, not into the code._
   - Our Work filter: the address bar (`?filter=`) is the single source of truth, read with `useSyncExternalStore`, so deep links, the browser back button and the buttons all agree.
   - About (A1): the year counts up on load; the "How we work" line draws with a plain scroll listener (no GSAP), horizontal on desktop, vertical on phones; photos reveal as one group.
   - The alien plumber is a 1.5 KB inline SVG in brand colours with a pilot flame on its antenna; it floats on a 6-second loop, still under reduced motion, and is switched off with `alien404`.
+- **Phase 7** — motion polish and performance budget.
+  - **Shared element (G2/S1):** service tile photos and the service hero photo carry the same React `ViewTransition` name (`service-photo-<slug>`, `share="morph"`), so on navigation the tile grows into the hero. Browsers without the View Transitions API simply swap pages.
+  - **Easter egg (off):** seven mouse clicks on the pilot flame within ten seconds fire the boiler-shaped UFO across the screen once. Touch and reduced motion never trigger it; `easterEgg: false` in `site.config.ts` keeps it off until Xhezmi decides.
+  - **Ignition hero timing revised (F2-H1):** the choreography is now driven by CSS from first paint on the plan's own clock (dim 0–300ms, light 300–900ms, words rising with it, PriceTag at ~1s, chips after), so the headline and sub-line never wait for JavaScript. JavaScript keeps the LCP rule (skips the intro if it runs before the light starts and the photo hasn't decoded), and freezes the lit state at the end. Reason: Lighthouse showed the hero sub-line as the largest paint, held back by the earlier 0.7s safety net.
+  - **Client bundle slimmed:** the header/mobile menu now receive their service links as props, the services grid is server-rendered with a small client wrapper for the touch drift, the coverage map receives only town names and positions, and the form uses the small `zod/mini` build. Result: whole-site copy no longer ships to the browser; home page initial JavaScript fell from 202 KB to 111 KB gzipped (budget 220 KB), the contact page from 277 KB to 112 KB.
+  - **Estimate tool:** Step 1 is now server-rendered (it was browser-only), which removed a 0.26 layout shift on `/estimate`; saved progress and `?cat=` links are applied immediately after hydration.
+  - **Contrast:** the muted text colour (`--color-ink-mute`) was 56% Ink and failed AA for small text; it is now 64% (5:1 on white).
+  - **Reduced-motion pass (every page):** the hero shows fully lit with a still SVG flame; word reveals, group reveals and icon draws are instant; the marquee becomes a static grid; map lines are drawn and markers still; CTA band blobs become a still gradient; tiles don't drift; the Why section doesn't pin; the timeline is fully drawn; estimate panels, category icons, tick pulses, summary rows and glow rings are instant; the form's progress fill and thank-you glow are still; the before/after slider does not demonstrate itself; the lightbox opens without the zoom; the alien doesn't float; page crossfades and the shared-element morph are off; Lenis smooth scroll never starts. User-driven transitions (buttons, menu, FAQ, dropdown) keep 150ms.
+  - Vercel Analytics is only rendered on Vercel (`process.env.VERCEL`), so local builds don't request a script that only exists there.
+  - **Budget check results** (Lighthouse 13, production build served locally, mobile preset with simulated slow 4G; targets from PLAN.md Part C):
+
+    | Page | Perf | A11y | Best practices | SEO | LCP | CLS | Initial JS (gzip) |
+    |---|---|---|---|---|---|---|---|
+    | `/` | 95 | 100 | 100 | 100 | 2.9 s | 0 | 195 KB |
+    | `/services/boiler-replacement-bolton` | 96 | 96 → 100 after the tag fix | 100 | 100 | 2.7 s | 0 | 189 KB |
+    | `/estimate` | 97 | 100 | 100 | 100 | 2.6 s | 0 | 206 KB |
+    | `/our-work` | 96 | 100 | 100 | 100 | 2.8 s | 0 | 190 KB |
+    | `/` desktop | 99 | — | — | — | 1.0 s | 0 | — |
+
+    Every target met (mobile Performance ≥ 90, others ≥ 95, desktop ≥ 95, CLS 0, home JS ≤ 220 KB). No moment cost more than 3 Performance points, so nothing from F2 was cut. The remaining LCP time on mobile is the throttled network delivering the CSS and fonts before the hero text can paint, not motion. **These numbers use tiny placeholder images; re-run when the client's photos are in.**
+  - Things checked and left alone: the largest paint element on the home page is the hero sub-line (text), which is what we want; `unused-javascript` and `legacy-javascript` are Next.js framework chunks and polyfills we don't control.

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { mapTowns } from "@/data/areas";
 import { business } from "@/data/business";
 import { CTABand } from "@/components/ui/CTABand";
 import { Reveal } from "@/components/ui/Reveal";
@@ -27,7 +28,7 @@ export default function AreasPage() {
       </Section>
 
       <Section aria-label="Map and list of the towns we cover">
-        <CoverageMap />
+        <CoverageMap areas={mapTowns()} />
       </Section>
 
       <CTABand />

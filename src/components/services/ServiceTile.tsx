@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ViewTransition } from "react";
 import type { Service } from "@/data/services";
 import { formatMoney } from "@/lib/format";
 
@@ -21,13 +22,16 @@ export function ServiceTile({ service, withSummary = false, className = "", size
   return (
     <Link href={`/services/${service.slug}`} className={`tile ${className}`.trim()}>
       <div className="tile__media">
-        <Image
-          src={service.heroImage.src}
-          alt={service.heroImage.alt}
-          fill
-          sizes={sizes ?? "(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"}
-          className="object-cover"
-        />
+        {/* The photo morphs into the service page hero photo on navigation (F2-G2 / S1) */}
+        <ViewTransition name={`service-photo-${service.slug}`} share="morph" default="none">
+          <Image
+            src={service.heroImage.src}
+            alt={service.heroImage.alt}
+            fill
+            sizes={sizes ?? "(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"}
+            className="object-cover"
+          />
+        </ViewTransition>
       </div>
       <p className="mt-3">
         <span className="tile__label">{service.shortName}</span>
