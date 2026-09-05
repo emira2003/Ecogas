@@ -28,10 +28,11 @@
   --color-water: #55a8e3; /* lightened for the same reason */
   --color-meadow: #56c184;
 
-  --color-surface: #16191f;
-  --color-surface-2: #1c2027;
-  --color-raised: #232830;
-  --color-cast-iron: #0f1216;
+  /* Lifted and given a blue-slate cast: flat neutral black felt heavy and dead */
+  --color-surface: #1b212b;
+  --color-surface-2: #222937;
+  --color-raised: #2a313e;
+  --color-cast-iron: #141922;
 
   --color-ink: #ece9e4; /* primary text */
   --color-white: #ffffff; /* light text / the reversed price tag */
@@ -42,12 +43,12 @@
   --color-current: currentColor;
 
   /* Derived mixes, not new colours */
-  --color-ink-soft: color-mix(in srgb, #ece9e4 76%, #16191f);
-  --color-ink-mute: color-mix(in srgb, #ece9e4 56%, #16191f); /* 6.2:1 on the page — passes AA */
-  --color-line: color-mix(in srgb, #ece9e4 15%, #16191f);
-  --color-line-dark: color-mix(in srgb, #ece9e4 18%, #0f1216);
-  --color-plaster-deep: #262c35; /* behind images while they load */
-  --color-plaster-soft: color-mix(in srgb, #ece9e4 74%, #0f1216); /* secondary text on the darkest bands */
+  --color-ink-soft: color-mix(in srgb, #ece9e4 76%, #1b212b);
+  --color-ink-mute: color-mix(in srgb, #ece9e4 58%, #1b212b); /* passes AA on the page */
+  --color-line: color-mix(in srgb, #ece9e4 15%, #1b212b);
+  --color-line-dark: color-mix(in srgb, #ece9e4 18%, #141922);
+  --color-plaster-deep: #2a313e; /* behind images while they load */
+  --color-plaster-soft: color-mix(in srgb, #ece9e4 74%, #141922); /* secondary text on the darkest bands */
 
   --font-sans: var(--font-archivo), "Archivo", ui-sans-serif, system-ui, sans-serif;
 
@@ -77,8 +78,19 @@
     overflow: hidden;
   }
 
+  /*
+   * The page is not a flat colour. A fixed field of warm and cool light sits behind everything,
+   * and the section bands above it are slightly transparent, so light carries from one band to
+   * the next instead of every area being the same dead tone. Fixed attachment means the light
+   * stays put while the page scrolls over it, which is what stops it reading as wallpaper.
+   */
   body {
-    background: var(--color-surface);
+    background-color: var(--color-surface);
+    background-image:
+      radial-gradient(75% 55% at 10% -5%, color-mix(in srgb, var(--color-flame) 20%, transparent), transparent 62%),
+      radial-gradient(55% 45% at 92% 18%, color-mix(in srgb, var(--color-water) 13%, transparent), transparent 66%),
+      radial-gradient(70% 50% at 60% 108%, color-mix(in srgb, var(--color-flame) 12%, transparent), transparent 68%);
+    background-attachment: fixed;
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 17px;
@@ -740,7 +752,8 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background: var(--color-surface);
+    /* Transparent so the page's own light reaches the top of the page */
+    background: transparent;
   }
   @media (width >= 64rem) {
     .hero {
@@ -1037,22 +1050,34 @@
   .section--dark {
     position: relative;
   }
-  /* Each band carries its own ground, plus a faint light from above and a hairline top edge,
-     so the page reads as stacked surfaces rather than one flat sheet of dark. */
-  .section--white {
-    background-color: var(--color-surface);
-    background-image: linear-gradient(180deg, rgb(255 255 255 / 3.5%), transparent 38%);
-    border-top: 1px solid rgb(255 255 255 / 5%);
-  }
-  .section--plaster {
-    background-color: var(--color-surface-2);
-    background-image: linear-gradient(180deg, rgb(255 255 255 / 4.5%), transparent 40%);
+  /*
+   * Section bands. Each is slightly transparent so the fixed light behind the page shows
+   * through, and each carries a fine blueprint grid — the same drawing language as the
+   * illustrations, so the background belongs to an engineering business rather than being
+   * decoration. Grid lines are drawn with a repeating gradient, which costs nothing.
+   */
+  .section--white,
+  .section--plaster,
+  .section--dark {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 3%) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 3%) 1px, transparent 1px),
+      linear-gradient(180deg, rgb(255 255 255 / 4%), transparent 34%);
+    background-size:
+      68px 68px,
+      68px 68px,
+      100% 100%;
     border-top: 1px solid rgb(255 255 255 / 6%);
   }
+  /* The lightest band is fully transparent, so the page's own light comes through undimmed */
+  .section--white {
+    background-color: transparent;
+  }
+  .section--plaster {
+    background-color: color-mix(in srgb, var(--color-surface-2) 78%, transparent);
+  }
   .section--dark {
-    background-color: var(--color-cast-iron);
-    background-image: linear-gradient(180deg, rgb(255 255 255 / 3%), transparent 45%);
-    border-top: 1px solid rgb(255 255 255 / 5%);
+    background-color: color-mix(in srgb, var(--color-cast-iron) 86%, transparent);
   }
 
   /* ---- Services grid (H3) ---- */

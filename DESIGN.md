@@ -26,6 +26,26 @@ Everything else stays quiet and disciplined.
 > the dark — it just runs through the entire page instead of a few bands. The table below is the
 > original light palette, kept because the *roles* still hold; §3.1a lists what each token is now.
 
+### 3.1b The background is not a flat colour
+
+Three rounds of feedback ran "too plain" → "too white" → "too dark, and still plain". The
+lightness was never the real problem: a single flat field is what reads as unfinished, at any
+brightness. So the page is built in layers instead:
+
+1. **A fixed field of light behind everything.** Three large radial pools on `body` — warm flame
+   from the top-left, a cool counterweight top-right, warm again at the foot — with
+   `background-attachment: fixed`, so the light stays put while the page scrolls over it. That is
+   what stops it reading as wallpaper.
+2. **Section bands are semi-transparent** (the lightest is fully transparent), so that light
+   carries from one band into the next rather than each area being its own dead tone.
+3. **A fine blueprint grid on every band**, 68px, drawn with repeating gradients so it costs
+   nothing. This is deliberate rather than decorative: it is the same drawing language as the
+   illustrations, so the background belongs to an engineering business.
+4. **Grain over the whole page** at 3%, so nothing is a perfectly smooth digital surface.
+
+The base tones were also lifted and given a blue-slate cast (`#1b212b` rather than `#16191f`);
+flat neutral black felt heavy and dead.
+
 ### 3.1a Dark palette (what is actually built)
 
 | Token | Value | Role |
