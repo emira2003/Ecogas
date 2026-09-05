@@ -82,12 +82,14 @@ Icons: lucide, **1.75px stroke**, never inside coloured circles. Icons sit direc
 ## 4. The PriceTag
 
 ```
-   ╭──────────────────────────────╮
-  <  from  £1,999  · 10-year warranty  │    ← "<" is a small flame-shaped notch
-   ╰──────────────────────────────╯      cut into the left edge (mask, scales with the tag)
+   ╭─────────────────────────────────────╮
+   │  ▲  from  £1,999 │ 10-year warranty │   ← "▲" is a small flame glyph inside the tag
+   ╰─────────────────────────────────────╯     (see the note below: it was a cut-out notch,
+                                                which looked like a torn edge, so it moved inside)
 ```
 
 - Orange (Flame) tag with Ink text on light backgrounds. **Reversed** on dark: white tag with Ember text (white rather than Plaster, because Ember on Plaster is 4.3:1 and just fails AA).
+- **The flame is drawn inside the tag, not cut out of its edge.** The original design (and the wireframe below) had a flame-shaped notch masked out of the left edge. Built, it looked broken: at the sizes the tag is actually used, only part of the flame shape landed on the tag, so it read as a torn or spiked edge rather than a flame. Replaced with a small flame glyph at the left of the tag in `currentColor` — same idea, legible from the estimate rows up to the hero, and nothing that can look like a rendering fault.
 - The notch is a 12×12px flame silhouette subtracted from the left edge with a CSS mask, so it works over photos and any background.
 - The amount is 800 weight, tabular numerals. The word "from" is 600, one step smaller. A note after the price ("10-year warranty") is 500 and separated by space, not a middle dot.
 - Sizes: `sm` (estimate rows), `md` (packages, service heroes), `lg` (home hero).

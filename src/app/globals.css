@@ -309,7 +309,7 @@
     display: inline-flex;
     align-items: baseline;
     gap: 0.4em;
-    padding: 0.5em 0.9em 0.5em 1.2em;
+    padding: 0.5em 0.9em;
     border-radius: 6px;
     background: var(--color-flame);
     color: var(--color-ink);
@@ -317,29 +317,16 @@
     font-stretch: 110%;
     line-height: 1;
     white-space: nowrap;
-    /* A full rectangle with a small flame silhouette subtracted from the left edge */
-    -webkit-mask-image:
-      linear-gradient(#000, #000),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M0 1.2C3 1.2 5.4 2.2 6.9 3.6 8.2 3 9.3 3.3 12 6 9.3 8.7 8.2 9 6.9 8.4 5.4 9.8 3 10.8 0 10.8Z'/%3E%3C/svg%3E");
-    mask-image:
-      linear-gradient(#000, #000),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M0 1.2C3 1.2 5.4 2.2 6.9 3.6 8.2 3 9.3 3.3 12 6 9.3 8.7 8.2 9 6.9 8.4 5.4 9.8 3 10.8 0 10.8Z'/%3E%3C/svg%3E");
-    -webkit-mask-size:
-      100% 100%,
-      0.85em 0.85em;
-    mask-size:
-      100% 100%,
-      0.85em 0.85em;
-    -webkit-mask-position:
-      0 0,
-      left center;
-    mask-position:
-      0 0,
-      left center;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+  }
+  /* The pilot flame, drawn inside the tag rather than cut out of its edge */
+  .price-tag__flame {
+    width: 0.75em;
+    height: 1em;
+    flex: none;
+    align-self: center;
+    margin-right: 0.1em;
+    fill: currentColor;
+    opacity: 0.85;
   }
   .price-tag--reversed {
     /* White, not Plaster: Ember on Plaster is 4.3:1 and just fails AA; on white it is 4.7:1 */
