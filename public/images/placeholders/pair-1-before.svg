@@ -1,6 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="old boiler before replacement">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f3540"/><stop offset="1" stop-color="#262b33"/></linearGradient></defs>
-<rect width="800" height="600" fill="url(#g)"/>
-<g transform="translate(274 150) scale(2.52)" fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="30" y="14" width="40" height="52" rx="4"/><rect x="42" y="24" width="16" height="8" rx="1"/><circle cx="50" cy="48" r="5"/><path d="M38 66v20M50 66v20M62 66v20"/><path d="M30 40h-8M70 40h8"/></g>
-<text x="32" y="570" font-family="Archivo, Arial, sans-serif" font-size="18" fill="#ffffff" fill-opacity="0.55">Placeholder — client photo: old boiler before replacement</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="presentation">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1"><stop offset="0" stop-color="#2f353f"/><stop offset="1" stop-color="#22262e"/></linearGradient>
+<radialGradient id="glow" cx="50%" cy="46%" r="52%"><stop offset="0" stop-color="#8b8f96" stop-opacity="0.1"/><stop offset="1" stop-color="#8b8f96" stop-opacity="0"/></radialGradient>
+<pattern id="grid" width="43" height="43" patternUnits="userSpaceOnUse"><path d="M43 0H0V43" fill="none" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/></pattern>
+</defs>
+<rect width="800" height="600" fill="url(#bg)"/>
+<rect width="800" height="600" fill="url(#grid)"/>
+<rect width="800" height="600" fill="url(#glow)"/>
+<g transform="translate(262 162) scale(2.76)" fill="none" stroke="#8b8f96" stroke-opacity="0.9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="28" y="12" width="44" height="54" rx="5"/><rect x="38" y="24" width="24" height="10" rx="2"/><circle cx="50" cy="48" r="6"/><path d="M37 66v18M50 66v18M63 66v18"/><path d="M28 22h-9M72 22h9"/></g>
 </svg>

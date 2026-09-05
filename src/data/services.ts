@@ -236,8 +236,8 @@ export const services: Service[] = [
       "The annual gas safety check every landlord needs by law, with the CP12 certificate for your records and your tenants.",
     h1: "Landlord gas safety certificates (CP12) in Bolton",
     heroImage: {
-      src: "/images/placeholders/service-gas-safety.svg",
-      alt: "A gas hob being safety-checked in a rental property kitchen",
+      src: "/images/services/gas-hob-flames.jpg",
+      alt: "The blue flames of a gas hob burning evenly on a black hob top",
     },
     intro: [
       "Landlords in England must have every gas appliance, flue and pipe in a rented property checked once a year by a Gas Safe registered engineer, give tenants a copy of the record (the CP12) within 28 days, and keep it for two years. It’s a legal duty, and it’s also the check that keeps your tenants safe.",
@@ -338,8 +338,8 @@ export const services: Service[] = [
       "Full bathroom refits and single replacements — showers, baths, basins and toilets — plumbed and finished properly.",
     h1: "Bathroom installation in Bolton",
     heroImage: {
-      src: "/images/placeholders/service-bathroom.svg",
-      alt: "A clean, newly fitted bathroom with a walk-in shower and white tiles",
+      src: "/images/services/bathroom-contemporary.jpg",
+      alt: "A contemporary bathroom with twin basins on a wooden vanity unit and a freestanding bath",
     },
     intro: [
       "A good bathroom is mostly good plumbing you never see: pipework that doesn’t knock, a shower with the pressure you expected and a bath that drains without leaving a puddle. We handle the strip-out and all the plumbing for full bathroom installations, and we fit single items such as showers, baths, basins and toilets when you don’t need the whole room doing.",
