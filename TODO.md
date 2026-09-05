@@ -10,7 +10,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 | 1 | Design system, shell and motion foundation | Done |
 | 2 | Home page | Done |
 | 3 | Services and Areas | Done |
-| 4 | Instant Estimate tool | Not started |
+| 4 | Instant Estimate tool | Done (the "Send me this quote" hand-off shows a temporary call/WhatsApp panel until the enquiry form is built in Phase 5) |
 | 5 | Enquiry form and email | Not started |
 | 6 | Remaining pages | Not started |
 | 7 | Motion polish and performance budget | Not started |
