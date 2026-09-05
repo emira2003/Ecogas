@@ -1,12 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { business, siteUrl } from "@/data/business";
 import { services } from "@/data/services";
+import { localBusinessJsonLd } from "@/lib/schema";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { Header } from "@/components/layout/Header";
 import { serviceLinksFrom } from "@/components/layout/nav";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
 import { PageTransition } from "@/components/layout/PageTransition";
@@ -39,6 +41,12 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  // Google Search Console: paste the code from "HTML tag" verification here (PLAN.md Part H step 5)
+  // verification: { google: "PASTE-CODE-HERE" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#262b33",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -61,8 +69,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <StickyMobileBar />
         <SmoothScroll />
+        {/* Google structured data about the business, on every page (PLAN.md Part G) */}
+        <JsonLd data={[localBusinessJsonLd()]} />
         {/* Vercel's cookie-free analytics: only on Vercel, where its script exists (avoids a 404 locally) */}
         {process.env.VERCEL ? <Analytics /> : null}
+        {/* Google Analytics 4 — only if the client asks for it; it would need a cookie banner. To enable:
+            <Script src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX" strategy="afterInteractive" />
+            <Script id="ga4" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-XXXXXXX')`}</Script>
+        */}
       </body>
     </html>
   );

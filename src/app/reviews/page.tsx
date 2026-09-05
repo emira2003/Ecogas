@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { business, isPlaceholder } from "@/data/business";
 import { reviews } from "@/data/reviews";
+import { breadcrumbJsonLd } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { CountUp } from "@/components/ui/CountUp";
 import { CTABand } from "@/components/ui/CTABand";
 import { Reveal } from "@/components/ui/Reveal";
@@ -12,6 +14,7 @@ export const metadata: Metadata = {
   title: { absolute: "Customer Reviews | Eco Gas Bolton" },
   description:
     "What customers in Bolton, Stockport and Manchester say about Eco Gas: boiler replacements, relocations and heating work, rated 4.9 out of 5.",
+  alternates: { canonical: "/reviews" },
 };
 
 export default function ReviewsPage() {
@@ -19,6 +22,8 @@ export default function ReviewsPage() {
 
   return (
     <>
+      {/* No review or rating schema here: PLAN.md Part G only allows it when attributed to the review platform */}
+      <JsonLd data={[breadcrumbJsonLd([{ name: "Reviews", path: "/reviews" }])]} />
       <Section bg="plaster" padding="compact" className="pt-12 lg:pt-20">
         <Reveal as="h1" split eager className="h1 max-w-3xl">
           Customer reviews

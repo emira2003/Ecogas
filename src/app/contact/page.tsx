@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { business, telHref, whatsappHref } from "@/data/business";
 import { services } from "@/data/services";
+import { breadcrumbJsonLd } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
@@ -12,12 +14,14 @@ export const metadata: Metadata = {
   title: { absolute: "Contact Eco Gas – Bolton Plumbing & Heating" },
   description:
     "Call, WhatsApp or message Eco Gas, Gas Safe plumbing and heating engineers at 992a Plodder Lane, Bolton. We reply to every enquiry.",
+  alternates: { canonical: "/contact" },
 };
 
 /** /contact — no CTA band and no sticky mobile bar on this page (PLAN.md D2). */
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={[breadcrumbJsonLd([{ name: "Contact", path: "/contact" }])]} />
       <Section bg="plaster" padding="compact" className="pt-12 lg:pt-20">
         <Reveal as="h1" split eager className="h1 max-w-3xl">
           Get in touch

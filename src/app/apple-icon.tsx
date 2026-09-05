@@ -1,0 +1,19 @@
+import { ImageResponse } from "next/og";
+
+/** Home-screen icon for iPhones: the pilot flame on Cast Iron. Replaced by the client's logo when supplied. */
+export const size = { width: 180, height: 180 };
+export const contentType = "image/png";
+
+export default function AppleIcon() {
+  return new ImageResponse(
+    (
+      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#262b33" }}>
+        <svg width="120" height="120" viewBox="0 0 64 64">
+          <path d="M32 10c6 14 19 21 19 39a19 19 0 0 1-38 0c0-9 5-15 10-20 0 7 2 12 7 12 5-6 5-18 2-31z" fill="#f26b21" />
+          <path d="M32 38c3.5 7 9.5 10.5 9.5 18.5a9.5 9.5 0 0 1-19 0c0-4.5 2.5-7 5-9.5 0 3.5 1 6 3.5 6 2.5-3.5 2.5-9.5 1-15z" fill="#ffd68c" />
+        </svg>
+      </div>
+    ),
+    { ...size },
+  );
+}

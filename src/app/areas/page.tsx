@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { mapTowns } from "@/data/areas";
 import { business } from "@/data/business";
+import { breadcrumbJsonLd } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { CTABand } from "@/components/ui/CTABand";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
@@ -10,11 +12,13 @@ export const metadata: Metadata = {
   title: { absolute: "Areas We Cover – Bolton & the North West | Eco Gas" },
   description:
     "Eco Gas covers Bolton, Manchester, Blackburn, Oldham, Stockport, Warrington, Wigan, Liverpool and Preston for boiler replacement, heating and plumbing.",
+  alternates: { canonical: "/areas" },
 };
 
 export default function AreasPage() {
   return (
     <>
+      <JsonLd data={[breadcrumbJsonLd([{ name: "Areas we cover", path: "/areas" }])]} />
       <Section bg="plaster" padding="compact" className="pt-12 lg:pt-20">
         <Reveal as="h1" split eager className="h1 max-w-3xl">
           Areas we cover

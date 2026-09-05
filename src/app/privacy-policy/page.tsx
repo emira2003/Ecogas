@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { business } from "@/data/business";
+import { breadcrumbJsonLd } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Section } from "@/components/ui/Section";
 
 export const metadata: Metadata = {
   title: { absolute: "Privacy Policy | Eco Gas" },
   description: "How Eco Gas uses the details you send through this website, how long we keep them, and your rights.",
+  alternates: { canonical: "/privacy-policy" },
 };
 
 /** Update this when the policy changes. */
@@ -14,6 +17,7 @@ const LAST_UPDATED = "5 September 2026";
 export default function PrivacyPolicyPage() {
   return (
     <>
+      <JsonLd data={[breadcrumbJsonLd([{ name: "Privacy policy", path: "/privacy-policy" }])]} />
       <Section bg="plaster" padding="compact" className="pt-12 lg:pt-20">
         <h1 className="h1 max-w-3xl">Privacy policy</h1>
         <p className="mt-4 text-ink-soft">Last updated {LAST_UPDATED}</p>

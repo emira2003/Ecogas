@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { mapTowns } from "@/data/areas";
 import { business, isPlaceholder } from "@/data/business";
 import { homeFaqs } from "@/data/faqs";
+import { faqJsonLd } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { CTABand } from "@/components/ui/CTABand";
 import { Faq } from "@/components/ui/Faq";
@@ -21,6 +23,7 @@ export const metadata: Metadata = {
   title: { absolute: "Boiler Replacement & Heating Engineers in Bolton | Eco Gas" },
   description:
     "Gas Safe registered boiler replacement, central heating and plumbing in Bolton since 2000. New boilers from £1,999 with a 10-year warranty. Get an instant estimate.",
+  alternates: { canonical: "/" },
 };
 
 export default function HomePage() {
@@ -29,6 +32,8 @@ export default function HomePage() {
 
   return (
     <>
+      <JsonLd data={[faqJsonLd(homeFaqs)]} />
+
       {/* 1. Hero */}
       <Hero />
 

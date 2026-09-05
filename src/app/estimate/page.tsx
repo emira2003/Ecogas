@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { breadcrumbJsonLd } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { EstimateWizard } from "@/components/estimate/EstimateWizard";
@@ -7,12 +9,14 @@ export const metadata: Metadata = {
   title: { absolute: "Instant Estimate – Boiler, Heating & Plumbing Prices | Eco Gas" },
   description:
     "See a realistic price for a new boiler, heating, plumbing or bathroom job in under a minute. Pick your jobs, see our typical prices, then send it to us. No commitment.",
+  alternates: { canonical: "/estimate" },
 };
 
 /** /estimate — no CTA band and no sticky mobile bar on this page (PLAN.md D2). */
 export default function EstimatePage() {
   return (
     <>
+      <JsonLd data={[breadcrumbJsonLd([{ name: "Instant estimate", path: "/estimate" }])]} />
       <Section bg="plaster" padding="compact" className="pt-12 lg:pt-20">
         <Reveal as="h1" split eager className="h1 max-w-3xl">
           Your instant estimate

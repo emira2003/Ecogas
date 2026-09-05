@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { business } from "@/data/business";
+import { breadcrumbJsonLd } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { CountUp } from "@/components/ui/CountUp";
 import { CTABand } from "@/components/ui/CTABand";
 import { Reveal } from "@/components/ui/Reveal";
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
   title: { absolute: "About Eco Gas – Gas Safe Engineers in Bolton Since 2000" },
   description:
     "Eco Gas is a small team of Gas Safe registered plumbing and heating engineers on Plodder Lane, Bolton, fitting boilers, heating and bathrooms since 2000.",
+  alternates: { canonical: "/about" },
 };
 
 const photos = [
@@ -44,6 +47,7 @@ const steps = [
 export default function AboutPage() {
   return (
     <>
+      <JsonLd data={[breadcrumbJsonLd([{ name: "About", path: "/about" }])]} />
       <Section bg="plaster" padding="compact" className="pt-12 lg:pt-20">
         <Reveal as="h1" split eager className="h1 max-w-4xl">
           A small team that’s been fitting boilers in Bolton since 2000

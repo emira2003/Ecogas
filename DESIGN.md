@@ -269,3 +269,7 @@ _None yet. Ideas that come up during the build go here, not into the code._
 
     Every target met (mobile Performance ≥ 90, others ≥ 95, desktop ≥ 95, CLS 0, home JS ≤ 220 KB). No moment cost more than 3 Performance points, so nothing from F2 was cut. The remaining LCP time on mobile is the throttled network delivering the CSS and fonts before the hero text can paint, not motion. **These numbers use tiny placeholder images; re-run when the client's photos are in.**
   - Things checked and left alone: the largest paint element on the home page is the hero sub-line (text), which is what we want; `unused-javascript` and `legacy-javascript` are Next.js framework chunks and polyfills we don't control.
+- **Phase 8** — SEO.
+  - Structured data (`src/lib/schema.ts`) never sends a placeholder to Google: phone, email, coordinates, opening hours and social links are included only once they are real, and FAQs whose answers still contain a `[…]` are skipped. Service pages carry `Service` with a GBP offer at the from-price; inner pages carry breadcrumbs; no review or rating markup (Part G).
+  - One generated social-preview image (Cast Iron, the pilot flame and wordmark, "Boiler replacement in Bolton", the £1,999 tag) is reused by every page. The favicon and iPhone icon are the pilot flame on Cast Iron until the client's logo arrives.
+  - Canonical addresses come from `NEXT_PUBLIC_SITE_URL` plus the path, so they are wrong until the domain is set in `.env.local` / Vercel (they currently say localhost).

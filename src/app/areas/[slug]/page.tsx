@@ -5,6 +5,8 @@ import { MapPin } from "lucide-react";
 import { areas, findArea } from "@/data/areas";
 import { reviews } from "@/data/reviews";
 import { services } from "@/data/services";
+import { breadcrumbJsonLd } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { CTABand } from "@/components/ui/CTABand";
 import { EstimateCallout } from "@/components/ui/EstimateCallout";
 import { Reveal } from "@/components/ui/Reveal";
@@ -25,6 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/areas/[slug]">): 
   return {
     title: { absolute: area.metaTitle },
     description: area.metaDescription,
+    alternates: { canonical: `/areas/${area.slug}` },
   };
 }
 
@@ -37,6 +40,14 @@ export default async function AreaPage({ params }: PageProps<"/areas/[slug]">) {
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: "Areas we cover", path: "/areas" },
+            { name: area.town, path: `/areas/${area.slug}` },
+          ]),
+        ]}
+      />
       <Section bg="plaster" padding="compact" className="pt-12 lg:pt-20">
         <p className="flex items-center gap-2 text-ink-soft">
           <MapPin size={18} strokeWidth={1.75} aria-hidden="true" />

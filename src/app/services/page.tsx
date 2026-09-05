@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { services } from "@/data/services";
+import { breadcrumbJsonLd } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { CTABand } from "@/components/ui/CTABand";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
@@ -10,11 +12,13 @@ export const metadata: Metadata = {
   title: { absolute: "Plumbing & Heating Services Bolton | Eco Gas" },
   description:
     "Boiler replacement from £1,999, central heating, servicing and repairs, landlord certificates, power flushing, bathrooms and plumbing across Bolton. Gas Safe since 2000.",
+  alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd data={[breadcrumbJsonLd([{ name: "Services", path: "/services" }])]} />
       <Section bg="plaster" padding="compact" className="pt-12 lg:pt-20">
         <Reveal as="h1" split eager className="h1 max-w-3xl">
           Plumbing and heating services in Bolton

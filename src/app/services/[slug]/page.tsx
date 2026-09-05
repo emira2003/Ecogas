@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { Info } from "lucide-react";
 import { reviews } from "@/data/reviews";
 import { findService, services } from "@/data/services";
+import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { CTABand } from "@/components/ui/CTABand";
 import { EstimateCallout } from "@/components/ui/EstimateCallout";
 import { Faq } from "@/components/ui/Faq";
@@ -27,6 +29,7 @@ export async function generateMetadata({ params }: PageProps<"/services/[slug]">
   return {
     title: { absolute: service.metaTitle },
     description: service.metaDescription,
+    alternates: { canonical: `/services/${service.slug}` },
   };
 }
 
@@ -43,6 +46,16 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
 
   return (
     <>
+      <JsonLd
+        data={[
+          serviceJsonLd(service),
+          faqJsonLd(service.faqs),
+          breadcrumbJsonLd([
+            { name: "Services", path: "/services" },
+            { name: service.shortName, path: `/services/${service.slug}` },
+          ]),
+        ]}
+      />
       <ServiceHero service={service} />
 
       {/* Intro + What's included */}
