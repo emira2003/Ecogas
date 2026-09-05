@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Phone } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { business, telHref } from "@/data/business";
@@ -10,6 +11,10 @@ import { Button } from "./Button";
  * The closing call to action on every page except Contact and Estimate (PLAN.md D2).
  * Two blurred Flame/Ember blobs drift slowly behind the text (F2-H11); they pause when
  * the band is off screen and are replaced by a still gradient with reduced motion.
+ *
+ * A warm domestic photograph sits behind all of it, heavily scrimmed. It is atmosphere for
+ * "a warmer home", not a claim about a particular job, so a library image is honest here —
+ * unlike Our Work or the team photo, which have to be Eco Gas's own.
  */
 export function CTABand() {
   const ref = useRef<HTMLElement>(null);
@@ -22,6 +27,16 @@ export function CTABand() {
 
   return (
     <section ref={ref} className="cta-band text-white" aria-labelledby="cta-heading">
+      <div className="cta-band__photo" aria-hidden="true">
+        <Image
+          src="/images/photos/warm-room-radiator.jpg"
+          alt=""
+          fill
+          loading="lazy"
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
       <div className="cta-blob cta-blob--flame" aria-hidden="true" />
       <div className="cta-blob cta-blob--ember" aria-hidden="true" />
       <div className="container-site flex flex-col items-center py-16 text-center md:py-24 lg:py-28">

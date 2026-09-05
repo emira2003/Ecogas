@@ -5,43 +5,58 @@ from. Photos are downloaded into the project, never hot-linked from another webs
 
 ## Stock photos in use
 
-Both are from Pexels, whose licence allows commercial use without payment or attribution.
-They are credited here anyway, because it is good practice and it records where they came from.
+All are from Pexels, whose licence allows commercial use without payment or attribution. They
+are credited here anyway, because it is good practice and it records where each one came from.
 
-| File | What it shows | Used for | Photographer | Source |
-|---|---|---|---|---|
-| `images/services/gas-hob-flames.jpg` | Blue flames on a gas hob, close up | Landlord Gas Safety Certificates | Mateusz Feliksik | pexels.com/photo/close-up-shot-of-a-stove-13422435/ |
-| `images/services/bathroom-contemporary.jpg` | Contemporary bathroom, twin basins on a wooden vanity | Bathroom Installations | Max Vakhtbovych | pexels.com/photo/contemporary-bathroom-with-minimalistic-interior-7045908/ |
+| File | What it shows | Used for | Photographer |
+|---|---|---|---|
+| `images/photos/hero-boiler-service.jpg` | Gloved hands working inside an open combi boiler | Home page hero | Heiko Ruth |
+| `images/photos/boiler-kitchen.jpg` | A new white combi boiler on a kitchen wall | Boiler replacement | Max Vakhtbovych |
+| `images/photos/radiator-valve-fitting.jpg` | An engineer fitting the valve to a new radiator | Central heating | Sergei Starostin |
+| `images/photos/boiler-install.jpg` | An engineer working inside an open wall-mounted boiler | Boiler service & repairs | МОБО Модульные Котельные |
+| `images/services/gas-hob-flames.jpg` | Blue flames on a gas hob, close up | Landlord gas safety certificates | Mateusz Feliksik |
+| `images/photos/copper-pipework.jpg` | Hands tightening a brass fitting on copper pipe | Power flushing | Anıl Karakaya |
+| `images/services/bathroom-contemporary.jpg` | Contemporary bathroom, twin basins on a wooden vanity | Bathroom installations | Max Vakhtbovych |
+| `images/photos/pipe-wrench.jpg` | A steel pipe wrench on a pale wooden surface | General plumbing | Kindel Media |
+| `images/photos/warm-room-radiator.jpg` | Sunlight across a wooden table beside a radiator | Closing call-to-action band | Kate Filatova |
 
-## Why there are not more stock photos
+Source pages, in the same order:
 
-We searched Pexels and Unsplash for the subjects this site needs and reviewed 24 candidates
-individually. Free stock libraries have almost nothing usable for **UK domestic gas boilers**:
-searches for "boiler", "combi boiler" and "wall mounted gas water heater" return antique museum
-boilers, rooftop solar heaters, oil refineries, air-conditioning units and derelict rooms.
-Putting any of those on a website selling new boilers would make the business look worse, not
-better, so they were not used.
+- pexels.com/photo/plumber-repairing-power-source-7859953/
+- pexels.com/photo/white-counter-top-on-gray-kitchen-cabinets-8146317/
+- pexels.com/photo/professional-plumber-installing-a-radiator-pipe-29226620/
+- pexels.com/photo/technician-repairing-heating-system-in-workshop-34938439/
+- pexels.com/photo/close-up-shot-of-a-stove-13422435/
+- pexels.com/photo/plumber-installs-pipe-fittings-6419128/
+- pexels.com/photo/contemporary-bathroom-with-minimalistic-interior-7045908/
+- pexels.com/photo/close-up-photo-of-plumbers-wrench-on-wooden-surface-8488058/
+- pexels.com/photo/sunlit-wooden-dining-table-with-radiator-30680046/
 
-The two above were the only images that genuinely matched a subject on this site.
+### A note on the earlier search
 
-**The real fix is the client's own photos.** PLAN.md Part K lists exactly what to take, and
-those photos will be better than any stock image because they show actual Eco Gas work.
+An earlier pass through Pexels and Unsplash reviewed 24 candidates and found only two usable
+images, and this file previously recorded that free libraries have almost nothing for UK
+domestic gas work. That conclusion was wrong, and it was wrong because the search terms were
+too literal: only "boiler" and "combi boiler" were tried, and those return antique museum
+boilers, rooftop solar heaters and oil refineries.
+
+Searching for what the work actually looks like — "radiator heating", "plumber", "heating
+engineer", "boiler installation" — returned plenty. The nine images above came from about
+thirty candidates on the second pass.
+
+The photo used in the closing call-to-action band is a warm domestic interior. It is
+atmosphere for the line "Ready for a warmer, safer home?", not a claim about a particular job,
+which is why a library image is honest in that slot.
 
 ## Illustrations (drawn by us, no licence needed)
 
-Everywhere a photo is still missing, the site uses a drawn panel instead: a dark Cast Iron
-ground with a faint blueprint grid, a soft warm glow and the subject drawn in Flame orange.
-They are designed to look deliberate rather than like a missing image, and they are tiny
-(around 1 KB each, 108 KB for all 25).
+Where a photo would have to be Eco Gas's own, the site still uses a drawn panel: a dark Cast
+Iron ground with a faint blueprint grid, a soft warm glow and the subject drawn in Flame
+orange. They are designed to look deliberate rather than like a missing image, and they are
+tiny (around 1 KB each).
 
 | File | Subject | Used for |
 |---|---|---|
-| `hero-boiler.svg` | Combi boiler | Home page hero |
-| `service-boiler.svg` | Combi boiler | Boiler replacement |
-| `service-heating.svg` | Radiator | Central heating |
-| `service-service.svg` | Wrench | Boiler servicing and repairs |
-| `service-power-flush.svg` | Pipework and valve | Power flushing |
-| `service-plumbing.svg` | Mixer tap | General plumbing |
 | `team.svg` | Van | "Why people in Bolton choose us" |
 | `engineer.svg`, `workshop.svg` | Wrench, pipework | About page photo slots |
 | `work-01.svg` … `work-12.svg` | Mixed | Recent jobs and Our Work |
@@ -54,6 +69,9 @@ slider still reads as old-versus-new.
 people in Bolton choose us" photo and the About page photos all claim to show Eco Gas's own
 work, team and premises. Filling them with stock photos of other people's boilers would
 misrepresent the business, so they stay as illustrations until the client sends real photos.
+
+`hero-boiler.svg` and the five `service-*.svg` panels are no longer referenced by any page,
+because those slots now hold photographs. They are kept in the repository as a fallback.
 
 ## Client's own photos
 

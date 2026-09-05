@@ -31,7 +31,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 - [ ] Which reviews can be shown; the missing review text for Robin (Stockport) and Damian (Manchester), and Damian's job type → `src/data/reviews.ts`
 - [ ] Confirmed prices for every estimate item (see table below); VAT included or not; any call-out fee
 - [ ] Exactly what is included in the £1,999 and £2,500 offers → `business.ts` (`offers`)
-- [ ] Photos and videos (shot list in PLAN.md Part K)
+- [ ] Photos and videos (shot list in PLAN.md Part K). **Most urgent item on this list.** The 12 Our Work photos and the before/after pairs are still drawings, and they are what makes the lower half of the home page look empty.
 - [ ] Facebook page link (and Instagram if any) → `business.ts` (`social`)
 - [ ] How customers pay (for the "How do I pay?" FAQ) → `src/data/faqs.ts`
 - [ ] How long enquiry emails are kept (for the privacy policy)
@@ -92,7 +92,16 @@ Service-page hero prices that are examples: central heating from £3,500 · boil
 
 ## Placeholder content in the code
 
-- **All images are generated SVG drawings** in `/public/images/placeholders/` (see `IMAGE-CREDITS.md`): the hero photo, the 7 service tiles, the team/van photo, the 12 work photos and the 2 before/after pairs. They are tiny files, so page-speed numbers will change once real photos go in — re-check in Phase 7 and again when the client's photos arrive.
+- **The hero, all 7 service tiles and the closing call-to-action band are now stock photographs**
+  from Pexels, credited in `IMAGE-CREDITS.md`. They are illustrative, and the client's own photos
+  should replace them when available.
+- **These images are still drawings** in `/public/images/placeholders/`, and stay that way on purpose:
+  the 12 Our Work photos, the 2 before/after pairs, the team/van photo and the 3 About page slots.
+  All of them claim to show Eco Gas's own work, team and premises, so only the client's photos will
+  do. **This is the main reason the lower half of the home page still looks quieter than the top.**
+- Page-speed numbers were measured with tiny SVG files in every slot, so they will have changed now
+  that real photographs are in — re-run the Phase 7 checks (method and numbers to beat are in
+  DESIGN.md).
 - Gallery (`src/data/gallery.ts`): all captions and towns are made-up examples until real photos arrive.
 - The "Why Eco Gas" photo is a placeholder for a team/van photo (PLAN.md Part K).
 - The coverage map (`src/components/home/CoverageMap.tsx`) uses a simplified, stylised outline of the North West — it is a diagram, not an accurate map. Town positions are real (from map coordinates).

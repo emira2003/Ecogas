@@ -368,3 +368,54 @@ _None yet. Ideas that come up during the build go here, not into the code._
 
   **Trade-off, stated once and accepted:** local search is Goal 1 in the plan (B2), and the seven service pages plus nine area pages are what carry those terms. A header link on every page counts for more than a footer link, so this shifts weight away from exactly the pages meant to rank. If rankings disappoint, the first thing to try is putting Services and Areas back in `src/components/layout/nav.ts`. The dropdown markup would need re-adding to `Header.tsx` (see the Phase 1 commit); its `.nav-dropdown` and `.mobile-nav__sublink` styles were left in `globals.css` ready for it.
 - **Phase 10** — handover. README.md rewritten in plain English: running the site, every routine content change with a worked example, replacing placeholders and the logo, the Web3Forms key, deployment and Search Console. Build complete.
+
+- **After Phase 10 — "too dark and too dead". Diagnosis corrected.** Four consecutive palette
+  changes were made in response to "too plain", "still too white", "too dark" and finally "too
+  dark and too dead". None of them worked, because every one of them treated a content problem
+  as a colour problem. Two faults were actually at work, and both are now fixed.
+
+  **Fault 1: the site was a wireframe.** Twenty-six of its twenty-eight images were line
+  drawings. A page of thin orange outlines on a flat ground reads as unfinished no matter what
+  colour the ground is. The earlier finding that free stock libraries have nothing usable for
+  UK domestic gas work was **wrong**, and it was wrong because the searches were too literal:
+  only "boiler" and its synonyms were tried. Searching for what the work looks like —
+  "radiator heating", "plumber", "heating engineer", "boiler installation" — returned a usable
+  pool immediately. Nine photographs are now in place: the home hero, all seven service tiles
+  (which are also the service pages' full-bleed heroes), and the closing call-to-action band.
+  All are credited in `IMAGE-CREDITS.md`.
+
+  **Fault 2: the section bands were within ~2% luminance of each other.** Each band was drawn
+  semi-transparent over one fixed body background, so `--white`, `--plaster` and `--dark`
+  resolved to roughly #1b212b, #1f2632 and #191e28. Over a 9,300px page that is a single flat
+  field with no rhythm — the literal definition of "dead". The bands are now opaque and a full
+  tonal step apart, and the whole palette is lifted out of near-black:
+
+  | Token | Was | Now |
+  |---|---|---|
+  | `--color-surface` | `#1b212b` | `#242b36` |
+  | `--color-surface-2` | `#222937` | `#2f3745` |
+  | `--color-raised` | `#2a313e` | `#3a4351` |
+  | `--color-cast-iron` | `#141922` | `#171d26` |
+
+  `--color-ink-mute` went from a 58% to a 62% mix, because the lighter Plaster band would
+  otherwise have dropped secondary text to 4.21:1. It is now 4.62:1 on Plaster and 5.36:1 on
+  Surface. The blueprint grid went from 3% to 4.5% white and the top light from 4% to 7%, both
+  of which were invisible against the old near-black.
+
+  **The call-to-action band now carries a photograph** — a sunlit room with a radiator — behind
+  the blobs, at 55% opacity with a brightness of 0.42 and a wash of Cast Iron over it. White
+  headline text clears 6:1 against the brightest part of the image. That photo is atmosphere
+  for "Ready for a warmer, safer home?", not a claim about a particular job, which is why a
+  library image is honest in that slot.
+
+  **Still deliberately not photographs:** Our Work, the before/after sliders, the "Why people
+  in Bolton choose us" photo and the three About page slots. Those claim to show Eco Gas's own
+  work, team and premises. They stay as drawn panels until the client sends real photos, and
+  they are the remaining reason the lower half of the home page is quieter than the upper half.
+
+  **A CSS edit that silently did nothing, worth recording.** The call-to-action photo rules
+  were first anchored on `.cta-band { background-image: … }`, which lives inside
+  `@media (prefers-reduced-motion: reduce)` as the still-gradient fallback. The rules compiled,
+  shipped, and applied to nobody. The photo rendered at full brightness over the heading. When
+  a rule appears in the stylesheet but `getComputedStyle` disagrees, check which at-rule it
+  landed in before changing the rule itself.

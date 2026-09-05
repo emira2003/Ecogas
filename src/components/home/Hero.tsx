@@ -68,13 +68,14 @@ export function Hero() {
           <div className="hero__media relative lg:col-span-5">
             <div className="hero__photo">
               <Image
-                src="/images/placeholders/hero-boiler.svg"
-                alt="A new combi boiler fitted neatly on a kitchen wall with tidy copper pipework"
+                src="/images/photos/hero-boiler-service.jpg"
+                alt="A gas engineer’s gloved hands working inside an open combi boiler, with the pump and control panel visible"
                 fill
                 priority
                 sizes="(min-width: 1024px) 40vw, 100vw"
                 className="hero__img object-cover"
               />
+              <span className="hero__photo-scrim" aria-hidden="true" />
             </div>
             {/* Full tag on desktop; a shorter one on phones so it never overflows the screen */}
             <div className="hero__tag">

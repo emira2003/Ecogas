@@ -76,8 +76,8 @@ export const services: Service[] = [
       "New A-rated boilers from Worcester Bosch, Vaillant, Viessmann, Glow-worm and Ideal, fitted by Gas Safe engineers with a 10-year manufacturer’s warranty.",
     h1: "Boiler replacement and installation in Bolton",
     heroImage: {
-      src: "/images/placeholders/service-boiler.svg",
-      alt: "A new combi boiler fitted neatly on a kitchen wall with tidy copper pipework",
+      src: "/images/photos/boiler-kitchen.jpg",
+      alt: "A new white combi boiler fitted on a kitchen wall beside a slatted wood cabinet front",
     },
     intro: [
       "A new boiler is the biggest heating decision most homes in Bolton make, and we’ve been making it straightforward since 2000. We fit A-rated combi, system and regular boilers from Worcester Bosch, Vaillant, Viessmann, Glow-worm and Ideal, from £1,999 with a 10-year manufacturer’s warranty. Before anything is ordered we look at your home, your hot water needs and your existing pipework, then give you one clear price.",
@@ -131,8 +131,8 @@ export const services: Service[] = [
       "Complete new heating systems — boiler, radiators, pipework and controls — designed around your home and fitted by Gas Safe engineers.",
     h1: "Central heating installation in Bolton",
     heroImage: {
-      src: "/images/placeholders/service-heating.svg",
-      alt: "A new white radiator with a thermostatic valve on a freshly painted wall",
+      src: "/images/photos/radiator-valve-fitting.jpg",
+      alt: "An engineer in overalls fitting the valve onto a new white radiator, with pipe grips laid out ready",
     },
     intro: [
       "A full central heating system is the right answer when a house has never had gas heating, when the old system is past saving, or when an extension changes what the home needs. We design the system around the property: a boiler sized for the house, radiators sized for each room, pipework routed sensibly and modern controls so you only heat the rooms you’re using.",
@@ -183,8 +183,8 @@ export const services: Service[] = [
       "Annual services, repairs and fault finding on all the major boiler makes, with a fixed call-out that includes the diagnosis.",
     h1: "Boiler servicing, repairs and fault finding in Bolton",
     heroImage: {
-      src: "/images/placeholders/service-service.svg",
-      alt: "An engineer’s hands testing a boiler with a flue gas analyser",
+      src: "/images/photos/boiler-install.jpg",
+      alt: "A heating engineer working inside an open wall-mounted boiler next to a hot water cylinder",
     },
     intro: [
       "Boilers rarely fail at a convenient time. If yours is making a noise, losing pressure, showing a fault code or has simply stopped, we find the cause and tell you plainly what it needs and what it will cost before any repair starts. Our fault-finding call-out is a fixed £85 and includes the diagnosis. We work on all the major makes, including Worcester Bosch, Vaillant, Viessmann, Glow-worm and Ideal.",
@@ -287,8 +287,8 @@ export const services: Service[] = [
       "Clears the sludge and rust that stop radiators heating properly, so the system runs hotter and your boiler works less.",
     h1: "Power flushing in Bolton",
     heroImage: {
-      src: "/images/placeholders/service-power-flush.svg",
-      alt: "Close-up of a radiator valve and copper pipework during a power flush",
+      src: "/images/photos/copper-pipework.jpg",
+      alt: "Close-up of hands tightening a brass fitting on copper pipework under a boiler",
     },
     intro: [
       "Radiators that are cold at the bottom, a boiler that bangs and kettles, or heating that takes an age to warm up are all signs of sludge in the system. Over the years rust and debris settle in the pipes and radiators, block the flow and make the boiler work far harder than it should. A power flush pushes water and cleaning chemicals through the system at high flow to lift that sludge out.",
@@ -388,8 +388,8 @@ export const services: Service[] = [
     summary: "Leaks, taps, toilets, blocked drains, outside taps and burst pipes — everyday plumbing fixed properly, from £75.",
     h1: "Plumbers in Bolton for everyday domestic plumbing",
     heroImage: {
-      src: "/images/placeholders/service-plumbing.svg",
-      alt: "A plumber fitting a new kitchen tap with a spanner",
+      src: "/images/photos/pipe-wrench.jpg",
+      alt: "A well-used steel pipe wrench resting on a pale wooden worktop",
     },
     intro: [
       "Not every job is a new boiler. A dripping tap, a toilet that won’t stop running, a sink that drains slowly or a pipe that’s started leaking under the floor all need sorting, and sorting properly rather than patching up. We do everyday domestic plumbing across Bolton, Farnworth, Westhoughton and Wigan, with clear prices from £75 so you know roughly what to expect before we arrive.",
