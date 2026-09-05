@@ -157,7 +157,7 @@ export function EnquiryForm({ mode, estimate, page, messagePrompt, serviceNames 
           <div className="sm:col-span-2">
             <p className="font-semibold">Jobs in your estimate</p>
             {estimate && estimate.lines.length > 0 ? (
-              <ul className="mt-2 divide-y divide-line rounded-md border border-line bg-white">
+              <ul className="mt-2 divide-y divide-line rounded-md border border-line bg-raised">
                 {estimate.lines.map((line) => (
                   <li key={line.name} className="flex justify-between gap-4 px-4 py-2">
                     <span>

@@ -4,26 +4,50 @@
    Tokens — see DESIGN.md §3. The default Tailwind palette is switched off so
    every colour on the site comes from this list.
 --------------------------------------------------------------------------- */
+/*
+ * DARK PALETTE.
+ *
+ * The site was white and warm plaster with dark reserved for the header, footer and CTA band.
+ * That read as plain and, in Xhezmi's words, "still too white", so the whole site is now dark:
+ * warm-neutral charcoals lit by the flame orange. The brand idea is unchanged — a pilot light in
+ * the dark — it now runs through the whole page instead of a few bands.
+ *
+ * Token roles (the names are historical; what matters is the role):
+ *   --color-white ....... stays pure white. It means "light text on dark", never a page surface.
+ *   --color-ink ......... primary TEXT. Now light, because text sits on dark everywhere.
+ *   --color-surface ..... the page itself, and any band that used to be white.
+ *   --color-surface-2 ... the alternating band that used to be Plaster.
+ *   --color-raised ...... cards, inputs and controls that sit above the page.
+ *   --color-cast-iron ... header, footer and CTA band. Deepest, so they still read as furniture.
+ *   --color-on-flame .... dark text that sits ON orange (buttons, price tags). Never on a surface.
+ */
 @theme {
   --color-*: initial;
   --color-flame: #f26b21;
-  --color-ember: #c2500f;
-  --color-water: #1f6fb2;
-  --color-cast-iron: #262b33;
-  --color-ink: #1b1f24;
-  --color-plaster: #f6f4f0;
-  --color-white: #ffffff;
-  --color-meadow: #2f7d4f;
+  --color-ember: #ff8a4c; /* lightened: Ember had to work as text on dark, not on white */
+  --color-water: #55a8e3; /* lightened for the same reason */
+  --color-meadow: #56c184;
+
+  --color-surface: #16191f;
+  --color-surface-2: #1c2027;
+  --color-raised: #232830;
+  --color-cast-iron: #0f1216;
+
+  --color-ink: #ece9e4; /* primary text */
+  --color-white: #ffffff; /* light text / the reversed price tag */
+  --color-on-flame: #14171b; /* text on orange */
+  --color-plaster: #1c2027; /* kept so existing bg-plaster utilities land on surface-2 */
+
   --color-transparent: transparent;
   --color-current: currentColor;
 
   /* Derived mixes, not new colours */
-  --color-ink-soft: color-mix(in srgb, #1b1f24 72%, #ffffff);
-  --color-ink-mute: color-mix(in srgb, #1b1f24 64%, #ffffff); /* 5:1 on white — passes AA for small text */
-  --color-line: color-mix(in srgb, #1b1f24 12%, #ffffff);
-  --color-line-dark: color-mix(in srgb, #ffffff 14%, #262b33);
-  --color-plaster-deep: #edeae4;
-  --color-plaster-soft: color-mix(in srgb, #f6f4f0 80%, #262b33);
+  --color-ink-soft: color-mix(in srgb, #ece9e4 76%, #16191f);
+  --color-ink-mute: color-mix(in srgb, #ece9e4 56%, #16191f); /* 6.2:1 on the page — passes AA */
+  --color-line: color-mix(in srgb, #ece9e4 15%, #16191f);
+  --color-line-dark: color-mix(in srgb, #ece9e4 18%, #0f1216);
+  --color-plaster-deep: #262c35; /* behind images while they load */
+  --color-plaster-soft: color-mix(in srgb, #ece9e4 74%, #0f1216); /* secondary text on the darkest bands */
 
   --font-sans: var(--font-archivo), "Archivo", ui-sans-serif, system-ui, sans-serif;
 
@@ -54,7 +78,7 @@
   }
 
   body {
-    background: var(--color-white);
+    background: var(--color-surface);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 17px;
@@ -105,7 +129,7 @@
 
   ::selection {
     background: var(--color-flame);
-    color: var(--color-ink);
+    color: var(--color-on-flame);
   }
 
   /*
@@ -120,7 +144,8 @@
     inset: 0;
     z-index: 200;
     pointer-events: none;
-    opacity: 0.045;
+    /* Lower than it was on white: grain shows more against dark */
+    opacity: 0.03;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
@@ -204,7 +229,7 @@
     padding: 0.75rem 1rem;
     border-radius: 6px;
     background: var(--color-flame);
-    color: var(--color-ink);
+    color: var(--color-on-flame);
     font-weight: 600;
     transform: translateY(-200%);
     transition: transform 0.15s var(--ease-out-expo);
@@ -256,7 +281,7 @@
 
   .btn-primary {
     background: var(--color-flame);
-    color: var(--color-ink);
+    color: var(--color-on-flame);
   }
   .btn-primary::before {
     content: "";
@@ -270,14 +295,14 @@
   }
   @media (hover: hover) {
     .btn-primary:hover {
-      color: var(--color-white);
+      color: var(--color-on-flame);
     }
     .btn-primary:hover::before {
       transform: scaleX(1);
     }
   }
   .btn-primary:focus-visible {
-    color: var(--color-white);
+    color: var(--color-on-flame);
   }
   .btn-primary:focus-visible::before {
     transform: scaleX(1);
@@ -328,7 +353,7 @@
     padding: 0.5em 0.9em;
     border-radius: 6px;
     background: var(--color-flame);
-    color: var(--color-ink);
+    color: var(--color-on-flame);
     font-weight: 600;
     font-stretch: 110%;
     line-height: 1;
@@ -347,7 +372,7 @@
   .price-tag--reversed {
     /* White, not Plaster: Ember on Plaster is 4.3:1 and just fails AA; on white it is 4.7:1 */
     background: var(--color-white);
-    color: var(--color-ember);
+    color: var(--color-on-flame);
   }
   .price-tag--sm {
     font-size: 1rem;
@@ -546,7 +571,7 @@
     bottom: 0;
     z-index: 40;
     padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
-    background: var(--color-white);
+    background: var(--color-raised);
     border-top: 1px solid var(--color-line);
     transform: translateY(110%);
     transition: transform 0.2s var(--ease-out-expo);
@@ -715,7 +740,7 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background: var(--color-white);
+    background: var(--color-surface);
   }
   @media (width >= 64rem) {
     .hero {
@@ -735,7 +760,7 @@
   .hero__lit {
     position: relative;
     z-index: 1;
-    background: var(--color-white);
+    background: var(--color-surface);
   }
   /* Warm ambient light in the top-left, as though the pilot flame is lighting the room.
      Monochrome and inside the palette, so it reads as depth rather than decoration. */
@@ -745,9 +770,10 @@
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    /* Stronger than on the light version: a dark ground swallows a subtle glow */
     background:
-      radial-gradient(60% 70% at 8% 12%, color-mix(in srgb, var(--color-flame) 13%, transparent), transparent 68%),
-      radial-gradient(50% 60% at 96% 100%, color-mix(in srgb, var(--color-cast-iron) 7%, transparent), transparent 70%);
+      radial-gradient(65% 75% at 6% 8%, color-mix(in srgb, var(--color-flame) 22%, transparent), transparent 66%),
+      radial-gradient(45% 55% at 98% 96%, color-mix(in srgb, var(--color-water) 9%, transparent), transparent 70%);
   }
   .hero__lit > * {
     position: relative;
@@ -919,7 +945,7 @@
     font-weight: 600;
     color: var(--color-ink);
     text-decoration: none;
-    background: var(--color-white);
+    background: var(--color-raised);
     transition:
       border-color 0.15s ease-out,
       color 0.15s ease-out;
@@ -1011,16 +1037,22 @@
   .section--dark {
     position: relative;
   }
-  .section--plaster {
-    background-image: linear-gradient(180deg, color-mix(in srgb, var(--color-white) 60%, transparent), transparent 42%);
-    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-white) 70%, transparent);
-    border-top: 1px solid color-mix(in srgb, var(--color-ink) 7%, transparent);
-  }
+  /* Each band carries its own ground, plus a faint light from above and a hairline top edge,
+     so the page reads as stacked surfaces rather than one flat sheet of dark. */
   .section--white {
-    background-image: linear-gradient(180deg, color-mix(in srgb, var(--color-plaster) 55%, transparent), transparent 30%);
+    background-color: var(--color-surface);
+    background-image: linear-gradient(180deg, rgb(255 255 255 / 3.5%), transparent 38%);
+    border-top: 1px solid rgb(255 255 255 / 5%);
+  }
+  .section--plaster {
+    background-color: var(--color-surface-2);
+    background-image: linear-gradient(180deg, rgb(255 255 255 / 4.5%), transparent 40%);
+    border-top: 1px solid rgb(255 255 255 / 6%);
   }
   .section--dark {
-    background-image: linear-gradient(180deg, color-mix(in srgb, var(--color-white) 6%, transparent), transparent 45%);
+    background-color: var(--color-cast-iron);
+    background-image: linear-gradient(180deg, rgb(255 255 255 / 3%), transparent 45%);
+    border-top: 1px solid rgb(255 255 255 / 5%);
   }
 
   /* ---- Services grid (H3) ---- */
@@ -1037,14 +1069,14 @@
     background: var(--color-plaster-deep);
     /* Sits on the surface rather than being cut out of it */
     box-shadow:
-      0 1px 2px color-mix(in srgb, var(--color-ink) 6%, transparent),
-      0 10px 26px -14px color-mix(in srgb, var(--color-ink) 30%, transparent);
+      0 1px 2px rgb(0 0 0 / 18%),
+      0 10px 26px -14px rgb(0 0 0 / 70%);
     transition: box-shadow 0.25s var(--ease-out-expo);
   }
   @media (hover: hover) {
     .tile:hover .tile__media {
       box-shadow:
-        0 2px 4px color-mix(in srgb, var(--color-ink) 8%, transparent),
+        0 2px 4px rgb(0 0 0 / 24%),
         0 18px 38px -16px color-mix(in srgb, var(--color-flame) 40%, transparent);
     }
   }
@@ -1098,10 +1130,10 @@
     flex-direction: column;
     border: 1px solid var(--color-ink);
     border-radius: 4px;
-    background: var(--color-white);
+    background: var(--color-raised);
     box-shadow:
-      0 1px 2px color-mix(in srgb, var(--color-ink) 6%, transparent),
-      0 14px 30px -18px color-mix(in srgb, var(--color-ink) 35%, transparent);
+      0 1px 2px rgb(0 0 0 / 18%),
+      0 14px 30px -18px rgb(0 0 0 / 70%);
     transition: transform 0.25s var(--ease-out-expo);
   }
   .package::after {
@@ -1203,7 +1235,7 @@
     width: min(20rem, 82vw);
     flex: none;
     border-left: 3px solid var(--color-flame);
-    background: var(--color-white);
+    background: var(--color-raised);
     padding: 1.25rem 1.25rem 1.25rem 1.375rem;
   }
   @keyframes marquee {
@@ -1364,7 +1396,7 @@
     font-size: 14px;
     font-weight: 600;
     paint-order: stroke;
-    stroke: var(--color-white);
+    stroke: var(--color-surface-2);
     stroke-width: 3px;
     stroke-linejoin: round;
     transition: fill 0.15s ease-out;
@@ -1696,7 +1728,7 @@
     padding: 1.25rem;
     border: 1.5px solid var(--color-line);
     border-radius: 12px;
-    background: var(--color-white);
+    background: var(--color-raised);
     color: var(--color-ink);
     text-align: left;
     cursor: pointer;
@@ -1799,7 +1831,7 @@
     margin-top: 0.15rem;
     border: 1.5px solid var(--color-ink-mute);
     border-radius: 6px;
-    background: var(--color-white);
+    background: var(--color-raised);
     transition:
       border-color 0.15s ease-out,
       background-color 0.15s ease-out;
@@ -1820,7 +1852,7 @@
   }
   .job.is-checked .job__box {
     border-color: var(--color-flame);
-    background: var(--color-plaster);
+    background: var(--color-surface-2);
   }
   .job.is-checked .job__box path {
     stroke-dashoffset: 0;
@@ -1883,7 +1915,7 @@
     height: 2.75rem;
     border: 1.5px solid var(--color-ink);
     border-radius: 6px;
-    background: var(--color-white);
+    background: var(--color-raised);
     color: var(--color-ink);
     cursor: pointer;
     transition: border-color 0.15s ease-out;
@@ -2045,7 +2077,7 @@
     padding: 1.5rem 1rem 0.5rem;
     border: 1.5px solid var(--color-line);
     border-radius: 6px;
-    background: var(--color-white);
+    background: var(--color-raised);
     color: var(--color-ink);
     font: inherit;
     line-height: 1.4;
@@ -2133,7 +2165,7 @@
     isolation: isolate;
     padding: 2rem;
     border-radius: 12px;
-    background: var(--color-plaster);
+    background: var(--color-surface-2);
     overflow: hidden;
   }
   .thanks::before {
@@ -2197,7 +2229,7 @@
     padding: 0.5rem 1rem;
     border: 1.5px solid var(--color-line);
     border-radius: 999px;
-    background: var(--color-white);
+    background: var(--color-raised);
     color: var(--color-ink);
     font-weight: 600;
     cursor: pointer;
@@ -2209,10 +2241,11 @@
   .filters__btn:hover {
     border-color: var(--color-flame);
   }
+  /* Flame, not Cast Iron: on a dark page the darkest colour reads as "off", not "selected" */
   .filters__btn[aria-pressed="true"] {
-    background: var(--color-cast-iron);
-    border-color: var(--color-cast-iron);
-    color: var(--color-white);
+    background: var(--color-flame);
+    border-color: var(--color-flame);
+    color: var(--color-on-flame);
   }
 
   /* Grid photo as a button (opens the lightbox) */
@@ -2266,7 +2299,7 @@
     height: 2.75rem;
     border-radius: 50%;
     background: var(--color-flame);
-    color: var(--color-ink);
+    color: var(--color-on-flame);
     transform: translate(-50%, -50%);
     pointer-events: none;
   }

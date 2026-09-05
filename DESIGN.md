@@ -19,7 +19,39 @@ Everything else stays quiet and disciplined.
 
 ## 3. Tokens
 
-### 3.1 Colour (CSS variables, also exposed to Tailwind as `bg-flame`, `text-ink` etc.)
+> **The site is dark.** PLAN.md Part F specifies white and warm plaster with dark reserved for
+> the header, footer, CTA band and price tags. Built that way it read as plain, and the feedback
+> after two rounds of polish was still "background too white". The whole site is now dark:
+> warm-neutral charcoals lit by the flame orange. The brand idea is unchanged — a pilot light in
+> the dark — it just runs through the entire page instead of a few bands. The table below is the
+> original light palette, kept because the *roles* still hold; §3.1a lists what each token is now.
+
+### 3.1a Dark palette (what is actually built)
+
+| Token | Value | Role |
+|---|---|---|
+| `--color-surface` | `#16191f` | The page, and any band that used to be white |
+| `--color-surface-2` | `#1c2027` | The alternating band that used to be Plaster |
+| `--color-raised` | `#232830` | Cards, inputs and controls sitting above the page |
+| `--color-cast-iron` | `#0f1216` | Header, footer, CTA band — deepest, so they still read as furniture |
+| `--color-ink` | `#ece9e4` | Primary **text** (light now; it is a text token, not a dark colour) |
+| `--color-white` | `#ffffff` | Light text, and the reversed price tag. Never a page surface |
+| `--color-on-flame` | `#14171b` | Dark text that sits **on** orange (buttons, price tags). Never on a surface |
+| `--color-flame` | `#f26b21` | Unchanged. 6.4:1 on the page |
+| `--color-ember` | `#ff8a4c` | Lightened: it now has to work as text on dark, not on white |
+| `--color-water` | `#55a8e3` | Lightened for the same reason |
+| `--color-meadow` | `#56c184` | Lightened for the same reason |
+
+Measured contrast, all comfortably past AA: body text 8.8:1, H1 14.5:1, H2 13.5:1, primary
+button 5.9:1, price tag 5.9:1, chips 12.2:1, nav and footer links 18.8:1, form inputs 12.2:1,
+floating labels 7.4:1, estimate job rows 14.5:1.
+
+Two things that would otherwise break, and how they are handled: text sitting **on orange** uses
+`--color-on-flame` (the primary button's hover keeps dark text, because white on the lightened
+Ember is unreadable), and the reversed price tag keeps a white ground with `--color-on-flame`
+text plus an orange flame glyph.
+
+### 3.1 Colour — the original light palette (superseded by §3.1a, kept for the roles)
 
 | Token | Hex | Job |
 |---|---|---|

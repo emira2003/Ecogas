@@ -14,7 +14,7 @@ export function EstimateCallout({ category, place }: EstimateCalloutProps) {
   const href = category ? `/estimate?cat=${category}` : "/estimate";
   return (
     <Section bg="plaster" padding="compact" aria-labelledby="estimate-callout-title">
-      <div className="flex flex-col gap-6 rounded-lg border border-ink bg-white p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col gap-6 rounded-lg border border-line bg-raised p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 id="estimate-callout-title" className="h3">
             See a price now

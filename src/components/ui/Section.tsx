@@ -15,11 +15,15 @@ interface SectionProps extends Omit<ComponentProps<"section">, "className"> {
   children: ReactNode;
 }
 
-/* `section--*` adds the surface treatment (light from above, hairline edge) — see globals.css */
+/*
+ * `section--*` carries both the background colour and its surface treatment (light from above,
+ * hairline edge) — see globals.css. The names are historical: since the site went dark, "white"
+ * is the deepest band, "plaster" the lighter alternating one, and "cast-iron" the darkest.
+ */
 const bgClasses: Record<Background, string> = {
-  white: "bg-white text-ink section--white",
-  plaster: "bg-plaster text-ink section--plaster",
-  "cast-iron": "bg-cast-iron text-white section--dark",
+  white: "text-ink section--white",
+  plaster: "text-ink section--plaster",
+  "cast-iron": "text-ink section--dark",
 };
 
 const paddingClasses = {
