@@ -532,11 +532,11 @@ _None yet. Ideas that come up during the build go here, not into the code._
 
   The rest were ranges. **Ranges a customer reads now use the word "to"**, not a hyphen:
   "£150 to £300" rather than "£150-£300", because a hyphen between two prices can be misread
-  as a minus sign, and in a narrow price badge it reads as one number. ,
-   and  all changed together, and the two unit tests that assert on those
-  strings changed with them. No catalogue item currently uses , so this path
-  is live only in the tests today, but it is what will show the moment one is added. Ranges
-  inside code comments ("120-180 words") just use a hyphen.
+  as a minus sign, and in a narrow price badge it reads as one number. `formatLine`,
+  `formatTotal` and `PriceTag` all changed together, and the two unit tests that assert on
+  those strings changed with them. No catalogue item currently uses `priceType: "range"`, so
+  this path is live only in the tests today, but it is what will show the moment one is added.
+  Ranges inside code comments ("120-180 words") just use a hyphen.
 
-  The guard test is now  and covers both characters. Verified
+  The guard test is now `src/lib/no-long-dashes.test.ts` and covers both characters. Verified
   again against every rendered page including the 404: zero em dashes, zero en dashes.
