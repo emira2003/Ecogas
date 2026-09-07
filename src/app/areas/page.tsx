@@ -9,7 +9,7 @@ import { Section } from "@/components/ui/Section";
 import { CoverageMap } from "@/components/home/CoverageMap";
 
 export const metadata: Metadata = {
-  title: { absolute: "Areas We Cover – Bolton & the North West | Eco Gas" },
+  title: { absolute: "Areas We Cover: Bolton & the North West | Eco Gas" },
   description:
     "Eco Gas covers Bolton, Manchester, Blackburn, Oldham, Stockport, Warrington, Wigan, Liverpool and Preston for boiler replacement, heating and plumbing.",
   alternates: { canonical: "/areas" },

@@ -525,8 +525,18 @@ _None yet. Ideas that come up during the build go here, not into the code._
   **Verified against the rendered pages, not just the source:** all 25 URLs in the sitemap were
   fetched and scanned. Zero em dashes.
 
-  **Still outstanding: 21 en dashes**, a different and slightly shorter character, all of them
-  in page titles ("Our Work – Boiler & Bathroom Installations | Eco Gas") and therefore in the
-  browser tab and in Google results. They were left because they were not what was asked for
-  and titles carry SEO weight, but they look near enough identical that they are probably worth
-  changing to colons. Xhezmi has been asked.
+  **En dashes went too, on Xhezmi’s say-so.** All 38 of them. Seven were page titles, so they
+  showed in the browser tab and in Google results; those now use a colon ("Our Work: Boiler &
+  Bathroom Installations | Eco Gas") and each title came out a character shorter, so all seven
+  stay inside the 60-character limit. The enquiry email subject changed the same way.
+
+  The rest were ranges. **Ranges a customer reads now use the word "to"**, not a hyphen:
+  "£150 to £300" rather than "£150-£300", because a hyphen between two prices can be misread
+  as a minus sign, and in a narrow price badge it reads as one number. ,
+   and  all changed together, and the two unit tests that assert on those
+  strings changed with them. No catalogue item currently uses , so this path
+  is live only in the tests today, but it is what will show the moment one is added. Ranges
+  inside code comments ("120-180 words") just use a hyphen.
+
+  The guard test is now  and covers both characters. Verified
+  again against every rendered page including the 404: zero em dashes, zero en dashes.

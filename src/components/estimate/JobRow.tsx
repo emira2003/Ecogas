@@ -15,7 +15,7 @@ interface JobRowProps {
   onQty: (id: string, delta: 1 | -1) => void;
 }
 
-/** PriceTag props for a catalogue item: "£90", "from £350", "£150 – £300" */
+/** PriceTag props for a catalogue item: "£90", "from £350", "£150 to £300" */
 export const itemPriceProps = (item: EstimateItem) =>
   item.priceType === "range"
     ? { amount: item.min ?? 0, amountTo: item.max }
@@ -26,7 +26,7 @@ export const itemPriceProps = (item: EstimateItem) =>
 /**
  * One job in Step 2 (PLAN.md D4, F2-E3): a real checkbox inside a label so the whole row is the
  * hit target, a flame-coloured tick that draws in, the PriceTag pulsing once when ticked,
- * and a 1–10 quantity stepper for items priced "each".
+ * and a 1-10 quantity stepper for items priced "each".
  */
 export function JobRow({ item, checked, qty, onToggle, onQty }: JobRowProps) {
   const [pulsing, setPulsing] = useState(false);

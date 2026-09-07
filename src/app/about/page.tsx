@@ -12,7 +12,7 @@ import { TrustStrip } from "@/components/ui/TrustStrip";
 import { Brands } from "@/components/home/Brands";
 
 export const metadata: Metadata = {
-  title: { absolute: "About Eco Gas – Gas Safe Engineers in Bolton Since 2000" },
+  title: { absolute: "About Eco Gas: Gas Safe Engineers in Bolton Since 2000" },
   description:
     "Eco Gas is a small team of Gas Safe registered plumbing and heating engineers on Plodder Lane, Bolton, fitting boilers, heating and bathrooms since 2000.",
   alternates: { canonical: "/about" },

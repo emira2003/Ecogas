@@ -1008,7 +1008,7 @@
   }
 
   /* The choreography runs from first paint on the plan's own clock (F2-H1): dim for 300ms,
-     light spreads 300–900ms, words rise as it passes, PriceTag stamps at ~1s, chips follow.
+     light spreads 300-900ms, words rise as it passes, PriceTag stamps at ~1s, chips follow.
      It is CSS-driven so it never waits for JavaScript; JavaScript only skips it ("lit")
      when it can decide early enough, and freezes the final state when it is over. */
   html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__lit,

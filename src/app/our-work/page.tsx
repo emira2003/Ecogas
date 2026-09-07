@@ -8,7 +8,7 @@ import { Section } from "@/components/ui/Section";
 import { GalleryGrid } from "@/components/work/GalleryGrid";
 
 export const metadata: Metadata = {
-  title: { absolute: "Our Work – Boiler & Bathroom Installations | Eco Gas" },
+  title: { absolute: "Our Work: Boiler & Bathroom Installations | Eco Gas" },
   description:
     "Photos of recent boiler installations, heating systems, bathrooms and plumbing jobs by Eco Gas across Bolton and the North West, with before and after comparisons.",
   alternates: { canonical: "/our-work" },

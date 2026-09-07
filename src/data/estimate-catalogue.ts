@@ -10,7 +10,7 @@
  *   `priceType` is one of:
  *     "fixed" → shows "£90"            (needs `price`)
  *     "from"  → shows "from £350"      (needs `price`)
- *     "range" → shows "£150 – £300"    (needs `min` and `max`)
+ *     "range" → shows "£150 to £300"    (needs `min` and `max`)
  *   Set `unit: "each"` if the customer can pick a quantity (e.g. radiators). Leave it out otherwise.
  *   `note` is optional small print shown under the job.
  *

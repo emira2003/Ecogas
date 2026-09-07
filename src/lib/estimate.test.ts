@@ -45,10 +45,10 @@ describe("calculateTotal", () => {
     assert.deepEqual(total, { kind: "from", low: 440, high: 440 });
     assert.equal(formatTotal(total), "Estimated from £440");
   });
-  it("gives a low–high range when a range is included", () => {
+  it("gives a low to high range when a range is included", () => {
     const total = calculateTotal([lineFor(fixed, 1), lineFor(range, 1)]);
     assert.deepEqual(total, { kind: "range", low: 240, high: 390 });
-    assert.equal(formatTotal(total), "Estimated £240 – £390");
+    assert.equal(formatTotal(total), "Estimated £240 to £390");
   });
   it("is zero with nothing picked", () => {
     assert.deepEqual(calculateTotal([]), { kind: "total", low: 0, high: 0 });
@@ -71,7 +71,7 @@ describe("quantities", () => {
     assert.equal(line.qty, 1);
     assert.equal(line.low, 90);
   });
-  it("clamps quantity to 1–10", () => {
+  it("clamps quantity to 1-10", () => {
     assert.equal(clampQty(0), 1);
     assert.equal(clampQty(11), 10);
     assert.equal(clampQty(4.6), 5);
@@ -80,7 +80,7 @@ describe("quantities", () => {
   it("multiplies ranges by quantity", () => {
     const rangeEach: EstimateItem = { ...range, unit: "each" };
     const line = lineFor(rangeEach, 2);
-    assert.equal(formatLine(line), "£300 – £600");
+    assert.equal(formatLine(line), "£300 to £600");
   });
 });
 

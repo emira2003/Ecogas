@@ -45,7 +45,7 @@ const buildEmail = (data: Enquiry): string => {
   }).format(new Date());
 
   const lines: string[] = [
-    "New website enquiry – Eco Gas",
+    "New website enquiry: Eco Gas",
     "",
     `Name: ${data.name}`,
     `Phone: ${data.phone}`,
@@ -103,7 +103,7 @@ export async function POST(request: Request) {
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({
         access_key: accessKey,
-        subject: "New website enquiry – Eco Gas",
+        subject: "New website enquiry: Eco Gas",
         from_name: "Eco Gas website",
         replyto: data.email,
         name: data.name,

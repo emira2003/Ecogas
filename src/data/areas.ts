@@ -3,7 +3,7 @@
  *
  * To add an area: copy a block, give it a new unique `slug` (lowercase, no spaces),
  * add its position on the map drawing, and write a fresh intro. Never copy another town’s.
- * Each intro names 2–3 real districts or landmarks so the page is clearly about that town.
+ * Each intro names 2-3 real districts or landmarks so the page is clearly about that town.
  */
 
 export type AreaSlug =
@@ -28,14 +28,14 @@ export interface Area {
   isBase?: boolean;
   /** Position on the coverage map. Real coordinates, projected. See data/nw-map.ts. */
   map: { x: number; y: number };
-  /** Unique intro, 120–180 words, in paragraphs. */
+  /** Unique intro, 120-180 words, in paragraphs. */
   intro: string[];
   /** One line on how far we travel to get here. */
   travelNote: string;
   h1: string;
   /** ≤ 60 characters */
   metaTitle: string;
-  /** 120–155 characters */
+  /** 120-155 characters */
   metaDescription: string;
 }
 

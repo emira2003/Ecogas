@@ -17,8 +17,8 @@ export const EASE_ENTRANCE = "cubic-bezier(0.22, 1, 0.36, 1)";
 export const EASE_ENTRANCE_GSAP = "expo.out";
 
 export const DURATION = {
-  micro: 0.2, // 150–250ms
-  reveal: 0.6, // 400–700ms
+  micro: 0.2, // 150-250ms
+  reveal: 0.6, // 400-700ms
   counter: 0.9,
   intro: 1.2, // Ignition hero, total
 } as const;

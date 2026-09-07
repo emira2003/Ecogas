@@ -9,7 +9,7 @@ import * as z from "zod/mini";
 export const BEST_TIMES = ["Morning", "Afternoon", "Evening", "Any"] as const;
 export type BestTime = (typeof BEST_TIMES)[number];
 
-/** Digits, spaces and a leading +, 10–15 characters in total. */
+/** Digits, spaces and a leading +, 10-15 characters in total. */
 const UK_PHONE = /^\+?[0-9 ]{10,15}$/;
 /** Lenient UK postcode: "BL5 1AQ", "bl51aq", "M1 1AA", "SW1A 1AA" */
 const UK_POSTCODE = /^[A-Z]{1,2}[0-9][A-Z0-9]?\s?[0-9][A-Z]{2}$/;

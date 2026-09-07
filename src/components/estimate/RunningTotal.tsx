@@ -24,7 +24,7 @@ export function RunningTotal({ total, count, onBack, onSee }: RunningTotalProps)
         ? `Estimated total ${formatMoney(l)}`
         : total.kind === "from"
           ? `Estimated from ${formatMoney(l)}`
-          : `Estimated ${formatMoney(l)} – ${formatMoney(h)}`;
+          : `Estimated ${formatMoney(l)} to ${formatMoney(h)}`;
 
   const picked = `${count} ${count === 1 ? "job" : "jobs"} picked`;
 

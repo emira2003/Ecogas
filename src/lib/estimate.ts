@@ -95,7 +95,7 @@ export const calculateTotal = (lines: LineItem[]): EstimateTotal => ({
   high: lines.reduce((sum, l) => sum + l.high, 0),
 });
 
-/** "Estimated total £X" / "Estimated from £X" / "Estimated £low – £high" */
+/** "Estimated total £X" / "Estimated from £X" / "Estimated £low to £high" */
 export const formatTotal = (total: EstimateTotal): string => {
   switch (total.kind) {
     case "total":
@@ -103,11 +103,11 @@ export const formatTotal = (total: EstimateTotal): string => {
     case "from":
       return `Estimated from ${formatMoney(total.low)}`;
     case "range":
-      return `Estimated ${formatMoney(total.low)} – ${formatMoney(total.high)}`;
+      return `Estimated ${formatMoney(total.low)} to ${formatMoney(total.high)}`;
   }
 };
 
-/** The price of one line as shown in the table: "£90", "from £350", "£150 – £300" (already multiplied by quantity). */
+/** The price of one line as shown in the table: "£90", "from £350", "£150 to £300" (already multiplied by quantity). */
 export const formatLine = (line: LineItem): string => {
   switch (line.item.priceType) {
     case "fixed":
@@ -115,7 +115,7 @@ export const formatLine = (line: LineItem): string => {
     case "from":
       return `from ${formatMoney(line.low)}`;
     case "range":
-      return `${formatMoney(line.low)} – ${formatMoney(line.high)}`;
+      return `${formatMoney(line.low)} to ${formatMoney(line.high)}`;
   }
 };
 

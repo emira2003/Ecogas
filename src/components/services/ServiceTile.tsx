@@ -6,7 +6,7 @@ import { formatMoney } from "@/lib/format";
 
 interface ServiceTileProps {
   service: Service;
-  /** Show the 2–3 line summary under the name (services overview) */
+  /** Show the 2-3 line summary under the name (services overview) */
   withSummary?: boolean;
   /** Extra classes on the link (e.g. column spans) */
   className?: string;

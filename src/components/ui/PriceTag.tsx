@@ -3,7 +3,7 @@ import { formatMoney } from "@/lib/format";
 interface PriceTagProps {
   /** Whole pounds, e.g. 1999 */
   amount?: number;
-  /** For ranges: the upper amount, e.g. 300 → "£150 – £300" */
+  /** For ranges: the upper amount, e.g. 300 → "£150 to £300" */
   amountTo?: number;
   /** Word before the price, e.g. "from". Leave out for a fixed price. */
   lead?: string;
@@ -39,7 +39,7 @@ export function PriceTag({
     text ??
     (amount !== undefined
       ? amountTo !== undefined
-        ? `${formatMoney(amount)} – ${formatMoney(amountTo)}`
+        ? `${formatMoney(amount)} to ${formatMoney(amountTo)}`
         : formatMoney(amount)
       : "");
 

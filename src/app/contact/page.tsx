@@ -11,7 +11,7 @@ import { EnquiryForm } from "@/components/estimate/EnquiryForm";
 import { MapEmbed } from "@/components/layout/MapEmbed";
 
 export const metadata: Metadata = {
-  title: { absolute: "Contact Eco Gas – Bolton Plumbing & Heating" },
+  title: { absolute: "Contact Eco Gas: Bolton Plumbing & Heating" },
   description:
     "Call, WhatsApp or message Eco Gas, Gas Safe plumbing and heating engineers at 992a Plodder Lane, Bolton. We reply to every enquiry.",
   alternates: { canonical: "/contact" },

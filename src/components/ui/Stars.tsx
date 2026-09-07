@@ -1,7 +1,7 @@
 import { Star } from "lucide-react";
 
 interface StarsProps {
-  /** 0–5, decimals allowed (4.9 shows a 90% last star) */
+  /** 0-5, decimals allowed (4.9 shows a 90% last star) */
   rating: number;
   size?: number;
   /**

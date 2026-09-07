@@ -47,7 +47,7 @@ export const business = {
 
   email: "[EMAIL]",
   gasSafeNumber: "[GAS SAFE NUMBER]",
-  /** Plain-English opening hours, e.g. "Mon–Fri 8am–6pm, Sat 9am–1pm". */
+  /** Plain-English opening hours, e.g. "Mon to Fri 8am to 6pm, Sat 9am to 1pm". */
   openingHours: "[HOURS]",
 
   /** Public website address (www is the primary). Set NEXT_PUBLIC_SITE_URL in .env.local / Vercel. */

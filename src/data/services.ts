@@ -5,7 +5,7 @@
  * `price.confirmed: false` means it is an EXAMPLE price still to be confirmed by the client (see TODO.md).
  *
  * To change the words on a page: edit the text below. Keep intros to two short paragraphs,
- * "included" to 5–7 lines and "good to know" to 2–4 lines. Anything in [SQUARE BRACKETS]
+ * "included" to 5-7 lines and "good to know" to 2-4 lines. Anything in [SQUARE BRACKETS]
  * is waiting on the client.
  */
 import type { EstimateCategoryId } from "./estimate-catalogue";
@@ -46,11 +46,11 @@ export interface Service {
   /** The page’s single H1. */
   h1: string;
   heroImage: { src: string; alt: string };
-  /** Two paragraphs, 120–180 words total, unique to this page. Mentions Bolton and 2–3 nearby towns. */
+  /** Two paragraphs, 120-180 words total, unique to this page. Mentions Bolton and 2-3 nearby towns. */
   intro: string[];
-  /** 5–7 bullets */
+  /** 5-7 bullets */
   included: string[];
-  /** 2–4 bullets */
+  /** 2-4 bullets */
   goodToKnow: string[];
   price: ServicePrice;
   /** Which estimate-tool category this service links to (/estimate?cat=…). */
@@ -61,7 +61,7 @@ export interface Service {
   related: ServiceSlug[];
   /** ≤ 60 characters */
   metaTitle: string;
-  /** 120–155 characters, contains the service and "Bolton". */
+  /** 120-155 characters, contains the service and "Bolton". */
   metaDescription: string;
   /** Only the Boiler Replacement page shows the "How the day goes" timeline. */
   showDayTimeline?: boolean;
@@ -118,7 +118,7 @@ export const services: Service[] = [
       },
     ],
     related: ["central-heating-installation-bolton", "boiler-service-repair-bolton"],
-    metaTitle: "Boiler Replacement Bolton – New Boilers from £1,999 | Eco Gas",
+    metaTitle: "Boiler Replacement Bolton: New Boilers from £1,999 | Eco Gas",
     metaDescription:
       "Boiler replacement in Bolton from £1,999 with a 10-year manufacturer’s warranty. Gas Safe engineers since 2000 fitting Worcester Bosch and Vaillant.",
     showDayTimeline: true,
@@ -427,7 +427,7 @@ export const services: Service[] = [
       },
     ],
     related: ["bathroom-installation-bolton", "boiler-service-repair-bolton"],
-    metaTitle: "Plumbers in Bolton – Domestic Plumbing | Eco Gas",
+    metaTitle: "Plumbers in Bolton: Domestic Plumbing | Eco Gas",
     metaDescription:
       "Plumbers in Bolton for everyday domestic plumbing: leaks, taps, toilets, blocked drains and burst pipes fixed properly from £75. Trading since 2000.",
   },
