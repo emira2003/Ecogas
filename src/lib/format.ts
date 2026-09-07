@@ -1,5 +1,5 @@
 /**
- * Money and number formatting. UK style: £1,999 — no pence unless needed.
+ * Money and number formatting. UK style: £1,999, no pence unless needed.
  */
 
 const gbp = new Intl.NumberFormat("en-GB", {

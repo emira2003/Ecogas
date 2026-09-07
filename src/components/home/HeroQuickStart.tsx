@@ -11,7 +11,7 @@ const chips: { label: string; cat: EstimateCategoryId; icon: typeof Flame; water
   { label: "Gas safety & servicing", cat: "gas-safety", icon: ShieldCheck },
 ];
 
-/** "What do you need help with?" — five chips that jump straight into the estimate tool. */
+/** "What do you need help with?": five chips that jump straight into the estimate tool. */
 export function HeroQuickStart() {
   return (
     <div className="mt-10">

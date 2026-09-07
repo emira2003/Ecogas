@@ -7,7 +7,7 @@ interface RevealProps {
   /** Which element to render, e.g. "h2", "p", "div", "ul" */
   as?: ElementType;
   /**
-   * Split the text into words that rise out of a clipped mask (for H1/H2 — F2-G3).
+   * Split the text into words that rise out of a clipped mask (for H1/H2, F2-G3).
    * Children must be a plain string in this mode.
    */
   split?: boolean;

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/estimate" },
 };
 
-/** /estimate — no CTA band and no sticky mobile bar on this page (PLAN.md D2). */
+/** /estimate: no CTA band and no sticky mobile bar on this page (PLAN.md D2). */
 export default function EstimatePage() {
   return (
     <>

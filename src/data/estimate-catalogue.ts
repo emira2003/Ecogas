@@ -1,5 +1,5 @@
 /**
- * INSTANT ESTIMATE CATALOGUE — the jobs and prices the estimate tool shows.
+ * INSTANT ESTIMATE CATALOGUE: the jobs and prices the estimate tool shows.
  *
  * HOW TO CHANGE A PRICE
  *   Find the job by its `name`, change the number after `price:` (or `min:` / `max:` for a range).

@@ -2,7 +2,7 @@
  * The nine areas Eco Gas covers. Each one becomes a page at /areas/[slug].
  *
  * To add an area: copy a block, give it a new unique `slug` (lowercase, no spaces),
- * add its position on the map drawing, and write a fresh intro — never copy another town’s.
+ * add its position on the map drawing, and write a fresh intro. Never copy another town’s.
  * Each intro names 2–3 real districts or landmarks so the page is clearly about that town.
  */
 
@@ -24,9 +24,9 @@ export interface Area {
   postcodeArea: string;
   /** County / region, used in the "Areas we cover" sentence. */
   region: "Greater Manchester" | "Lancashire" | "Merseyside" | "Cheshire";
-  /** true for Bolton — where the business is based. */
+  /** true for Bolton, where the business is based. */
   isBase?: boolean;
-  /** Position on the coverage map. Real coordinates, projected — see data/nw-map.ts. */
+  /** Position on the coverage map. Real coordinates, projected. See data/nw-map.ts. */
   map: { x: number; y: number };
   /** Unique intro, 120–180 words, in paragraphs. */
   intro: string[];

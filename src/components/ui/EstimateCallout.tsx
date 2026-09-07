@@ -9,7 +9,7 @@ interface EstimateCalloutProps {
   place?: string;
 }
 
-/** "See a price now" — the estimate call-out on service and area pages (PLAN.md D3). */
+/** "See a price now": the estimate call-out on service and area pages (PLAN.md D3). */
 export function EstimateCallout({ category, place }: EstimateCalloutProps) {
   const href = category ? `/estimate?cat=${category}` : "/estimate";
   return (

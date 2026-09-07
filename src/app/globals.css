@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Tokens — see DESIGN.md §3. The default Tailwind palette is switched off so
+   Tokens: see DESIGN.md §3. The default Tailwind palette is switched off so
    every colour on the site comes from this list.
 --------------------------------------------------------------------------- */
 /*
@@ -9,8 +9,8 @@
  *
  * The site was white and warm plaster with dark reserved for the header, footer and CTA band.
  * That read as plain and, in Xhezmi's words, "still too white", so the whole site is now dark:
- * warm-neutral charcoals lit by the flame orange. The brand idea is unchanged — a pilot light in
- * the dark — it now runs through the whole page instead of a few bands.
+ * warm-neutral charcoals lit by the flame orange. The brand idea is unchanged, a pilot light in
+ * the dark, and it now runs through the whole page instead of a few bands.
  *
  * Token roles (the names are historical; what matters is the role):
  *   --color-white ....... stays pure white. It means "light text on dark", never a page surface.
@@ -26,7 +26,7 @@
   /*
    * Flame is the brand orange. It is used as a fill (buttons, borders) anywhere, and as text
    * ONLY on the dark bands, where it clears 5.3:1. Ember is the same orange darkened until it
-   * works as text on the light bands — 2.75:1 vs 5.5:1, so the two are not interchangeable.
+   * works as text on the light bands: 2.75:1 vs 5.5:1, so the two are not interchangeable.
    */
   --color-flame: #f26b21;
   --color-ember: #a8430b;
@@ -65,7 +65,7 @@
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
 
   --container-site: 1200px;
-  --breakpoint-xs: 25rem; /* 400px — marquee/grid switch (F2-H7) */
+  --breakpoint-xs: 25rem; /* 400px, marquee/grid switch (F2-H7) */
 }
 
 /* ---------------------------------------------------------------------------
@@ -173,7 +173,7 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Typography — DESIGN.md §3.2
+   Typography: DESIGN.md §3.2
 --------------------------------------------------------------------------- */
 @utility h1 {
   font-weight: 800;
@@ -242,7 +242,7 @@
    Components
 --------------------------------------------------------------------------- */
 @layer components {
-  /* Skip link — visible only when focused */
+  /* Skip link: visible only when focused */
   .skip-link {
     position: fixed;
     top: 0.75rem;
@@ -602,7 +602,7 @@
     transform: translateY(0);
   }
 
-  /* ---- Reveal (G3) — hidden state only exists once JavaScript has run ---- */
+  /* ---- Reveal (G3): hidden state only exists once JavaScript has run ---- */
   .reveal-word {
     display: inline-block;
     overflow: hidden;
@@ -983,7 +983,7 @@
     opacity: 1;
   }
 
-  /* Dim state (pending) — only with JS, first visit, motion allowed */
+  /* Dim state (pending): only with JS, first visit, motion allowed */
   html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__dark,
   html.js:not(.intro-seen) .hero[data-intro="play"] .hero__dark {
     display: block;
@@ -1171,7 +1171,7 @@
   }
   /*
    * Section bands. Each is slightly transparent so the fixed light behind the page shows
-   * through, and each carries a fine blueprint grid — the same drawing language as the
+   * through, and each carries a fine blueprint grid, the same drawing language as the
    * illustrations, so the background belongs to an engineering business rather than being
    * decoration. Grid lines are drawn with a repeating gradient, which costs nothing.
    */
@@ -1202,7 +1202,7 @@
   }
   /*
    * The one dark band between the hero and the closing call to action. Its grid and top
-   * highlight have to invert — the light bands draw both in ink, which would be invisible
+   * highlight have to invert: the light bands draw both in ink, which would be invisible
    * here, and the 55% white highlight would read as a glare across the top of the section.
    */
   .section--dark {

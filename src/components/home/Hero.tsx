@@ -11,7 +11,7 @@ import { PilotFlame } from "./PilotFlame";
 
 const TITLE = "Boiler replacement in Bolton, done properly.";
 const SUBLINE =
-  "Gas Safe engineers since 2000. New boilers from £1,999 with a 10-year manufacturer’s warranty — and an honest estimate before we’ve even knocked on your door.";
+  "Gas Safe engineers since 2000. New boilers from £1,999 with a 10-year manufacturer’s warranty, and an honest estimate before we’ve even knocked on your door.";
 
 /**
  * Home hero (PLAN.md D3 §1): 7/5 split on desktop, stacked on mobile.

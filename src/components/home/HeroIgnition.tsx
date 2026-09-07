@@ -34,7 +34,7 @@ export function HeroIgnition({ children, className = "" }: { children: ReactNode
       try {
         sessionStorage.setItem(INTRO_KEY, "1");
       } catch {
-        /* private mode etc. — the intro will just play again next time */
+        /* private mode etc: the intro will just play again next time */
       }
     };
 
@@ -74,13 +74,13 @@ export function HeroIgnition({ children, className = "" }: { children: ReactNode
         timers.push(window.setTimeout(skip, LIGHT_STARTS_MS - sincePaint));
         img.decode().then(play).catch(skip);
       } else {
-        // The CSS choreography is already under way — let it finish, then freeze the lit state
+        // The CSS choreography is already under way, so let it finish, then freeze the lit state
         play();
       }
       markSeen();
     }
 
-    // Warm glow following the pointer — desktop only, after the intro
+    // Warm glow following the pointer, desktop only, after the intro
     let raf = 0;
     const onMove = (e: PointerEvent) => {
       if (raf) return;

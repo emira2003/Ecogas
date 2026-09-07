@@ -21,7 +21,7 @@ const hasText = (value: string) => Boolean(value) && !isPlaceholder(value) && !v
 
 type JsonLd = Record<string, unknown>;
 
-/** The business itself — on every page. */
+/** The business itself, on every page. */
 export const localBusinessJsonLd = (): JsonLd => {
   const data: JsonLd = {
     "@context": "https://schema.org",
@@ -51,7 +51,7 @@ export const localBusinessJsonLd = (): JsonLd => {
   const sameAs = [business.social.facebook, business.social.instagram, business.reviews.url].filter(hasText);
   if (sameAs.length > 0) data.sameAs = sameAs;
 
-  // Opening hours: added once the client confirms them (see TODO.md) — needs day-by-day times,
+  // Opening hours: added once the client confirms them (see TODO.md), needs day-by-day times,
   // e.g. { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", …], opens: "08:00", closes: "18:00" }
 
   return data;

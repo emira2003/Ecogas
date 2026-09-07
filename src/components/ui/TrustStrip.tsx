@@ -23,7 +23,7 @@ export function TrustStrip({ bg = "white", className = "" }: TrustStripProps) {
   const [state, setState] = useState<"pending" | "ready" | "in">("pending");
 
   // Step 1: give every stroke a length of 1 so CSS can draw it from 0 → 1, then mark "ready".
-  // With reduced motion nothing happens here — the CSS shows the icons as they are.
+  // With reduced motion nothing happens here: the CSS shows the icons as they are.
   useEffect(() => {
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;

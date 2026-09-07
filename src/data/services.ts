@@ -96,7 +96,7 @@ export const services: Service[] = [
       "Prices are a guide. We confirm your exact price after a free look at the job.",
       "Combi boilers heat water on demand and suit most homes without a hot water cylinder; system and regular boilers suit larger homes with more bathrooms.",
       "Manufacturers usually require an annual service to keep the warranty valid. We can do that for you.",
-      "Prices [include / exclude — CLIENT TO CONFIRM] VAT.",
+      "Prices [include / exclude - CLIENT TO CONFIRM] VAT.",
     ],
     price: { type: "from", amount: 1999, confirmed: true },
     estimateCategory: "boilers",
@@ -128,7 +128,7 @@ export const services: Service[] = [
     name: "Full Central Heating Systems",
     shortName: "Central heating",
     summary:
-      "Complete new heating systems — boiler, radiators, pipework and controls — designed around your home and fitted by Gas Safe engineers.",
+      "Complete new heating systems: boiler, radiators, pipework and controls, designed around your home and fitted by Gas Safe engineers.",
     h1: "Central heating installation in Bolton",
     heroImage: {
       src: "/images/photos/radiator-valve-fitting.jpg",
@@ -335,7 +335,7 @@ export const services: Service[] = [
     name: "Bathroom Installations",
     shortName: "Bathrooms",
     summary:
-      "Full bathroom refits and single replacements — showers, baths, basins and toilets — plumbed and finished properly.",
+      "Full bathroom refits and single replacements: showers, baths, basins and toilets, plumbed and finished properly.",
     h1: "Bathroom installation in Bolton",
     heroImage: {
       src: "/images/services/bathroom-contemporary.jpg",
@@ -343,7 +343,7 @@ export const services: Service[] = [
     },
     intro: [
       "A good bathroom is mostly good plumbing you never see: pipework that doesn’t knock, a shower with the pressure you expected and a bath that drains without leaving a puddle. We handle the strip-out and all the plumbing for full bathroom installations, and we fit single items such as showers, baths, basins and toilets when you don’t need the whole room doing.",
-      "We install bathrooms across Bolton, Horwich, Egerton and Bury. Tiling, electrics and decorating are [arranged through trades we work with — CLIENT TO CONFIRM] or by you, and we’ll tell you honestly what order things need to happen in so the job runs smoothly and nothing gets done twice, whether that’s a full refit or a single new shower.",
+      "We install bathrooms across Bolton, Horwich, Egerton and Bury. Tiling, electrics and decorating are [arranged through trades we work with - CLIENT TO CONFIRM] or by you, and we’ll tell you honestly what order things need to happen in so the job runs smoothly and nothing gets done twice, whether that’s a full refit or a single new shower.",
     ],
     included: [
       "Old suite stripped out",
@@ -355,7 +355,7 @@ export const services: Service[] = [
     ],
     goodToKnow: [
       "A full refit takes several days; single items usually take a day or less.",
-      "Tiling and electrics [included / arranged separately — CLIENT TO CONFIRM].",
+      "Tiling and electrics [included / arranged separately - CLIENT TO CONFIRM].",
       "Prices are a guide. We confirm your exact price after a free look at the room.",
     ],
     price: { type: "from", amount: 3500, confirmed: false }, // EXAMPLE
@@ -373,7 +373,7 @@ export const services: Service[] = [
       },
       {
         question: "Do you supply the suite, or do I?",
-        answer: "Either. Bring your own, or [we can source one for you — CLIENT TO CONFIRM].",
+        answer: "Either. Bring your own, or [we can source one for you - CLIENT TO CONFIRM].",
       },
     ],
     related: ["plumber-bolton", "central-heating-installation-bolton"],
@@ -385,7 +385,7 @@ export const services: Service[] = [
     slug: "plumber-bolton",
     name: "General Domestic Plumbing",
     shortName: "Plumbing",
-    summary: "Leaks, taps, toilets, blocked drains, outside taps and burst pipes — everyday plumbing fixed properly, from £75.",
+    summary: "Leaks, taps, toilets, blocked drains, outside taps and burst pipes: everyday plumbing fixed properly, from £75.",
     h1: "Plumbers in Bolton for everyday domestic plumbing",
     heroImage: {
       src: "/images/photos/pipe-wrench.jpg",
@@ -413,7 +413,7 @@ export const services: Service[] = [
     faqs: [
       {
         question: "Do you charge a call-out fee?",
-        answer: "[CLIENT TO CONFIRM — e.g. no separate call-out fee; the job price includes finding the fault.]",
+        answer: "[CLIENT TO CONFIRM - e.g. no separate call-out fee; the job price includes finding the fault.]",
       },
       {
         question: "Can you come today?",

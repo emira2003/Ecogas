@@ -1,5 +1,5 @@
 /**
- * Instant Estimate pricing (PLAN.md D4). Pure functions only — no React, no browser.
+ * Instant Estimate pricing (PLAN.md D4). Pure functions only: no React, no browser.
  * This is the ONLY place totals are worked out, and it is covered by unit tests
  * (estimate.test.ts). Prices come from src/data/estimate-catalogue.ts.
  */

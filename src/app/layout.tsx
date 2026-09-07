@@ -74,7 +74,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <JsonLd data={[localBusinessJsonLd()]} />
         {/* Vercel's cookie-free analytics: only on Vercel, where its script exists (avoids a 404 locally) */}
         {process.env.VERCEL ? <Analytics /> : null}
-        {/* Google Analytics 4 — only if the client asks for it; it would need a cookie banner. To enable:
+        {/* Google Analytics 4: only if the client asks for it; it would need a cookie banner. To enable:
             <Script src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX" strategy="afterInteractive" />
             <Script id="ga4" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-XXXXXXX')`}</Script>
         */}

@@ -13,7 +13,7 @@ import { Button } from "./Button";
  * the band is off screen and are replaced by a still gradient with reduced motion.
  *
  * A warm domestic photograph sits behind all of it, heavily scrimmed. It is atmosphere for
- * "a warmer home", not a claim about a particular job, so a library image is honest here —
+ * "a warmer home", not a claim about a particular job, so a library image is honest here,
  * unlike Our Work or the team photo, which have to be Eco Gas's own.
  */
 export function CTABand() {

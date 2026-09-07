@@ -28,7 +28,7 @@ export function Footer() {
         <div>
           <Logo />
           <p className="mt-4 max-w-xs text-plaster-soft">{business.description}</p>
-          {/* Gas Safe logo slot — the client supplies the official file; we never draw it. */}
+          {/* Gas Safe logo slot: the client supplies the official file; we never draw it. */}
           <p className="small-text mt-6 text-plaster-soft">
             Gas Safe registered
             <br />
@@ -140,7 +140,7 @@ export function Footer() {
               </li>
             </ul>
           </nav>
-          {/* Website credit — ready to switch on:
+          {/* Website credit, ready to switch on:
           <p>
             Website by{" "}
             <a href="https://[XHEZMI-SITE]" className={linkClass} rel="noopener">

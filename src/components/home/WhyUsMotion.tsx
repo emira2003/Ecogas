@@ -8,8 +8,8 @@ import { prefersReducedMotion } from "@/lib/motion";
  * warms from cool to warm as the section comes into view.
  *
  * The plan asked for this as a *pinned* section on desktop. It was built that way and then taken
- * out, because pinning held the page still for over a screen of scrolling — 1,080px of nothing
- * moving, in the middle of an already long home page — which reads as broken scrolling.
+ * out, because pinning held the page still for over a screen of scrolling: 1,080px of nothing
+ * moving, in the middle of an already long home page, which reads as broken scrolling.
  *
  * This version uses IntersectionObserver only. No pinning, no scroll listeners, no measuring the
  * page, and GSAP is no longer loaded on the home page at all. Same idea, nothing can freeze or

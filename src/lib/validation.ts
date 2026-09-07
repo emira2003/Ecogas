@@ -38,7 +38,7 @@ export const enquirySchema = z.object({
   service: optionalText(80),
   bestTime: z._default(z.optional(z.enum(BEST_TIMES)), "Any"),
   message: optionalText(1000, "Please keep your message under 1,000 characters."),
-  /** Honeypot — real people never see or fill this field */
+  /** Honeypot: real people never see or fill this field */
   company: optionalText(200),
   /** Which page the form was on, e.g. "/contact" */
   page: optionalText(200),

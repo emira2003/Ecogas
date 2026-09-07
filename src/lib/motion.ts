@@ -12,7 +12,7 @@
 import { useSyncExternalStore } from "react";
 import { siteConfig } from "@/data/site.config";
 
-/** Entrance easing from F2 — used by CSS as well (see globals.css `--ease-out-expo`). */
+/** Entrance easing from F2, used by CSS as well (see globals.css `--ease-out-expo`). */
 export const EASE_ENTRANCE = "cubic-bezier(0.22, 1, 0.36, 1)";
 export const EASE_ENTRANCE_GSAP = "expo.out";
 
@@ -54,7 +54,7 @@ export const usePointerDevice = (): boolean =>
   useSyncExternalStore(subscribePointer, isPointerDevice, serverFalse);
 
 // ---------------------------------------------------------------------------
-// GSAP — loaded on demand
+// GSAP, loaded on demand
 // ---------------------------------------------------------------------------
 
 type GsapModule = typeof import("gsap");
@@ -140,7 +140,7 @@ export const loadGsap = () => {
         ScrollTrigger.config({ ignoreMobileResize: true });
 
         // Re-measure once the page has settled. Without this, triggers keep the positions they
-        // were given on mount — before the web font swaps and the images finish — so pinned
+        // were given on mount, before the web font swaps and the images finish, so pinned
         // sections sit at the wrong scroll position and never play.
         const refresh = () => ScrollTrigger.refresh();
         if (document.readyState === "complete") refresh();
@@ -156,7 +156,7 @@ export const loadGsap = () => {
 };
 
 // ---------------------------------------------------------------------------
-// Lenis smooth scroll — pointer devices only (F2-G1)
+// Lenis smooth scroll, pointer devices only (F2-G1)
 // ---------------------------------------------------------------------------
 
 /**

@@ -6,7 +6,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 
 /**
- * "Straightforward boiler prices" — two spec-sheet cards (PLAN.md D3 §4, F2-H4):
+ * "Straightforward boiler prices": two spec-sheet cards (PLAN.md D3 §4, F2-H4):
  * flat, 1px Ink border, dark price header with the price rolling up; the pair rises
  * together; on hover a card lifts 4px and its shadow warms.
  */

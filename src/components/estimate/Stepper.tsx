@@ -8,7 +8,7 @@ const STEPS: { n: Step; label: string }[] = [
   { n: 3, label: "Your estimate" },
 ];
 
-/** "1 Choose · 2 Pick jobs · 3 Your estimate" — a real sequence, so numbered (PLAN.md D4). */
+/** "1 Choose · 2 Pick jobs · 3 Your estimate". A real sequence, so numbered (PLAN.md D4). */
 export function Stepper({ current }: { current: Step }) {
   return (
     <ol className="stepper" aria-label="Estimate steps">

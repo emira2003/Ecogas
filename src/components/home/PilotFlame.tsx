@@ -12,7 +12,7 @@ const EGG_WINDOW_MS = 10_000;
  * The pilot flame beside the headline (F2-H1).
  *
  * This was a canvas of ~120 particles. At the size it actually renders (48×72px, next to a 60px
- * headline) the particles read as a small grey smudge rather than a flame — it looked like a
+ * headline) the particles read as a small grey smudge rather than a flame, which looked like a
  * rendering fault. Drawn as a crisp SVG with a slow CSS flicker instead: unmistakably a flame at
  * any size, no canvas, no animation loop, and nothing to go wrong. It goes still with reduced
  * motion, which the CSS handles.

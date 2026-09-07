@@ -10,7 +10,7 @@ import { Section } from "@/components/ui/Section";
  * with each other in search results. The full story stays on /about.
  *
  * Sits directly under "Why people in Bolton choose us", which is also Plaster, so the two are
- * separated by a hairline rule — the same device used between the hero and the trust strip.
+ * separated by a hairline rule, the same device used between the hero and the trust strip.
  */
 export function AboutSummary() {
   return (

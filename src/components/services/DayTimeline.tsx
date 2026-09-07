@@ -78,7 +78,7 @@ const stages: Stage[] = [
 ];
 
 /**
- * "How the day goes" (PLAN.md D3, F2-S3) — Boiler Replacement page only. A real sequence,
+ * "How the day goes" (PLAN.md D3, F2-S3). Boiler Replacement page only. A real sequence,
  * so it is numbered. Desktop: pinned, scrolls sideways, the line draws as you go and each
  * drawing sketches itself in. Mobile: vertical, the line draws downward.
  */

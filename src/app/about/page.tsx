@@ -40,7 +40,7 @@ const steps = [
   },
   {
     title: "Warranty registered",
-    text: "Your manufacturer’s warranty is [registered by us — CLIENT TO CONFIRM], so you’re covered from day one.",
+    text: "Your manufacturer’s warranty is [registered by us - CLIENT TO CONFIRM], so you’re covered from day one.",
   },
 ];
 

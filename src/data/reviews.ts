@@ -1,9 +1,9 @@
 /**
- * Customer reviews. Newest first — add new reviews at the TOP of the list.
+ * Customer reviews. Newest first: add new reviews at the TOP of the list.
  *
  * To add one: copy a block, give it a new unique `id`, fill in the fields.
  * Use first name + town only. Only include reviews the client has confirmed can be shown.
- * `date` (YYYY-MM-DD) is optional and is never displayed — it just helps keep the order right.
+ * `date` (YYYY-MM-DD) is optional and is never displayed, it just helps keep the order right.
  */
 
 export type ReviewTown =

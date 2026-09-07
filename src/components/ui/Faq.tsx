@@ -12,7 +12,7 @@ interface FaqProps {
 
 /**
  * Native <details> questions with a smooth open/close (F2-H10).
- * Works fully without JavaScript — the animation is only a layer on top.
+ * Works fully without JavaScript. The animation is only a layer on top.
  */
 export function Faq({ items, className = "" }: FaqProps) {
   return (

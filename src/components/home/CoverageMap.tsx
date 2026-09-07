@@ -38,7 +38,7 @@ const STAGGER_MS = 110;
  * The coverage map (PLAN.md D3 §9, F2-H9): nine markers over a real map of the North West.
  *
  * The land is 41 actual local authority districts (data/nw-map.ts), drawn from Ordnance
- * Survey boundaries and projected into this viewBox — so the coastline, the Mersey and the
+ * Survey boundaries and projected into this viewBox, so the coastline, the Mersey and the
  * Ribble are where they really are, and the markers sit on the real towns. The nine districts
  * we cover are tinted, which makes the map state the coverage rather than just decorate it.
  * It is inline SVG: no tile server, no map library, no third-party cookies.
@@ -117,7 +117,7 @@ export function CoverageMap({ areas }: { areas: MapTown[] }) {
                   key={a.slug}
                   href={`/areas/${a.slug}`}
                   className={`map__marker ${hot === a.slug ? "is-hot" : ""}`.trim()}
-                  aria-label={`${a.town} — see what we do there`}
+                  aria-label={`${a.town}: see what we do there`}
                   style={{ "--d": `${i * STAGGER_MS}ms` } as CSSProperties}
                   {...hotProps(a.slug)}
                 >

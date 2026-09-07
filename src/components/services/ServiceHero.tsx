@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { PriceTag } from "@/components/ui/PriceTag";
 import { Reveal } from "@/components/ui/Reveal";
 
-/** "from £1,999", "Boiler service £90", "£70" — as a lead word plus amount. */
+/** "from £1,999", "Boiler service £90", "£70", as a lead word plus amount. */
 export const priceTagProps = (service: Service) => {
   const { price } = service;
   const lead = [price.label, price.type === "from" ? "from" : ""].filter(Boolean).join(" ");

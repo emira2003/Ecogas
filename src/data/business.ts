@@ -1,11 +1,11 @@
 /**
- * Eco Gas — business facts.
+ * Eco Gas business facts.
  *
  * This is the ONLY place these facts live. The header, footer, contact page
  * and the Google structured data all read from here, so the name, address and
  * phone number stay identical everywhere (character for character).
  *
- * Anything in [SQUARE BRACKETS] is a placeholder waiting on the client — see TODO.md.
+ * Anything in [SQUARE BRACKETS] is a placeholder waiting on the client. See TODO.md.
  * Phone, WhatsApp and the site address come from environment variables
  * (see .env.example) so they can be changed without touching code.
  *
@@ -53,7 +53,7 @@ export const business = {
   /** Public website address (www is the primary). Set NEXT_PUBLIC_SITE_URL in .env.local / Vercel. */
   siteUrl: fromEnv(process.env.NEXT_PUBLIC_SITE_URL, "https://www.[DOMAIN]"),
 
-  /** Boilers we install. Logo files are a slot for later — never draw brand logos ourselves. */
+  /** Boilers we install. Logo files are a slot for later. Never draw brand logos ourselves. */
   brands: [
     { name: "Worcester Bosch", logo: null as string | null },
     { name: "Viessmann", logo: null as string | null },
@@ -72,7 +72,7 @@ export const business = {
         "A-rated boiler from Worcester Bosch, Vaillant, Viessmann, Glow-worm or Ideal",
         "Fitted by a Gas Safe registered engineer",
         "10-year manufacturer’s warranty",
-        "[other inclusions — CLIENT TO CONFIRM]",
+        "[other inclusions - CLIENT TO CONFIRM]",
       ],
     },
     premium: {
@@ -91,7 +91,7 @@ export const business = {
     note: "Prices are a guide. We confirm your exact price after a free look at the job.",
   },
 
-  /** "Why choose us" — the five points from the flyer, with a two-line explanation each. */
+  /** "Why choose us": the five points from the flyer, with a two-line explanation each. */
   whyChooseUs: [
     {
       title: "Expert installation by Gas Safe engineers",
@@ -106,7 +106,7 @@ export const business = {
     {
       title: "High-quality products",
       detail:
-        "We fit boilers from Worcester Bosch, Viessmann, Vaillant, Glow-worm and Ideal — brands with a proven track record and parts that are easy to get.",
+        "We fit boilers from Worcester Bosch, Viessmann, Vaillant, Glow-worm and Ideal. They have a proven track record and parts that are easy to get.",
     },
     {
       title: "Competitive prices",
@@ -127,7 +127,7 @@ export const business = {
     count: 12,
     platform: "[REVIEW PLATFORM]",
     url: "[REVIEW URL]",
-    /** Second profile — only shown once confirmed. */
+    /** Second profile, only shown once confirmed. */
     secondary: {
       label: "Excellent",
       count: 31,

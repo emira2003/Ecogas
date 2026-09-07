@@ -6,7 +6,7 @@ import { business } from "@/data/business";
  * dark, the wordmark, "Boiler replacement in Bolton · from £1,999".
  * TODO: swap the wordmark for the client's logo once logo-ecogas.png arrives.
  */
-export const alt = "Eco Gas — boiler replacement in Bolton from £1,999";
+export const alt = "Eco Gas: boiler replacement in Bolton from £1,999";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

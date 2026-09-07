@@ -122,7 +122,7 @@ export function EnquiryForm({ mode, estimate, page, messagePrompt, serviceNames 
 
   return (
     <form ref={formRef} className={`enquiry ${className}`.trim()} onSubmit={onSubmit} noValidate>
-      {/* Honeypot — hidden from people, tempting for bots. Not display:none, so bots still see it. */}
+      {/* Honeypot: hidden from people, tempting for bots. Not display:none, so bots still see it. */}
       <div className="hp" aria-hidden="true">
         <label htmlFor={`${id}-company`}>Company</label>
         <input id={`${id}-company`} name="company" type="text" tabIndex={-1} autoComplete="off" />

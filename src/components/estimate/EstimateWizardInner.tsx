@@ -43,7 +43,7 @@ const restoredState = (): WizardState => {
     const raw = sessionStorage.getItem(STORAGE_KEY);
     if (raw) saved = JSON.parse(raw) as Partial<WizardState>;
   } catch {
-    /* nothing saved, or storage blocked — start fresh */
+    /* nothing saved, or storage blocked: start fresh */
   }
   const linkCat = new URLSearchParams(window.location.search).get("cat");
   const savedCat = isCategoryId(saved.category) ? saved.category : null;
@@ -93,7 +93,7 @@ export function EstimateWizardInner() {
     try {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {
-      /* storage blocked — the tool still works, it just won't survive a refresh */
+      /* storage blocked: the tool still works, it just won't survive a refresh */
     }
     const url = new URL(window.location.href);
     if (state.category) url.searchParams.set("cat", state.category);

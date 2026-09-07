@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
 
           <h2 className="h3">How long we keep it</h2>
           <p>
-            Enquiry emails are kept for [12 months — CLIENT TO CONFIRM] and then deleted, unless you become a customer,
+            Enquiry emails are kept for [12 months - CLIENT TO CONFIRM] and then deleted, unless you become a customer,
             in which case the details we need for your job, warranty and any legal record (such as a gas safety
             certificate) are kept for as long as those require.
           </p>

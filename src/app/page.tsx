@@ -59,7 +59,7 @@ export default function HomePage() {
       {/* 5. Why Eco Gas */}
       <WhyUs />
 
-      {/* About — added when About was removed from the header */}
+      {/* About: added when About was removed from the header */}
       <AboutSummary />
 
       {/* 6. Brands */}

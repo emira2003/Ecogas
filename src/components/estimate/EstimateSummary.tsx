@@ -63,8 +63,8 @@ export function EstimateSummary({ lines, total, onSend, onStartAgain }: Estimate
       </div>
 
       <p className="summary__disclaimer mt-6 max-w-2xl text-ink-soft">
-        This is an estimate, not a quote. We confirm the exact price after we’ve seen the job — free, no obligation.
-        Prices [include / exclude — CLIENT TO CONFIRM] VAT.
+        This is an estimate, not a quote. We confirm the exact price after we’ve seen the job. It’s free, with no obligation.
+        Prices [include / exclude - CLIENT TO CONFIRM] VAT.
       </p>
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">

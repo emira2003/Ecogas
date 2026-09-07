@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-/** /contact — no CTA band and no sticky mobile bar on this page (PLAN.md D2). */
+/** /contact: no CTA band and no sticky mobile bar on this page (PLAN.md D2). */
 export default function ContactPage() {
   return (
     <>

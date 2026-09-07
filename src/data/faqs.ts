@@ -2,7 +2,7 @@
  * Home page FAQs.
  *
  * To add one: copy a block, give it a new unique `id`, write the question and answer.
- * Keep answers short and specific. Anything in [SQUARE BRACKETS] needs the client — see TODO.md.
+ * Keep answers short and specific. Anything in [SQUARE BRACKETS] needs the client. See TODO.md.
  */
 import { business } from "./business";
 
@@ -22,7 +22,7 @@ export const homeFaqs: Faq[] = [
   {
     id: "gas-safe",
     question: "Are you Gas Safe registered?",
-    answer: `Yes — registration number ${business.gasSafeNumber}. You can check us on the Gas Safe Register website.`,
+    answer: `Yes. Our registration number is ${business.gasSafeNumber}. You can check us on the Gas Safe Register website.`,
   },
   {
     id: "warranty",
@@ -34,7 +34,7 @@ export const homeFaqs: Faq[] = [
     id: "areas",
     question: "Which areas do you cover?",
     answer:
-      "Based in Bolton, covering Greater Manchester, Lancashire, Merseyside and Cheshire — Bolton, Manchester, Blackburn, Oldham, Stockport, Warrington, Wigan, Liverpool and Preston postcode areas.",
+      "Based in Bolton, covering Greater Manchester, Lancashire, Merseyside and Cheshire: the Bolton, Manchester, Blackburn, Oldham, Stockport, Warrington, Wigan, Liverpool and Preston postcode areas.",
   },
   {
     id: "estimate",
@@ -46,6 +46,6 @@ export const homeFaqs: Faq[] = [
     id: "payment",
     question: "How do I pay?",
     answer:
-      "[CLIENT TO CONFIRM — e.g. bank transfer or card on completion; deposit for boiler installs?]",
+      "[CLIENT TO CONFIRM - e.g. bank transfer or card on completion; deposit for boiler installs?]",
   },
 ];

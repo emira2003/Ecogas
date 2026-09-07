@@ -504,3 +504,29 @@ _None yet. Ideas that come up during the build go here, not into the code._
 
   Build, lint and the 16 tests pass, and the contrast audit still reports 0 failures with the
   new attribution line (Ink Mute at 12px, 5.19:1).
+
+- **House style: no em dashes.** Xhezmi asked for every em dash to go and for none to be used
+  again. All 91 in `src/` are gone: 22 in copy visitors read, and the rest in code comments,
+  which were done at the same time so the rule is simple to state and simple to check.
+
+  They were not swapped for hyphens. A hyphen dropped into the middle of a sentence is worse
+  typography than the dash it replaces, so each one was rewritten: a colon where a label
+  introduces a list ("Complete new heating systems: boiler, radiators, pipework and controls"),
+  a comma where the clause just continues ("...10-year warranty, and an honest estimate..."),
+  and a full stop where the sentence was doing two jobs ("Yes. Our registration number is..."
+  instead of "Yes, registration number..."). The `[... CLIENT TO CONFIRM]` placeholders use a
+  plain hyphen, since those are internal markers that get deleted when the client answers.
+
+  **`src/lib/no-em-dash.test.ts` enforces it.** It walks `src/` and fails `npm test` if one
+  reappears, so this does not depend on anyone remembering. It builds the character from its
+  code point rather than writing it literally, or the test would fail on itself. Ordinary
+  hyphens (Glow-worm, 10-year, call-out) are untouched and unchecked.
+
+  **Verified against the rendered pages, not just the source:** all 25 URLs in the sitemap were
+  fetched and scanned. Zero em dashes.
+
+  **Still outstanding: 21 en dashes**, a different and slightly shorter character, all of them
+  in page titles ("Our Work – Boiler & Bathroom Installations | Eco Gas") and therefore in the
+  browser tab and in Google results. They were left because they were not what was asked for
+  and titles carry SEO weight, but they look near enough identical that they are probably worth
+  changing to colons. Xhezmi has been asked.

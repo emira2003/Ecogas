@@ -3,7 +3,7 @@
  *
  * Generated once from Ordnance Survey / ONS boundary data (Local Authority Districts,
  * December 2013) published at github.com/martinjc/UK-GeoJSON, which is Open Government
- * Licence v3 — free to use commercially with attribution. See IMAGE-CREDITS.md.
+ * Licence v3: free to use commercially with attribution. See IMAGE-CREDITS.md.
  *
  * The coordinates are real: Web Mercator, projected into the 600x500 viewBox spanning
  * 3.28W-1.86W and 53.20N-53.94N, clipped to the frame and simplified to ~1.2px. The

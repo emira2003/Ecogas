@@ -60,7 +60,7 @@ const buildEmail = (data: Enquiry): string => {
 
   if (data.estimate) {
     lines.push("", "Estimate from the website tool:");
-    for (const line of data.estimate.lines) lines.push(`- ${line.qty} × ${line.name} — ${line.price}`);
+    for (const line of data.estimate.lines) lines.push(`- ${line.qty} × ${line.name}: ${line.price}`);
     lines.push(data.estimate.total);
   }
 
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
 
   const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
   if (!accessKey) {
-    console.error("[enquiry] WEB3FORMS_ACCESS_KEY is not set — enquiry not sent");
+    console.error("[enquiry] WEB3FORMS_ACCESS_KEY is not set, enquiry not sent");
     return json({ ok: false, error: `Email sending isn't switched on yet. ${CALL_US}` }, 500);
   }
 
