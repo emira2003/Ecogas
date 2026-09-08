@@ -3,10 +3,10 @@ import { business } from "@/data/business";
 
 /**
  * The one social-preview image, reused by every page (PLAN.md Part G / Phase 8):
- * dark, the wordmark, "Boiler replacement in Bolton · from £1,999".
+ * dark, the wordmark, "Boiler replacement in Bolton · from £1,625".
  * TODO: swap the wordmark for the client's logo once logo-ecogas.png arrives.
  */
-export const alt = "Eco Gas: boiler replacement in Bolton from £1,999";
+export const alt = "Eco Gas: boiler replacement in Bolton from £1,625";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -54,9 +54,9 @@ export default function OpenGraphImage() {
               }}
             >
               <span style={{ fontSize: 30 }}>from</span>
-              <span style={{ fontSize: 48, fontWeight: 800 }}>£1,999</span>
+              <span style={{ fontSize: 48, fontWeight: 800 }}>£1,625</span>
             </div>
-            <div style={{ fontSize: 32, color: "#cbc9c7" }}>10-year manufacturer’s warranty</div>
+            <div style={{ fontSize: 32, color: "#cbc9c7" }}>Manufacturer warranty, 5 to 12 years</div>
           </div>
           <div style={{ fontSize: 28, color: "#cbc9c7" }}>Gas Safe registered · Trading since 2000 · Bolton and the North West</div>
         </div>

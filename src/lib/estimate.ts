@@ -59,6 +59,9 @@ export const unitRange = (item: EstimateItem): { low: number; high: number } => 
       return { low: item.price ?? 0, high: item.price ?? 0 };
     case "range":
       return { low: item.min ?? 0, high: item.max ?? item.min ?? 0 };
+    case "quote":
+      // Contributes nothing to the arithmetic. `totalKind` is what stops that reading as free.
+      return { low: 0, high: 0 };
   }
 };
 
@@ -83,6 +86,10 @@ export const linesFrom = (selections: Selections): LineItem[] =>
 
 /** Which kind of total a set of lines produces (PLAN.md D4: fixed → total, any from → from, any range → range). */
 export const totalKind = (types: PriceType[]): TotalKind => {
+  // A "quote" line adds nothing to the arithmetic, so the sum can only ever be a floor: the
+  // quoted work sits on top of it. This check comes first, or a basket of fixed prices plus
+  // a relocation would print "Estimated total £X" and read as though the relocation is free.
+  if (types.includes("quote")) return "from";
   if (types.includes("range")) return "range";
   if (types.includes("from")) return "from";
   return "total";
@@ -116,6 +123,8 @@ export const formatLine = (line: LineItem): string => {
       return `from ${formatMoney(line.low)}`;
     case "range":
       return `${formatMoney(line.low)} to ${formatMoney(line.high)}`;
+    case "quote":
+      return "Priced on the job";
   }
 };
 

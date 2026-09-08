@@ -27,7 +27,7 @@ export interface Review {
   /** Where the review was left, e.g. "Google" or "Checkatrade". Shown as "via [platform]". */
   platform: string;
   /** What kind of job it was, so service pages can show relevant reviews. Leave out if unsure. */
-  category?: "boilers" | "heating" | "plumbing" | "bathrooms" | "gas-safety";
+  category?: "boilers" | "heating" | "controls" | "gas-safety";
   date?: string;
 }
 

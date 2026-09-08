@@ -11,7 +11,7 @@ import { PilotFlame } from "./PilotFlame";
 
 const TITLE = "Boiler replacement in Bolton, done properly.";
 const SUBLINE =
-  "Gas Safe engineers since 2000. New boilers from £1,999 with a 10-year manufacturer’s warranty, and an honest estimate before we’ve even knocked on your door.";
+  "Gas Safe engineers since 2000. New boilers from £1,625, fitted properly, with a warranty that comes from the manufacturer. Send us a photo and we will price it before we knock on your door.";
 
 /**
  * Home hero (PLAN.md D3 §1): 7/5 split on desktop, stacked on mobile.
@@ -20,6 +20,7 @@ const SUBLINE =
  */
 export function Hero() {
   const words = TITLE.split(" ");
+  const entry = business.packages[0];
 
   return (
     <HeroIgnition>
@@ -78,19 +79,23 @@ export function Hero() {
               />
               <span className="hero__photo-scrim" aria-hidden="true" />
             </div>
-            {/* Full tag on desktop; a shorter one on phones so it never overflows the screen */}
+            {/*
+              Full tag on desktop; a shorter one on phones so it never overflows the screen.
+              Both read the entry package, so the price and the warranty beside it can never
+              drift apart: this price is the Eco package, and Eco carries five years.
+            */}
             <div className="hero__tag">
               <PriceTag
                 lead="New boiler from"
-                amount={business.offers.boiler.fromPrice}
-                note="10-year warranty"
+                amount={entry.swapPrice}
+                note={`${entry.warrantyYears} year warranty`}
                 size="lg"
                 className="hidden lg:inline-flex"
               />
               <PriceTag
                 lead="from"
-                amount={business.offers.boiler.fromPrice}
-                note="10-year warranty"
+                amount={entry.swapPrice}
+                note={`${entry.warrantyYears} year warranty`}
                 size="md"
                 className="lg:hidden"
               />

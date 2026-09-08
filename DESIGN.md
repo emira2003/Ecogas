@@ -540,3 +540,67 @@ _None yet. Ideas that come up during the build go here, not into the code._
 
   The guard test is now `src/lib/no-long-dashes.test.ts` and covers both characters. Verified
   again against every rendered page including the 404: zero em dashes, zero en dashes.
+
+- **The pricing rebuild, and the site becoming boiler specific.** Xhezmi supplied the real
+  package prices, the trading name, and a decision that the site should sell boilers rather
+  than everything a plumber can do.
+
+  **Three packages, two prices each.** Eco £1,625, Premium £2,350, Exclusive £2,600 as a
+  straight swap; £600 more on any of them to convert a gravity system to a combi. The tiers
+  differ by boiler and therefore by warranty: five, ten and twelve years. All six prices live
+  in `business.ts` and nothing else on the site is allowed to state a price.
+
+  **The old copy paired the price and the warranty in one sentence**, "from £1,999 with a
+  10-year manufacturer's warranty", in about twenty-five places: nine town pages, their Google
+  descriptions, the About page, the services page, the home page headline, the site
+  description and the social sharing image. That pairing is now false, because the cheapest
+  package carries five years rather than ten. Every one of those was rewritten rather than
+  renumbered, and the hero price tag now reads its warranty out of the package data so the two
+  can never drift apart again.
+
+  **Three decisions in the pricing section worth recording**, because the obvious version is
+  worse in each case. Both prices are on show rather than behind a swap/conversion toggle,
+  because hiding half the numbers behind a click on a page that promises "no hidden extras"
+  undercuts the message in the layout itself. The four standard inclusions are stated once
+  beneath all three cards rather than repeated in each, which is tidier and turns standard kit
+  into a stronger claim instead of an upsell. And there is no "most popular" flag on the middle
+  card: here the tiers genuinely differ, so the warranty years sit in the header next to the
+  price and do the comparing.
+
+  **The warranty sentence was the client's call.** Three versions were offered, from purely
+  factual to one that invited the reader to compare. He picked the plainest: "Every warranty is
+  registered with the boiler manufacturer in your name, and we guarantee our own work for the
+  same period." Worth knowing why that matters commercially: BOXT, the obvious comparison,
+  guarantee their own workmanship for twelve months. If Eco Gas really does match the warranty
+  length, that is the strongest claim on the site, and it is made without a word about anyone
+  else. The suggestion that the site should call the competition a scam was declined: saying so
+  is legally risky and reads as defensive.
+
+  **A new "quote" price type**, for work that cannot honestly carry a number: relocation,
+  underfloor heating, controls. It shows "Priced on the job" and emits no `Offer` in the Google
+  structured data, because a price of zero is a claim that the work is free. In the estimate
+  tool a quote line forces the total into "from", so a basket of fixed prices plus a relocation
+  can never print "Estimated total £X" and read as though the relocation costs nothing. There
+  is a test for exactly that.
+
+  **Scope.** Bathrooms went at the client's request. General plumbing went with it, on the
+  reading that "boiler specific" means it. Power flushing stopped being its own page because a
+  chemical flush is now included in all six packages, and selling it separately would undercut
+  that. Underfloor heating and heating controls were added. Six services, all gas and heating.
+  The three retired pages return 404: the site has never been deployed, so there are no live
+  URLs to redirect. **The cost, stated once: two pages carrying local search terms are gone, so
+  the site will appear for fewer searches.** For a specialist that is usually the right trade,
+  because "Bolton boiler" is the search worth winning, but it is a trade rather than a free win.
+
+  **The makes strip** on the home page drifts continuously, holding the list twice and moving
+  exactly half its width so the loop has no seam. It pauses on hover, on focus and off screen,
+  and stops dead under reduced motion, where the duplicate copy is hidden so the list does not
+  print twice. Every item is a wordmark until official logo files arrive; `logo:` in
+  `business.ts` switches an item to an image with no other change. `accreditation:` is null
+  everywhere on purpose, because an accredited installer badge is a credential rather than a
+  logo and the business either holds it or does not.
+
+  **Verified rather than assumed.** A script fetches all 24 sitemap URLs plus the 404 page and
+  fails on any trace of the old price, the old blanket warranty, the dropped services, or
+  either long dash. It reports clean. The contrast audit reports zero failures on the home page
+  after the rewrite. Build, lint and 18 tests pass.

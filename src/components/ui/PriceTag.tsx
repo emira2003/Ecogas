@@ -9,7 +9,7 @@ interface PriceTagProps {
   lead?: string;
   /** Free text instead of an amount, e.g. "Free quote" */
   text?: string;
-  /** Short note after the price, e.g. "10-year warranty" */
+  /** Short note after the price, e.g. "5 year warranty" */
   note?: string;
   /** "flame" on light backgrounds, "reversed" on dark ones */
   tone?: "flame" | "reversed";

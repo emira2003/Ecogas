@@ -25,9 +25,11 @@ type JsonLd = Record<string, unknown>;
 export const localBusinessJsonLd = (): JsonLd => {
   const data: JsonLd = {
     "@context": "https://schema.org",
-    "@type": ["HVACBusiness", "Plumber"],
+    "@type": ["HVACBusiness", "HomeAndConstructionBusiness"],
     "@id": BUSINESS_ID,
     name: business.name,
+    // Google wants the trading name in `name` and the registered one here, not both in `name`.
+    legalName: business.legalName,
     description: business.description,
     url: siteUrl,
     logo: LOGO_URL,
@@ -67,17 +69,23 @@ export const serviceJsonLd = (service: Service): JsonLd => ({
   url: absoluteUrl(`/services/${service.slug}`),
   provider: { "@id": BUSINESS_ID },
   areaServed: areas.map((a) => ({ "@type": "City", name: a.town })),
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "GBP",
-    price: service.price.amount,
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      priceCurrency: "GBP",
-      price: service.price.amount,
-      description: `${service.price.type === "from" ? "From" : "Fixed price"} ${formatMoney(service.price.amount)}`,
-    },
-  },
+  // A service priced on the job carries no Offer at all. Google treats a price of 0 as a
+  // claim that the work is free, so an absent offer is the only honest option here.
+  ...(service.price.amount === undefined || service.price.type === "quote"
+    ? {}
+    : {
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "GBP",
+          price: service.price.amount,
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            priceCurrency: "GBP",
+            price: service.price.amount,
+            description: `${service.price.type === "from" ? "From" : "Fixed price"} ${formatMoney(service.price.amount)}`,
+          },
+        },
+      }),
 });
 
 /** FAQ rich results. Questions with unconfirmed answers are left out. */

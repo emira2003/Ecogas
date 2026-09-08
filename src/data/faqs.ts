@@ -28,7 +28,8 @@ export const homeFaqs: Faq[] = [
     id: "warranty",
     question: "What warranty do I get on a new boiler?",
     answer:
-      "Up to a 10-year manufacturer’s warranty on the boilers we fit [CONFIRM the £1,999 offer always includes 10 years].",
+      "Five, ten or twelve years, depending on the package. Every one is registered with the boiler "
+      + "manufacturer in your name, and we guarantee our own work for the same period.",
   },
   {
     id: "areas",

@@ -16,10 +16,13 @@ const fromEnv = (value: string | undefined, fallback: string): string =>
   value && value.trim() !== "" ? value.trim() : fallback;
 
 export const business = {
-  name: "Eco Gas",
-  tagline: "Gas Safe registered plumbing & heating engineers in Bolton",
+  /** The name people read. The registered company name is `legalName`, below. */
+  name: "Eco Gas North West",
+  /** Companies House name. Footer and structured data only, never body copy. */
+  legalName: "ECO-GAS NORTH WEST LTD",
+  tagline: "Gas Safe registered boiler and heating engineers in Bolton",
   description:
-    "Gas Safe registered plumbing & heating engineers. Specialists in boiler replacement and installation.",
+    "Gas Safe registered boiler and heating engineers. Boiler installation, servicing, repairs, underfloor heating and controls.",
 
   /** Trading since this year. Say "since 2000" and "25+ years". */
   foundingYear: 2000,
@@ -53,42 +56,90 @@ export const business = {
   /** Public website address (www is the primary). Set NEXT_PUBLIC_SITE_URL in .env.local / Vercel. */
   siteUrl: fromEnv(process.env.NEXT_PUBLIC_SITE_URL, "https://www.[DOMAIN]"),
 
-  /** Boilers we install. Logo files are a slot for later. Never draw brand logos ourselves. */
+  /**
+   * The makes we fit, shown as a moving strip on the home page.
+   *
+   * `logo` stays null until the client supplies the official artwork from each maker's
+   * installer portal. Never draw a brand logo ourselves and never lift one off a search
+   * result: they come out low resolution, and often the wrong version.
+   *
+   * `accreditation` is a credential, not a logo. Only fill it in for schemes the business
+   * genuinely holds, because claiming one it does not is a misrepresentation. See TODO.md.
+   */
   brands: [
-    { name: "Worcester Bosch", logo: null as string | null },
-    { name: "Viessmann", logo: null as string | null },
-    { name: "Vaillant", logo: null as string | null },
-    { name: "Glow-worm", logo: null as string | null },
-    { name: "Ideal", logo: null as string | null, approvedInstaller: true },
+    { name: "Vaillant", kind: "boiler", logo: null as string | null, accreditation: null as string | null },
+    { name: "Worcester Bosch", kind: "boiler", logo: null as string | null, accreditation: null as string | null },
+    { name: "Viessmann", kind: "boiler", logo: null as string | null, accreditation: null as string | null },
+    { name: "Hive", kind: "controls", logo: null as string | null, accreditation: null as string | null },
+    { name: "Honeywell", kind: "controls", logo: null as string | null, accreditation: null as string | null },
   ],
 
-  /** The two boiler offers from the flyer. Only these two prices are confirmed by the client. */
-  offers: {
-    boiler: {
-      name: "New boiler",
-      fromPrice: 1999,
-      confirmed: true,
-      includes: [
-        "A-rated boiler from Worcester Bosch, Vaillant, Viessmann, Glow-worm or Ideal",
-        "Fitted by a Gas Safe registered engineer",
-        "10-year manufacturer’s warranty",
-        "[other inclusions - CLIENT TO CONFIRM]",
-      ],
+  /**
+   * The three boiler packages, all prices confirmed by the client.
+   *
+   * Each has two prices for the same package:
+   *   `swapPrice`    a straight swap, combi out and combi in, same position, system as it is
+   *   `upgradePrice` a gravity system converted to a combi, which is the swap price plus £600
+   *
+   * The tiers differ by boiler and therefore by warranty length, which is why the warranty is
+   * stated per package and never as one blanket figure across the site.
+   */
+  packages: [
+    {
+      id: "eco",
+      name: "Eco",
+      swapPrice: 1625,
+      upgradePrice: 2225,
+      warrantyYears: 5,
+      summary: "The straightforward option. Everything you need, nothing you do not.",
+      extras: [] as readonly string[],
     },
-    premium: {
-      name: "Premium package",
-      fromPrice: 2500,
-      confirmed: true,
-      includes: [
-        "High-efficiency boiler",
-        "Smart controls",
-        "Power flush",
-        "Up to 10-year manufacturer’s warranty",
-        "Expert installation",
-      ],
+    {
+      id: "premium",
+      name: "Premium",
+      swapPrice: 2350,
+      upgradePrice: 2950,
+      warrantyYears: 10,
+      summary: "Twice the warranty, and app control of your heating from anywhere.",
+      extras: ["Hive smart control upgrade"] as readonly string[],
     },
-    /** Shown under every price. */
-    note: "Prices are a guide. We confirm your exact price after a free look at the job.",
+    {
+      id: "exclusive",
+      name: "Exclusive",
+      swapPrice: 2600,
+      upgradePrice: 3200,
+      warrantyYears: 12,
+      summary: "Our longest warranty, on our best boiler.",
+      extras: ["Hive smart control upgrade"] as readonly string[],
+    },
+  ],
+
+  /** Included in all three packages, whichever tier you pick. */
+  packageIncludes: [
+    "Magnetic system filter",
+    "Chemical flush, so the new boiler starts on clean water",
+    "Programmable thermostat",
+    "All paperwork from the manufacturer and building control",
+  ],
+
+  /** Prices that sit outside the packages. */
+  extraPrices: {
+    service: { from: 65 },
+    /** Vertical flue kits. The run length decides it. */
+    flueKit: { from: 300 },
+    /** A whole new system rather than a boiler swap. */
+    fullSystem: { from: 4400, radiators: 6 },
+  },
+
+  /**
+   * The three sentences that carry the commercial promise. Wording signed off by the client:
+   * plain, and never a word about what anyone else does.
+   */
+  promises: {
+    warranty:
+      "Every warranty is registered with the boiler manufacturer in your name, and we guarantee our own work for the same period.",
+    photos: "All prices are from, and confirmed once we have seen photos of your existing boiler.",
+    noExtras: "Once we agree a price, that is the price. No hidden extras.",
   },
 
   /** "Why choose us": the five points from the flyer, with a two-line explanation each. */
@@ -99,19 +150,19 @@ export const business = {
         "Every job is done by a Gas Safe registered engineer, registration number [GAS SAFE NUMBER]. You can check us on the Gas Safe Register.",
     },
     {
-      title: "10-year manufacturer’s warranty",
+      title: "Warranties that come from the manufacturer",
       detail:
-        "New boilers come with a 10-year manufacturer’s warranty [CONFIRM: always included on the £1,999 offer], so you’re covered long after we’ve left.",
+        "Every warranty is registered with the boiler manufacturer in your name, and we guarantee our own work for the same period. Five, ten or twelve years, depending on the package.",
     },
     {
-      title: "High-quality products",
+      title: "Boilers worth fitting",
       detail:
-        "We fit boilers from Worcester Bosch, Viessmann, Vaillant, Glow-worm and Ideal. They have a proven track record and parts that are easy to get.",
+        "We fit Vaillant, Worcester Bosch and Viessmann. They have a proven track record, they hold their warranty, and parts are easy to get years later.",
     },
     {
-      title: "Competitive prices",
+      title: "A price that does not move",
       detail:
-        "A small team with low overheads, so our prices stay very competitive. New boilers from £1,999, and an honest estimate before we’ve even visited.",
+        "Send us photos of your existing boiler and we will price the job properly. Once we agree that price, that is the price. No hidden extras on the day.",
     },
     {
       title: "Reliable, friendly service",

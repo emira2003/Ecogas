@@ -13,9 +13,11 @@ interface ServiceTileProps {
   sizes?: string;
 }
 
-/** "from £1,999", "Boiler service £90", "£70" */
+/** "from £1,625", "Service from £65", "£70", or "Priced on the job" where there is no number. */
 export const priceLine = (s: Service) =>
-  `${s.price.label ? `${s.price.label} ` : ""}${s.price.type === "from" ? "from " : ""}${formatMoney(s.price.amount)}`;
+  s.price.type === "quote" || s.price.amount === undefined
+    ? "Priced on the job"
+    : `${s.price.label ? `${s.price.label} ` : ""}${s.price.type === "from" ? "from " : ""}${formatMoney(s.price.amount)}`;
 
 /** A photo-led service tile: 12px radius, no shadow (DESIGN.md §3.4). */
 export function ServiceTile({ service, withSummary = false, className = "", sizes }: ServiceTileProps) {

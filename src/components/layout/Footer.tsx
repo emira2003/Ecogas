@@ -117,8 +117,9 @@ export function Footer() {
 
       <div className="border-t border-line-dark">
         <div className="container-site small-text flex flex-col gap-2 py-5 text-plaster-soft sm:flex-row sm:items-center sm:justify-between">
+          {/* The registered company name belongs here, not in the body copy. */}
           <p>
-            © {year} {business.name}
+            © {year} {business.legalName}
           </p>
           {/* About and Reviews live here now that they are not in the header */}
           <nav aria-label="More pages">

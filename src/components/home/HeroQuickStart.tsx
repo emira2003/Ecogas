@@ -1,14 +1,14 @@
 import Link from "next/link";
-import { Bath, Flame, Heater, ShieldCheck, Wrench } from "lucide-react";
+import { Flame, Heater, ShieldCheck, Thermometer, Wrench } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { EstimateCategoryId } from "@/data/estimate-catalogue";
 
 const chips: { label: string; cat: EstimateCategoryId; icon: typeof Flame; water?: boolean }[] = [
-  { label: "Boiler", cat: "boilers", icon: Flame },
+  { label: "New boiler", cat: "boilers", icon: Flame },
+  { label: "Service or repair", cat: "heating", icon: Wrench },
   { label: "Central heating", cat: "heating", icon: Heater },
-  { label: "Plumbing repair", cat: "plumbing", icon: Wrench, water: true },
-  { label: "Bathroom", cat: "bathrooms", icon: Bath, water: true },
-  { label: "Gas safety & servicing", cat: "gas-safety", icon: ShieldCheck },
+  { label: "Controls", cat: "controls", icon: Thermometer, water: true },
+  { label: "Landlord certificate", cat: "gas-safety", icon: ShieldCheck },
 ];
 
 /** "What do you need help with?": five chips that jump straight into the estimate tool. */
@@ -20,7 +20,7 @@ export function HeroQuickStart() {
       </p>
       <ul aria-labelledby="quickstart-label" className="mt-3 flex flex-wrap gap-2">
         {chips.map(({ label, cat, icon: Icon, water }, i) => (
-          <li key={cat}>
+          <li key={label}>
             <Link
               href={`/estimate?cat=${cat}`}
               className={`hero__chip ${water ? "hero__chip--water" : ""}`.trim()}

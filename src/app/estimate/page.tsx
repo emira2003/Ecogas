@@ -6,9 +6,9 @@ import { Section } from "@/components/ui/Section";
 import { EstimateWizard } from "@/components/estimate/EstimateWizard";
 
 export const metadata: Metadata = {
-  title: { absolute: "Instant Estimate: Boiler, Heating & Plumbing Prices | Eco Gas" },
+  title: { absolute: "Instant Estimate: Boiler & Heating Prices | Eco Gas" },
   description:
-    "See a realistic price for a new boiler, heating, plumbing or bathroom job in under a minute. Pick your jobs, see our typical prices, then send it to us. No commitment.",
+    "See a realistic price for a new boiler, a service or a heating job in under a minute. Pick your jobs, see our typical prices, then send it to us. No commitment.",
   alternates: { canonical: "/estimate" },
 };
 

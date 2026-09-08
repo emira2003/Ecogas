@@ -23,7 +23,7 @@ import { WhyUs } from "@/components/home/WhyUs";
 export const metadata: Metadata = {
   title: { absolute: "Boiler Replacement & Heating Engineers in Bolton | Eco Gas" },
   description:
-    "Gas Safe registered boiler replacement, central heating and plumbing in Bolton since 2000. New boilers from £1,999 with a 10-year warranty. Get an instant estimate.",
+    "Gas Safe registered boiler replacement, central heating and servicing in Bolton since 2000. New boilers from £1,625 with 5, 10 or 12 year manufacturer warranties. Get an instant estimate.",
   alternates: { canonical: "/" },
 };
 

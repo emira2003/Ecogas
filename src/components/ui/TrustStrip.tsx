@@ -63,8 +63,8 @@ export function TrustStrip({ bg = "white", className = "" }: TrustStripProps) {
     {
       icon: BadgeCheck,
       iconClass: "text-ink",
-      title: "10-year manufacturer's warranty",
-      detail: "On new boilers we fit",
+      title: "Manufacturer-backed warranty",
+      detail: "5, 10 or 12 years, in your name",
     },
     {
       icon: Star,

@@ -11,7 +11,7 @@ import { CoverageMap } from "@/components/home/CoverageMap";
 export const metadata: Metadata = {
   title: { absolute: "Areas We Cover: Bolton & the North West | Eco Gas" },
   description:
-    "Eco Gas covers Bolton, Manchester, Blackburn, Oldham, Stockport, Warrington, Wigan, Liverpool and Preston for boiler replacement, heating and plumbing.",
+    "Eco Gas covers Bolton, Manchester, Blackburn, Oldham, Stockport, Warrington, Wigan, Liverpool and Preston for boiler replacement, servicing and heating.",
   alternates: { canonical: "/areas" },
 };
 
@@ -26,7 +26,7 @@ export default function AreasPage() {
         <p className="lead mt-6 max-w-2xl text-ink-soft">
           {business.coverageSentence} Our base is on Plodder Lane in Bolton, and from there we work across nine
           postcode areas. Pick your town to see what we do there, how far we travel, and what customers nearby have said.
-          Wherever you are, a new boiler starts from £1,999 with a 10-year manufacturer’s warranty and the price is
+          Wherever you are, a new boiler starts from £1,625, with a warranty that comes from the boiler manufacturer and the price is
           confirmed after a free look at the job.
         </p>
       </Section>

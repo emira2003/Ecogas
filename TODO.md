@@ -31,7 +31,44 @@ Everything still needed before launch, in one place. Updated at the end of every
 - [ ] Which reviews can be shown; the missing review text for Robin (Stockport) and Damian (Manchester), and Damian's job type → `src/data/reviews.ts`
 - [ ] Confirmed prices for every estimate item (see table below); VAT included or not; any call-out fee
 - [ ] Exactly what is included in the £1,999 and £2,500 offers → `business.ts` (`offers`)
-- [ ] Photos and videos (shot list in PLAN.md Part K). **Most urgent item on this list.** The 12 Our Work photos and the before/after pairs are still drawings, and they are what makes the lower half of the home page look empty.
+- [ ] Photos and videos (shot list in PLAN.md Part K). The 12 Our Work photos and the before/after
+      pairs are still drawings, and they are what makes the lower half of the home page look empty.
+
+## From the pricing update (8 September 2026)
+
+These came out of the new package pricing and the move to a boiler specific site. Everything
+here is either an open question or a file the client owes us.
+
+- [ ] **What completes the Exclusive package?** The message read "12 years with Smart Control and"
+      and stopped. Right now Exclusive shows the same inclusions as Premium with a longer
+      warranty, which may be all it is.
+- [ ] **Which boiler make goes with which tier?** A 5, 10 and 12 year manufacturer warranty
+      almost certainly means three different makes. The site currently says we fit Vaillant,
+      Worcester Bosch and Viessmann without saying which is which, because we were not told.
+- [ ] **Is the workmanship guarantee really 5, 10 and 12 years?** The site now says "we guarantee
+      our own work for the same period". That is the strongest claim on the whole site and the
+      one thing BOXT cannot match (theirs is 12 months). Confirm it means exactly that.
+- [ ] **No fix, no fee:** confirmed as nothing to pay if the boiler cannot be repaired. Confirm
+      whether a visit that diagnoses but does not repair is also free.
+- [ ] **VAT:** are the six package prices including or excluding VAT? Still marked
+      [CLIENT TO CONFIRM] on the boiler page.
+- [ ] **£600 gravity to combi:** worth a second look. It is tight for tanks out, cylinder out and
+      new pipework, and the "no hidden extras" promise means it has to hold once agreed.
+- [ ] **Underfloor heating:** wet only, or electric mats too? Retrofit into existing rooms, or
+      only where the floor is up anyway? A starting price, or is it always quoted? Two
+      [CLIENT TO CONFIRM] markers sit on that page.
+- [ ] **Brand logo files.** The moving strip on the home page shows brand names as text until the
+      official artwork arrives. Get the files from each maker's installer portal, not from a
+      web search: search results are low resolution and often the wrong version. Drop them in
+      `/public/images/brands/` and set `logo:` in `business.ts`.
+- [ ] **Accreditations.** One screenshot showed a "Vaillant Accredited Installer" badge. That is a
+      credential, not a logo, and it can only go on the site if Shaun actually holds it. Tell us
+      which schemes he is on and we will show those and only those (`accreditation:` in
+      `business.ts`). Nothing is claimed at present.
+- [ ] **Company name.** The site now reads "Eco Gas North West" in the header and body, with
+      "ECO-GAS NORTH WEST LTD" in the footer copyright line and the Google business data. Page
+      titles still end "| Eco Gas" to stay inside Google's 60 character limit. Confirm that split
+      is right.
 - [ ] Facebook page link (and Instagram if any) → `business.ts` (`social`)
 - [ ] How customers pay (for the "How do I pay?" FAQ) → `src/data/faqs.ts`
 - [ ] How long enquiry emails are kept (for the privacy policy)
@@ -92,7 +129,7 @@ Service-page hero prices that are examples: central heating from £3,500 · boil
 
 ## Placeholder content in the code
 
-- **The hero, all 7 service tiles and the closing call-to-action band are now stock photographs**
+- **The hero, all 6 service tiles and the closing call-to-action band are now stock photographs**
   from Pexels, credited in `IMAGE-CREDITS.md`. They are illustrative, and the client's own photos
   should replace them when available.
 - **These images are still drawings** in `/public/images/placeholders/`, and stay that way on purpose:

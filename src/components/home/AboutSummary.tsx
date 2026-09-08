@@ -22,7 +22,7 @@ export function AboutSummary() {
           </Reveal>
           <p className="lead mt-6 text-ink-soft">
             We’re a small team of Gas Safe registered engineers based on Plodder Lane in Bolton, fitting boilers,
-            heating systems and bathrooms across the North West.
+            heating systems and controls across the North West.
           </p>
           <p className="lead mt-4 text-ink-soft">
             Being small is deliberate. Low overheads keep our prices competitive, and the same people turn up to every

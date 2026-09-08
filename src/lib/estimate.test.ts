@@ -85,10 +85,19 @@ describe("quantities", () => {
 });
 
 describe("real catalogue", () => {
-  it("prices the boiler offer at from £1,999", () => {
-    const lines = linesFrom({ "new-combi-boiler": 1 });
+  it("prices the entry boiler package at from £1,625", () => {
+    const lines = linesFrom({ "boiler-eco-swap": 1 });
     assert.equal(lines.length, 1);
-    assert.equal(formatTotal(calculateTotal(lines)), "Estimated from £1,999");
+    assert.equal(formatTotal(calculateTotal(lines)), "Estimated from £1,625");
+  });
+  it("never lets a quoted job read as free", () => {
+    // A quote line adds £0 to the arithmetic. If the total still said "Estimated total", a
+    // basket of fixed prices plus a relocation would imply the relocation costs nothing.
+    const lines = linesFrom({ "landlord-gas-safety-certificate": 1, "boiler-relocation": 1 });
+    assert.equal(lines.length, 2);
+    assert.equal(formatTotal(calculateTotal(lines)), "Estimated from £70");
+    const relocation = lines.find((l) => l.item.id === "boiler-relocation");
+    assert.equal(formatLine(relocation!), "Priced on the job");
   });
   it("ignores ids that are not in the catalogue", () => {
     const lines = linesFrom({ "not-a-real-job": 1, "annual-boiler-service": 1 });

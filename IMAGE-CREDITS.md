@@ -13,11 +13,11 @@ are credited here anyway, because it is good practice and it records where each 
 | `images/photos/hero-boiler-service.jpg` | Gloved hands working inside an open combi boiler | Home page hero | Heiko Ruth |
 | `images/photos/boiler-kitchen.jpg` | A new white combi boiler on a kitchen wall | Boiler replacement | Max Vakhtbovych |
 | `images/photos/radiator-valve-fitting.jpg` | An engineer fitting the valve to a new radiator | Central heating | Sergei Starostin |
-| `images/photos/boiler-install.jpg` | An engineer working inside an open wall-mounted boiler | Boiler service & repairs | МОБО Модульные Котельные |
+| `images/photos/boiler-install.jpg` | An engineer working inside an open wall-mounted boiler | Servicing & repairs | МОБО Модульные Котельные |
 | `images/services/gas-hob-flames.jpg` | Blue flames on a gas hob, close up | Landlord gas safety certificates | Mateusz Feliksik |
-| `images/photos/copper-pipework.jpg` | Hands tightening a brass fitting on copper pipe | Power flushing | Anıl Karakaya |
-| `images/services/bathroom-contemporary.jpg` | Contemporary bathroom, twin basins on a wooden vanity | Bathroom installations | Max Vakhtbovych |
-| `images/photos/pipe-wrench.jpg` | A steel pipe wrench on a pale wooden surface | General plumbing | Kindel Media |
+| `images/photos/copper-pipework.jpg` | Hands tightening a brass fitting on copper pipe | Not currently used | Anıl Karakaya |
+| `images/services/bathroom-contemporary.jpg` | Contemporary bathroom, twin basins on a wooden vanity | Not currently used | Max Vakhtbovych |
+| `images/photos/pipe-wrench.jpg` | A steel pipe wrench on a pale wooden surface | Not currently used | Kindel Media |
 | `images/photos/warm-room-radiator.jpg` | Sunlight across a wooden table beside a radiator | Closing call-to-action band | Kate Filatova |
 
 Source pages, in the same order:
@@ -40,8 +40,8 @@ domestic gas work. That conclusion was wrong, and it was wrong because the searc
 too literal: only "boiler" and "combi boiler" were tried, and those return antique museum
 boilers, rooftop solar heaters and oil refineries.
 
-Searching for what the work actually looks like — "radiator heating", "plumber", "heating
-engineer", "boiler installation" — returned plenty. The nine images above came from about
+Searching for what the work actually looks like, with terms such as "radiator heating",
+"plumber", "heating engineer" and "boiler installation", returned plenty. The nine images above came from about
 thirty candidates on the second pass.
 
 The photo used in the closing call-to-action band is a warm domestic interior. It is
@@ -96,3 +96,28 @@ Listed here once received, so it is clear which images belong to Eco Gas.
 | File | What it shows | Received on |
 |---|---|---|
 | _none yet_ | | |
+
+## Added with the boiler specific rebuild
+
+| File | What it shows | Used for | Photographer |
+|---|---|---|---|
+| `images/photos/underfloor-warm-feet.jpg` | Bare feet on a warm wooden floor | Underfloor heating | cottonbro studio |
+| `images/photos/smart-thermostat.jpg` | A hand adjusting a wall-mounted smart thermostat | Heating controls | HUUM |
+
+- pexels.com/photo/person-standing-on-the-wooden-floor-with-barefoot-5904034/
+- pexels.com/photo/modern-smart-thermostat-with-user-interface-36818203/
+
+`images/services/bathroom-contemporary.jpg` and `images/photos/pipe-wrench.jpg` are no longer
+referenced by any page, because bathrooms and general plumbing came off the site. They are kept
+in the repository in case either service comes back.
+
+## Brand logos, not yet supplied
+
+The moving strip on the home page shows Vaillant, Worcester Bosch, Viessmann, Hive and Honeywell
+as plain wordmarks. Real logos need the official files from each maker's installer portal, not
+images lifted from a web search, which come out low resolution and often the wrong version. Put
+them in `/public/images/brands/` and fill in `logo:` in `src/data/business.ts`.
+
+**An accredited installer badge is a credential, not a logo.** Only show the schemes the business
+actually holds. `accreditation:` in `business.ts` is null for every make until we are told
+otherwise, so nothing is currently claimed.

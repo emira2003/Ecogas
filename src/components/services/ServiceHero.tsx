@@ -7,9 +7,14 @@ import { Button } from "@/components/ui/Button";
 import { PriceTag } from "@/components/ui/PriceTag";
 import { Reveal } from "@/components/ui/Reveal";
 
-/** "from £1,999", "Boiler service £90", "£70", as a lead word plus amount. */
+/**
+ * "from £1,625", "Service from £65", "£70", as a lead word plus amount.
+ * Returns null where the service has no number to show, and the hero drops the tag entirely
+ * rather than stamping a £0 into it.
+ */
 export const priceTagProps = (service: Service) => {
   const { price } = service;
+  if (price.type === "quote" || price.amount === undefined) return null;
   const lead = [price.label, price.type === "from" ? "from" : ""].filter(Boolean).join(" ");
   return { lead: lead || undefined, amount: price.amount };
 };
@@ -20,6 +25,7 @@ export const priceTagProps = (service: Service) => {
  */
 export function ServiceHero({ service }: { service: Service }) {
   const firstSentence = service.intro[0]?.split(/(?<=[.!?])\s/)[0] ?? "";
+  const tag = priceTagProps(service);
 
   return (
     <section className="service-hero" aria-labelledby="service-title">
@@ -37,9 +43,11 @@ export function ServiceHero({ service }: { service: Service }) {
             {service.h1}
           </Reveal>
           <p className="lead mt-5 text-plaster-soft">{firstSentence}</p>
-          <div className="stamp-in mt-6 inline-block">
-            <PriceTag {...priceTagProps(service)} tone="reversed" size="lg" />
-          </div>
+          {tag ? (
+            <div className="stamp-in mt-6 inline-block">
+              <PriceTag {...tag} tone="reversed" size="lg" />
+            </div>
+          ) : null}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
             <Button href={`/estimate?cat=${service.estimateCategory}`} size="lg">
               Get an instant estimate

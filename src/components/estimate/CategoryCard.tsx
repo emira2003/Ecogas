@@ -1,11 +1,10 @@
-import { Bath, Flame, Heater, ShieldCheck, Wrench, type LucideIcon } from "lucide-react";
+import { Flame, Heater, ShieldCheck, Thermometer, type LucideIcon } from "lucide-react";
 import type { EstimateCategory, EstimateCategoryId } from "@/data/estimate-catalogue";
 
 const icons: Record<EstimateCategoryId, LucideIcon> = {
   boilers: Flame,
   heating: Heater,
-  plumbing: Wrench,
-  bathrooms: Bath,
+  controls: Thermometer,
   "gas-safety": ShieldCheck,
 };
 

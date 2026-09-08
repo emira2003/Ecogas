@@ -13,8 +13,7 @@ const FILTERS: { id: FilterId; label: string }[] = [
   { id: "all", label: "All" },
   { id: "boilers", label: "Boilers" },
   { id: "heating", label: "Heating" },
-  { id: "bathrooms", label: "Bathrooms" },
-  { id: "plumbing", label: "Plumbing" },
+  { id: "controls", label: "Controls" },
 ];
 
 const isFilter = (v: unknown): v is FilterId => FILTERS.some((f) => f.id === v);

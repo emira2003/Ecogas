@@ -1323,6 +1323,145 @@
       opacity: 1;
     }
   }
+  /*
+   * The card header carries the two numbers that decide the choice: the price and the
+   * warranty length. Everything else about the three packages is identical, which is why
+   * there is no "most popular" flag here and no repeated list of standard inclusions.
+   */
+  .package__head {
+    border-radius: 3px 3px 0 0;
+    background: var(--color-cast-iron);
+    padding: 1.25rem 1.5rem 1.4rem;
+    color: var(--color-white);
+  }
+  .package__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    font-size: clamp(2rem, 4.5vw, 2.6rem);
+    font-weight: 800;
+    font-stretch: 110%;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-flame);
+  }
+  .package__from {
+    font-size: 1rem;
+    font-weight: 600;
+    font-stretch: 100%;
+    letter-spacing: 0;
+    color: var(--color-plaster-soft);
+  }
+  .package__warranty {
+    margin-top: 0.55rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-plaster-soft);
+  }
+  .package__body {
+    flex: 1;
+    padding: 1.5rem 1.5rem 0;
+  }
+  /*
+   * The conversion price is the same package, not a competing one, so it sits in its own
+   * strip at the foot of the card rather than beside the headline number.
+   */
+  .package__alt {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 1.5rem 1.5rem 0;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--color-line);
+    font-size: 0.9375rem;
+    color: var(--color-ink-soft);
+  }
+
+  /* The four things every package includes, stated once under all three cards. */
+  .package-standard {
+    display: grid;
+    gap: 1rem 2rem;
+    align-items: start;
+    padding: 1.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: 4px;
+    background: var(--color-raised);
+  }
+  @media (width >= 48rem) {
+    .package-standard {
+      grid-template-columns: auto 1fr;
+    }
+  }
+  .package-standard__title {
+    font-weight: 700;
+    font-stretch: 105%;
+  }
+  .package-standard__list {
+    display: grid;
+    gap: 0.75rem 2rem;
+  }
+  @media (width >= 40rem) {
+    .package-standard__list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* ---- The makes we fit, drifting ----
+     The track holds the list twice and travels exactly -50%, so the second copy arrives
+     where the first started and there is no visible jump. Masked at both edges so items
+     fade in and out rather than appearing at a hard line. */
+  .brand-strip {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 6rem, #000 calc(100% - 6rem), transparent);
+  }
+  .brand-strip__track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    gap: 3.5rem;
+    padding: 0.5rem 0;
+    animation: brand-drift 38s linear infinite;
+  }
+  /* Same pause contract as the reviews marquee: pointer, keyboard, and off screen. */
+  .brand-strip:hover .brand-strip__track,
+  .brand-strip:focus-within .brand-strip__track,
+  .brand-strip[data-paused] .brand-strip__track {
+    animation-play-state: paused;
+  }
+  .brand-strip__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    flex: none;
+  }
+  .brand-strip__name {
+    font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+    font-weight: 800;
+    font-stretch: 112%;
+    letter-spacing: -0.01em;
+    color: var(--color-ink-mute);
+    transition: color 0.2s ease-out;
+  }
+  .brand-strip__item:hover .brand-strip__name {
+    color: var(--color-ink);
+  }
+  .brand-strip__logo {
+    height: 2.75rem;
+    width: auto;
+    object-fit: contain;
+  }
+  .brand-strip__badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-ember);
+  }
+  @keyframes brand-drift {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
 
   /* ---- Why Eco Gas (H5) ---- */
   .why__item {
@@ -2801,7 +2940,20 @@
 --------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   /* The hero photo stops drifting and stops parallaxing; the progress bar goes entirely,
-     because a bar that tracks the scroll is motion whether or not it is subtle. */
+     because a bar that tracks the scroll is motion whether or not it is subtle. The brand
+     strip stops moving and wraps onto as many lines as it needs. */
+  .brand-strip {
+    mask-image: none;
+  }
+  .brand-strip__track {
+    width: auto;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+    animation: none;
+  }
+  .brand-strip__item.is-dup {
+    display: none;
+  }
   .hero__img {
     animation: none;
   }

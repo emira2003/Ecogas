@@ -14,7 +14,7 @@ import { Brands } from "@/components/home/Brands";
 export const metadata: Metadata = {
   title: { absolute: "About Eco Gas: Gas Safe Engineers in Bolton Since 2000" },
   description:
-    "Eco Gas is a small team of Gas Safe registered plumbing and heating engineers on Plodder Lane, Bolton, fitting boilers, heating and bathrooms since 2000.",
+    "Eco Gas North West is a small team of Gas Safe registered boiler and heating engineers on Plodder Lane, Bolton, fitting boilers and heating since 2000.",
   alternates: { canonical: "/about" },
 };
 
@@ -64,21 +64,20 @@ export default function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <p className="lead text-ink-soft">
-              Eco Gas is a small team of Gas Safe registered plumbing and heating engineers based on Plodder Lane in
-              Bolton. We’ve been trading since 2000, which means more than 25 years of fitting boilers, heating systems
-              and bathrooms in homes across Bolton and the North West.
+              Eco Gas North West is a small team of Gas Safe registered boiler and heating engineers based on Plodder
+              Lane in Bolton. We’ve been trading since 2000, which means more than 25 years of fitting boilers, heating
+              systems and the controls that run them, in homes across Bolton and the North West.
             </p>
             <p className="lead mt-5 text-ink-soft">
               Being small is deliberate. Low overheads mean very competitive prices, and a small team means a high
               standard of workmanship, because our name is on every job. We specialise in boiler replacement and
-              installation, fitting Worcester Bosch, Viessmann, Vaillant, Glow-worm and Ideal boilers from £1,999 with a
-              10-year manufacturer’s warranty.
+              installation, fitting Vaillant, Worcester Bosch and Viessmann boilers from £1,625.
             </p>
             <p className="lead mt-5 text-ink-soft">
-              Everything we do comes back to the five things on our flyer: expert installation by Gas Safe engineers, a
-              10-year manufacturer’s warranty, high-quality products, competitive prices, and reliable, friendly
-              service. If you’d like to know what that feels like from the customer’s side, our reviews page has their
-              words, not ours.
+              Everything we do comes back to the same five things: expert installation by Gas Safe engineers, a warranty
+              that comes from the boiler manufacturer rather than from us, boilers worth fitting, a price that does not
+              move once it is agreed, and turning up when we say we will. If you’d like to know what that feels like
+              from the customer’s side, our reviews page has their words, not ours.
             </p>
           </div>
 

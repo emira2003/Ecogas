@@ -3,14 +3,15 @@
  *
  * HOW TO CHANGE A PRICE
  *   Find the job by its `name`, change the number after `price:` (or `min:` / `max:` for a range).
- *   Whole pounds only, no £ sign, no commas: 1999 not "£1,999".
+ *   Whole pounds only, no £ sign, no commas: 1625 not "£1,625".
  *
  * HOW TO ADD A JOB
  *   Copy an existing block inside the right category’s `items` list and edit it.
  *   `priceType` is one of:
- *     "fixed" → shows "£90"            (needs `price`)
- *     "from"  → shows "from £350"      (needs `price`)
- *     "range" → shows "£150 to £300"    (needs `min` and `max`)
+ *     "fixed" → shows "£70"            (needs `price`)
+ *     "from"  → shows "from £300"      (needs `price`)
+ *     "range" → shows "£150 to £300"   (needs `min` and `max`)
+ *     "quote" → shows no number        (for work that cannot honestly carry one)
  *   Set `unit: "each"` if the customer can pick a quantity (e.g. radiators). Leave it out otherwise.
  *   `note` is optional small print shown under the job.
  *
@@ -20,11 +21,14 @@
  * IMPORTANT: keep every `id` unique, and never reuse an old id for a different job.
  * The id is what a saved estimate refers to, so reusing one would change the meaning of past estimates.
  *
- * PRICES BELOW ARE EXAMPLES except the two the client has confirmed (£1,999 and £2,500).
- * See TODO.md for the full list to confirm.
+ * The six package prices, the £65 service, the £300 flue kit and the £4,400 system are
+ * CONFIRMED by the client. Everything marked EXAMPLE still needs confirming: see TODO.md.
+ *
+ * Plumbing and bathrooms were removed when the site became boiler specific. Their ids are
+ * retired, not reused.
  */
 
-export type PriceType = "fixed" | "from" | "range";
+export type PriceType = "fixed" | "from" | "range" | "quote";
 
 export interface EstimateItem {
   id: string; // unique kebab-case
@@ -38,18 +42,13 @@ export interface EstimateItem {
   note?: string; // small print
 }
 
-export type EstimateCategoryId =
-  | "boilers"
-  | "heating"
-  | "plumbing"
-  | "bathrooms"
-  | "gas-safety";
+export type EstimateCategoryId = "boilers" | "heating" | "controls" | "gas-safety";
 
 export interface EstimateCategory {
   id: EstimateCategoryId;
   name: string;
   tagline: string;
-  /** "flame" = heating and gas (orange). "water" = plumbing and bathrooms (blue). */
+  /** "flame" = boilers and gas (orange). "water" = the wet side, heating and controls (blue). */
   accent: "flame" | "water";
   items: EstimateItem[];
 }
@@ -57,67 +56,96 @@ export interface EstimateCategory {
 export const estimateCatalogue: EstimateCategory[] = [
   {
     id: "boilers",
-    name: "Boilers",
-    tagline: "New boilers, faults and servicing",
+    name: "New boiler",
+    tagline: "Three packages, straight swap or gravity to combi",
     accent: "flame",
     items: [
       {
-        id: "new-combi-boiler",
-        name: "New combi boiler installation",
-        description: "Supply and fit an A-rated combi boiler with a 10-year manufacturer’s warranty",
+        id: "boiler-eco-swap",
+        name: "Eco package, straight swap",
+        description: "5 year manufacturer warranty. Filter, chemical flush and programmable thermostat included",
         priceType: "from",
-        price: 1999, // CONFIRMED by client
+        price: 1625, // CONFIRMED by client
       },
       {
-        id: "premium-boiler-package",
-        name: "Premium boiler package",
-        description: "High-efficiency boiler, smart controls and a power flush",
+        id: "boiler-premium-swap",
+        name: "Premium package, straight swap",
+        description: "10 year manufacturer warranty, plus the Hive smart control upgrade",
         priceType: "from",
-        price: 2500, // CONFIRMED by client
+        price: 2350, // CONFIRMED by client
+      },
+      {
+        id: "boiler-exclusive-swap",
+        name: "Exclusive package, straight swap",
+        description: "12 year manufacturer warranty, plus the Hive smart control upgrade",
+        priceType: "from",
+        price: 2600, // CONFIRMED by client
+      },
+      {
+        id: "boiler-eco-conversion",
+        name: "Eco package, gravity system to combi",
+        description: "The Eco package where the loft tank and cylinder come out",
+        priceType: "from",
+        price: 2225, // CONFIRMED by client
+      },
+      {
+        id: "boiler-premium-conversion",
+        name: "Premium package, gravity system to combi",
+        description: "The Premium package where the loft tank and cylinder come out",
+        priceType: "from",
+        price: 2950, // CONFIRMED by client
+      },
+      {
+        id: "boiler-exclusive-conversion",
+        name: "Exclusive package, gravity system to combi",
+        description: "The Exclusive package where the loft tank and cylinder come out",
+        priceType: "from",
+        price: 3200, // CONFIRMED by client
+      },
+      {
+        id: "vertical-flue-kit",
+        name: "Vertical flue kit",
+        description: "Where the flue goes up through the roof instead of out through a wall",
+        priceType: "from",
+        price: 300, // CONFIRMED by client
+        note: "The length of the run decides the final price",
       },
       {
         id: "boiler-relocation",
         name: "Boiler relocation",
-        description: "Move your boiler to a new position, including the pipework",
-        priceType: "from",
-        price: 600, // EXAMPLE
-      },
-      {
-        id: "boiler-fault-finding",
-        name: "Boiler not working / fault finding",
-        description: "We find the fault and tell you exactly what it needs",
-        priceType: "fixed",
-        price: 85, // EXAMPLE
-        note: "Call-out includes diagnosis",
-      },
-      {
-        id: "annual-boiler-service",
-        name: "Annual boiler service",
-        description: "Full check and clean to keep your boiler running safely",
-        priceType: "fixed",
-        price: 90, // EXAMPLE
+        description: "Moving the boiler to a different position, including the pipework",
+        priceType: "quote",
+        note: "Priced on the job: it depends where the boiler is now and where it is going",
       },
     ],
   },
   {
     id: "heating",
-    name: "Central heating",
-    tagline: "Systems, radiators, flushes and controls",
+    name: "Heating & servicing",
+    tagline: "Systems, radiators, services and breakdowns",
     accent: "flame",
     items: [
       {
-        id: "full-heating-system",
-        name: "Full new heating system",
-        description: "Boiler, radiators, pipework and controls for the whole house",
+        id: "annual-boiler-service",
+        name: "Annual boiler service",
+        description: "Full check and clean. Keeps the boiler safe and the warranty valid",
         priceType: "from",
-        price: 3500, // EXAMPLE
+        price: 65, // CONFIRMED by client
       },
       {
-        id: "power-flush",
-        name: "Power flush",
-        description: "Clears sludge from radiators and pipes so they heat evenly",
+        id: "boiler-breakdown-repair",
+        name: "Boiler breakdown",
+        description: "We find the fault and tell you what it needs before any work starts",
+        priceType: "quote",
+        note: "No fix, no fee. If we cannot repair it, there is nothing to pay for the visit",
+      },
+      {
+        id: "full-heating-system",
+        name: "Full new heating system",
+        description: "Boiler, radiators, pipework and controls. Six radiators",
         priceType: "from",
-        price: 350, // EXAMPLE
+        price: 4400, // CONFIRMED by client
+        note: "A site visit is needed to price this one properly",
       },
       {
         id: "radiator-replacement",
@@ -136,111 +164,53 @@ export const estimateCatalogue: EstimateCategory[] = [
         unit: "each",
       },
       {
-        id: "smart-thermostat",
-        name: "Smart thermostat installation",
-        description: "Fit and set up a smart thermostat you can control from your phone",
-        priceType: "from",
-        price: 180, // EXAMPLE
-      },
-      {
-        id: "heating-fault-finding",
-        name: "Heating not working / fault finding",
-        description: "We find the fault and tell you exactly what it needs",
-        priceType: "fixed",
-        price: 85, // EXAMPLE
-        note: "Call-out includes diagnosis",
+        id: "underfloor-heating",
+        name: "Underfloor heating",
+        description: "Wet underfloor circuits run from your boiler, with manifold and zone controls",
+        priceType: "quote",
+        note: "Priced on the job, once we know the rooms and the floor build-up",
       },
     ],
   },
   {
-    id: "plumbing",
-    name: "Plumbing repairs",
-    tagline: "Leaks, taps, toilets and drains",
+    id: "controls",
+    name: "Controls",
+    tagline: "Smart thermostats, zoning and radiator valves",
     accent: "water",
     items: [
       {
-        id: "leaking-pipe-repair",
-        name: "Leaking pipe repair",
-        description: "Find the leak, repair the pipe and check it holds",
-        priceType: "from",
-        price: 85, // EXAMPLE
+        id: "hive-smart-control",
+        name: "Hive smart thermostat",
+        description: "Fitted, paired to your boiler and set up on your phone before we leave",
+        priceType: "quote",
+        note: "Included as standard with the Premium and Exclusive boiler packages",
       },
       {
-        id: "dripping-tap",
-        name: "Dripping or broken tap",
-        description: "Repair or replace a kitchen or bathroom tap",
-        priceType: "from",
-        price: 75, // EXAMPLE
+        id: "programmable-thermostat",
+        name: "Programmable room thermostat",
+        description: "A timer and thermostat in one, so the heating follows your week",
+        priceType: "quote",
+        note: "Included as standard with every boiler package",
       },
       {
-        id: "toilet-repair",
-        name: "Toilet repair",
-        description: "Fix a toilet that’s running, leaking or won’t flush",
-        priceType: "from",
-        price: 85, // EXAMPLE
+        id: "heating-zone-valve",
+        name: "Extra heating zone",
+        description: "Heat upstairs and downstairs on separate schedules",
+        priceType: "quote",
       },
       {
-        id: "blocked-sink-drain",
-        name: "Blocked sink or drain",
-        description: "Clear the blockage and get the water draining again",
+        id: "trv-replacement",
+        name: "Thermostatic radiator valve",
+        description: "Turn down the rooms nobody is using, one radiator at a time",
         priceType: "from",
-        price: 95, // EXAMPLE
-      },
-      {
-        id: "outside-tap",
-        name: "Outside tap installation",
-        description: "Fit an outside tap with its own isolation valve",
-        priceType: "from",
-        price: 150, // EXAMPLE
-      },
-      {
-        id: "burst-pipe",
-        name: "Burst pipe",
-        description: "Stop the leak, repair the pipe and make good",
-        priceType: "from",
-        price: 120, // EXAMPLE
-      },
-    ],
-  },
-  {
-    id: "bathrooms",
-    name: "Bathrooms",
-    tagline: "Full fits, showers, baths and basins",
-    accent: "water",
-    items: [
-      {
-        id: "full-bathroom",
-        name: "Full bathroom installation",
-        description: "Strip out and fit a complete new bathroom",
-        priceType: "from",
-        price: 3500, // EXAMPLE
-      },
-      {
-        id: "shower-installation",
-        name: "Shower installation",
-        description: "Fit a new shower, including the plumbing",
-        priceType: "from",
-        price: 350, // EXAMPLE
-      },
-      {
-        id: "toilet-basin-replacement",
-        name: "Toilet or basin replacement",
-        description: "Remove the old one and fit the new one",
-        priceType: "from",
-        price: 220, // EXAMPLE
-      },
-      {
-        id: "bath-replacement",
-        name: "Bath replacement",
-        description: "Take out the old bath and fit and seal the new one",
-        priceType: "from",
-        price: 450, // EXAMPLE
+        price: 45, // EXAMPLE
+        unit: "each",
       },
     ],
   },
   {
     id: "gas-safety",
-    name: "Gas safety & servicing",
+    name: "Gas safety",
     tagline: "Landlord certificates, cookers and safety checks",
     accent: "flame",
     items: [
@@ -259,7 +229,7 @@ export const estimateCatalogue: EstimateCategory[] = [
         price: 140, // EXAMPLE
       },
       {
-        id: "gas-cooker-hob-installation",
+        id: "gas-cooker-installation",
         name: "Gas cooker or hob installation",
         description: "Connect and safety-test a new gas cooker or hob",
         priceType: "from",

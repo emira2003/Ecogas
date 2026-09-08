@@ -8,9 +8,9 @@ import { Section } from "@/components/ui/Section";
 import { GalleryGrid } from "@/components/work/GalleryGrid";
 
 export const metadata: Metadata = {
-  title: { absolute: "Our Work: Boiler & Bathroom Installations | Eco Gas" },
+  title: { absolute: "Our Work: Boiler & Heating Installations | Eco Gas" },
   description:
-    "Photos of recent boiler installations, heating systems, bathrooms and plumbing jobs by Eco Gas across Bolton and the North West, with before and after comparisons.",
+    "Photos of recent boiler installations, heating systems and controls fitted by Eco Gas North West across Bolton, with before and after comparisons.",
   alternates: { canonical: "/our-work" },
 };
 
@@ -26,7 +26,7 @@ export default function OurWorkPage() {
           Recent jobs across Bolton and the North West
         </Reveal>
         <p className="lead mt-6 max-w-2xl text-ink-soft">
-          Boilers, heating systems, bathrooms and everyday plumbing, photographed as we left them. Tap any photo to see
+          Boilers, heating systems and controls, photographed as we left them. Tap any photo to see
           it larger.
         </p>
       </Section>

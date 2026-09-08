@@ -5,7 +5,7 @@
  *   `src`      path starting with /images/…
  *   `alt`      what is actually in the photo, for people who can’t see it (a real description)
  *   `caption`  one line shown under the photo, e.g. "Combi boiler swap, Westhoughton"
- *   `category` one of "boilers" | "heating" | "bathrooms" | "plumbing"
+ *   `category` one of "boilers" | "heating" | "controls"
  *   `town`     where the job was
  *
  * BEFORE / AFTER PAIRS: give both photos the same `pairId` and set `pairRole` to "before" or "after".
@@ -15,7 +15,7 @@
  * The placeholder images are generated SVG drawings (see IMAGE-CREDITS.md).
  */
 
-export type GalleryCategory = "boilers" | "heating" | "bathrooms" | "plumbing";
+export type GalleryCategory = "boilers" | "heating" | "controls";
 
 export interface GalleryImage {
   id: string;
@@ -63,9 +63,9 @@ export const gallery: GalleryImage[] = [
     src: "/images/placeholders/pair-2-before.svg",
     width: 800,
     height: 600,
-    alt: "Placeholder: a tired bathroom before refitting",
-    caption: "Bathroom refit, before and after, Manchester",
-    category: "bathrooms",
+    alt: "Placeholder: an old gravity system with the cylinder still in place",
+    caption: "Gravity system to combi, before and after, Manchester",
+    category: "boilers",
     town: "Manchester",
     pairId: "pair-2",
     pairRole: "before",
@@ -75,9 +75,9 @@ export const gallery: GalleryImage[] = [
     src: "/images/placeholders/pair-2-after.svg",
     width: 800,
     height: 600,
-    alt: "Placeholder: the finished bathroom from the same angle",
-    caption: "Bathroom refit, before and after, Manchester",
-    category: "bathrooms",
+    alt: "Placeholder: the new combi on the wall, tank and cylinder gone",
+    caption: "Gravity system to combi, before and after, Manchester",
+    category: "boilers",
     town: "Manchester",
     pairId: "pair-2",
     pairRole: "after",
@@ -140,7 +140,7 @@ export const gallery: GalleryImage[] = [
     width: 800,
     height: 800,
     alt: "Placeholder: a thermostatic radiator valve close up",
-    caption: "Power flush and new valves, Little Lever",
+    caption: "System flush and new valves, Little Lever",
     category: "heating",
     town: "Little Lever",
   },
@@ -149,9 +149,9 @@ export const gallery: GalleryImage[] = [
     src: "/images/placeholders/work-07.svg",
     width: 800,
     height: 1000,
-    alt: "Placeholder: a finished family bathroom",
-    caption: "Family bathroom refit, Egerton",
-    category: "bathrooms",
+    alt: "Placeholder: underfloor heating pipes laid in a new kitchen floor",
+    caption: "Underfloor heating in a new kitchen, Egerton",
+    category: "heating",
     town: "Egerton",
   },
   {
@@ -159,9 +159,9 @@ export const gallery: GalleryImage[] = [
     src: "/images/placeholders/work-08.svg",
     width: 800,
     height: 700,
-    alt: "Placeholder: a walk-in shower with glass screen",
-    caption: "Walk-in shower installation, Atherton",
-    category: "bathrooms",
+    alt: "Placeholder: a smart control on the wall",
+    caption: "Hive smart control fitted, Atherton",
+    category: "controls",
     town: "Atherton",
   },
   {
@@ -169,9 +169,9 @@ export const gallery: GalleryImage[] = [
     src: "/images/placeholders/work-09.svg",
     width: 800,
     height: 600,
-    alt: "Placeholder: a new basin and toilet",
-    caption: "New basin and toilet, Leigh",
-    category: "bathrooms",
+    alt: "Placeholder: a vertical flue terminal on a roof",
+    caption: "Vertical flue taken through the roof, Leigh",
+    category: "boilers",
     town: "Leigh",
   },
   {
@@ -179,9 +179,9 @@ export const gallery: GalleryImage[] = [
     src: "/images/placeholders/work-10.svg",
     width: 800,
     height: 900,
-    alt: "Placeholder: an outside tap on a brick wall",
-    caption: "Outside tap installation, Radcliffe",
-    category: "plumbing",
+    alt: "Placeholder: a magnetic filter fitted on the return pipe",
+    caption: "Magnetic filter and system flush, Radcliffe",
+    category: "heating",
     town: "Radcliffe",
   },
   {
@@ -189,9 +189,9 @@ export const gallery: GalleryImage[] = [
     src: "/images/placeholders/work-11.svg",
     width: 800,
     height: 600,
-    alt: "Placeholder: neat copper pipework under a sink",
-    caption: "Pipework tidy-up under the sink, Stockport",
-    category: "plumbing",
+    alt: "Placeholder: neat copper pipework to a relocated boiler",
+    caption: "Boiler relocation and new pipework, Stockport",
+    category: "boilers",
     town: "Stockport",
   },
   {
