@@ -111,12 +111,35 @@ Listed here once received, so it is clear which images belong to Eco Gas.
 referenced by any page, because bathrooms and general plumbing came off the site. They are kept
 in the repository in case either service comes back.
 
-## Brand logos, not yet supplied
+## Brand logos
 
-The moving strip on the home page shows Vaillant, Worcester Bosch, Viessmann, Hive and Honeywell
-as plain wordmarks. Real logos need the official files from each maker's installer portal, not
-images lifted from a web search, which come out low resolution and often the wrong version. Put
-them in `/public/images/brands/` and fill in `logo:` in `src/data/business.ts`.
+The moving strip on the home page uses the official vector marks, in `/public/images/brands/`.
+All five came from Wikimedia Commons, where each is **public domain for copyright** while the
+**trademark stays with its owner**. Showing them to say which products we fit is ordinary
+nominative use, the same as any installer listing the makes they work with.
+
+| File | Make | Commons file | Copyright |
+|---|---|---|---|
+| `vaillant.svg` | Vaillant | Vaillant-logo-2021.svg | Public domain, trademarked |
+| `worcester-bosch.svg` | Worcester Bosch | Bosch-logo.svg | Public domain, trademarked |
+| `viessmann.svg` | Viessmann | Viessmann-logo.svg | Public domain, trademarked |
+| `hive.svg` | Hive | Hive Home logo.svg | Public domain, trademarked |
+| `honeywell.svg` | Honeywell | Honeywell logo.svg | Public domain, trademarked |
+
+**Three things to know.**
+
+The Worcester Bosch slot currently shows the **Bosch corporate mark**, because Commons has no
+Worcester Bosch logo. Bosch is the parent and the mark is legitimately theirs, so it is accurate
+rather than wrong, but the UK boiler brand has its own green and red Worcester Bosch artwork.
+Swap the file when the client gets it from the installer portal; nothing else needs changing.
+
+`viessmann.svg` had no `viewBox`, only a width and height, which makes an SVG scale
+unpredictably. One was added matching its declared size. Do not remove it.
+
+**Sizes are per make, in `business.ts`, not one shared height.** These marks are wildly
+different shapes: Honeywell is about six times wider than it is tall, the Hive mark is taller
+than it is wide. At a single height Hive looked like a typo beside the others, so each carries
+its own `logoHeight`, set so they read at about the same visual weight.
 
 **An accredited installer badge is a credential, not a logo.** Only show the schemes the business
 actually holds. `accreditation:` in `business.ts` is null for every make until we are told

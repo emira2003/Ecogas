@@ -59,19 +59,24 @@ export const business = {
   /**
    * The makes we fit, shown as a moving strip on the home page.
    *
-   * `logo` stays null until the client supplies the official artwork from each maker's
-   * installer portal. Never draw a brand logo ourselves and never lift one off a search
-   * result: they come out low resolution, and often the wrong version.
+   * The logos are the official vector marks, from Wikimedia Commons, where each is public
+   * domain for copyright while the trademark stays with its owner. Showing them to say which
+   * products we fit is ordinary nominative use. See IMAGE-CREDITS.md.
+   *
+   * `logoHeight` is per make on purpose. These marks have wildly different proportions: the
+   * Honeywell wordmark is nearly six times wider than it is tall, the Hive mark is taller than
+   * it is wide. Rendering them all at one height leaves Hive looking like a typo next to the
+   * others, so each is sized to carry about the same visual weight.
    *
    * `accreditation` is a credential, not a logo. Only fill it in for schemes the business
    * genuinely holds, because claiming one it does not is a misrepresentation. See TODO.md.
    */
   brands: [
-    { name: "Vaillant", kind: "boiler", logo: null as string | null, accreditation: null as string | null },
-    { name: "Worcester Bosch", kind: "boiler", logo: null as string | null, accreditation: null as string | null },
-    { name: "Viessmann", kind: "boiler", logo: null as string | null, accreditation: null as string | null },
-    { name: "Hive", kind: "controls", logo: null as string | null, accreditation: null as string | null },
-    { name: "Honeywell", kind: "controls", logo: null as string | null, accreditation: null as string | null },
+    { name: "Vaillant", kind: "boiler", logo: "/images/brands/vaillant.svg" as string | null, logoHeight: 58, accreditation: null as string | null },
+    { name: "Worcester Bosch", kind: "boiler", logo: "/images/brands/worcester-bosch.svg" as string | null, logoHeight: 52, accreditation: null as string | null },
+    { name: "Viessmann", kind: "boiler", logo: "/images/brands/viessmann.svg" as string | null, logoHeight: 46, accreditation: null as string | null },
+    { name: "Hive", kind: "controls", logo: "/images/brands/hive.svg" as string | null, logoHeight: 78, accreditation: null as string | null },
+    { name: "Honeywell", kind: "controls", logo: "/images/brands/honeywell.svg" as string | null, logoHeight: 44, accreditation: null as string | null },
   ],
 
   /**

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import type { CSSProperties } from "react";
 import { business } from "@/data/business";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
@@ -24,19 +24,38 @@ export function Brands() {
   ];
 
   return (
-    <Section id="brands" aria-labelledby="brands-title" contained={false}>
+    <Section id="brands" padding="compact" aria-labelledby="brands-title" contained={false}>
       <div className="container-site">
         <Reveal as="h2" split id="brands-title" className="h2">
           What we fit
         </Reveal>
+        <p className="mt-3 max-w-xl text-ink-soft">
+          The makes we install, service and repair, and whose warranties we register in your name.
+        </p>
       </div>
 
-      <div className="brand-strip mt-8" aria-hidden="true">
-        <ul className="brand-strip__track">
+      {/*
+        Two elements, not one. The tray carries the background and the rules and stays solid
+        edge to edge; the window inside it is what clips and fades the moving row. Putting the
+        fade on the tray itself would fade its own rules away at both ends.
+      */}
+      <div className="brand-strip mt-9" aria-hidden="true">
+        <div className="brand-strip__window">
+          <ul className="brand-strip__track">
           {strip.map((brand, i) => (
             <li key={`${brand.name}-${i}`} className={`brand-strip__item ${brand.dup ? "is-dup" : ""}`.trim()}>
               {brand.logo ? (
-                <Image src={brand.logo} alt="" width={160} height={44} loading="lazy" className="brand-strip__logo" />
+                /* eslint-disable-next-line @next/next/no-img-element --
+                   next/image would need dangerouslyAllowSVG turned on for the whole site, and
+                   it has nothing to optimise here: these are local vector files of 2 to 11 KB. */
+                <img
+                  src={brand.logo}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="brand-strip__logo"
+                  style={{ "--logo-h": `${brand.logoHeight}px` } as CSSProperties}
+                />
               ) : (
                 <span className="brand-strip__name">{brand.name}</span>
               )}
@@ -45,7 +64,8 @@ export function Brands() {
               ) : null}
             </li>
           ))}
-        </ul>
+          </ul>
+        </div>
       </div>
 
       {/* The strip is decorative and duplicated, so the real list is given once to screen readers. */}

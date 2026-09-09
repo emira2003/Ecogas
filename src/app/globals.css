@@ -1412,17 +1412,75 @@
      The track holds the list twice and travels exactly -50%, so the second copy arrives
      where the first started and there is no visible jump. Masked at both edges so items
      fade in and out rather than appearing at a hard line. */
+  /*
+   * The logos travel in full colour but only near the middle: a band across the centre shows
+   * them as they are, and they desaturate as they drift out to either side. That settles the
+   * problem that five brand colours at once look like a jumble, without ever greying out the
+   * makes the client sells on.
+   *
+   * It is done with one overlay rather than two stacked copies of the row. The overlay carries
+   * `backdrop-filter: grayscale(1)`, which drains the colour out of whatever is painted behind
+   * it, and a mask that makes the overlay itself absent through the middle. So there is a
+   * single moving row, nothing to keep in sync, and the browser does the work on the GPU.
+   *
+   * Where `backdrop-filter` is unsupported the overlay simply does nothing and every logo stays
+   * in colour, which is the right thing to fall back to.
+   */
+  /*
+   * The tray. A shallow recess cut into the band, in the same layered-surface language the
+   * rest of the page uses: a slightly deeper ground than the section it sits in, a bright
+   * hairline along the top edge where the light would catch, and a soft shadow falling inwards
+   * from it. That is what makes the row read as part of the page rather than logos parked on
+   * top of it.
+   */
   .brand-strip {
-    overflow: hidden;
-    mask-image: linear-gradient(90deg, transparent, #000 6rem, #000 calc(100% - 6rem), transparent);
+    position: relative;
+    padding: 2.25rem 0;
+    background: color-mix(in srgb, var(--color-surface-2) 55%, var(--color-surface));
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 65%),
+      inset 0 10px 18px -14px rgb(30 36 46 / 45%),
+      inset 0 -10px 18px -14px rgb(30 36 46 / 22%);
   }
+  /* The window is what clips and fades the moving row. The tray behind it stays solid. */
+  .brand-strip__window {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 7rem, #000 calc(100% - 7rem), transparent);
+  }
+  /* The colour window. Opaque at both ends (colour drained), absent through the centre. */
+  .brand-strip::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    backdrop-filter: grayscale(1);
+    /* A wash of the page colour on the same mask, so the sides dim as well as drain. An
+       opacity() inside backdrop-filter would be tidier, but the CSS build drops the whole
+       declaration when it sees one, taking the greyscale with it. */
+    background: color-mix(in srgb, var(--color-surface) 34%, transparent);
+    mask-image: linear-gradient(
+      90deg,
+      #000 0%,
+      #000 22%,
+      transparent 41%,
+      transparent 59%,
+      #000 78%,
+      #000 100%
+    );
+  }
+  /* The gap is wide on purpose, and scales with the window. One pass of the five logos has to
+     stay wider than the screen: the track holds the list twice so the loop has no seam, and if
+     one pass fitted on screen you would see both copies at once and every logo would appear
+     twice. At 14vw per gap the pass stays ahead of the viewport from a phone to an ultrawide. */
   .brand-strip__track {
     display: flex;
     width: max-content;
     align-items: center;
-    gap: 3.5rem;
-    padding: 0.5rem 0;
-    animation: brand-drift 38s linear infinite;
+    gap: clamp(3.5rem, 11vw, 14rem);
+    animation: brand-drift 46s linear infinite;
   }
   /* Same pause contract as the reviews marquee: pointer, keyboard, and off screen. */
   .brand-strip:hover .brand-strip__track,
@@ -1447,11 +1505,27 @@
   .brand-strip__item:hover .brand-strip__name {
     color: var(--color-ink);
   }
+  /* Height comes from the data, per make, because the marks are wildly different shapes.
+     --brand-scale shrinks the whole set on small screens without touching those ratios. */
   .brand-strip__logo {
-    height: 2.75rem;
+    display: block;
+    height: calc(var(--logo-h, 2.75rem) * var(--brand-scale, 1));
     width: auto;
+    max-width: none;
     object-fit: contain;
   }
+  @media (width < 40rem) {
+    .brand-strip {
+      --brand-scale: 0.62;
+    }
+  }
+  /* On a phone the row is a lot narrower, so the same duration reads as a crawl. */
+  @media (width < 40rem) {
+    .brand-strip__track {
+      animation-duration: 24s;
+    }
+  }
+
   .brand-strip__badge {
     font-size: 0.75rem;
     font-weight: 600;
@@ -2969,8 +3043,14 @@
   /* The hero photo stops drifting and stops parallaxing; the progress bar goes entirely,
      because a bar that tracks the scroll is motion whether or not it is subtle. The brand
      strip stops moving and wraps onto as many lines as it needs. */
-  .brand-strip {
+  /* The row wraps instead of travelling, so it needs no edge fade and no clipping. */
+  .brand-strip__window {
+    overflow: visible;
     mask-image: none;
+  }
+  /* Nothing is passing through the middle, so every logo simply keeps its colour. */
+  .brand-strip::after {
+    display: none;
   }
   .brand-strip__track {
     width: auto;
