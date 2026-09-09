@@ -1814,37 +1814,29 @@
     transition-duration: 0.4s;
   }
 
-  /* ---- How the day goes (S3) ---- */
-  .timeline {
-    --progress: 1;
-  }
-  .timeline__viewport {
-    position: relative;
-  }
+  /* ---- How the day goes (S3) ----
+     Five stages across the page, no pinning and no sideways scrubbing. Each stage carries its
+     own rail segment reaching into the gap towards the next number, which is what keeps the
+     rail on the number row and off the words. The last stage has no segment, so the rail stops
+     at the final number instead of running off the edge. */
   .timeline__track {
-    position: relative;
+    display: grid;
     list-style: none;
     margin: 0;
     padding: 0;
   }
-  /* The connecting line: ::before is the grey rail, ::after the orange fill that draws along it */
-  .timeline__track::before,
-  .timeline__track::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-  }
-  .timeline__track::before {
-    background: var(--color-line);
-  }
-  .timeline__track::after {
-    background: var(--color-flame);
-    transform-origin: left top;
-  }
   .stage {
     position: relative;
   }
+  .stage__rail {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 2.25rem;
+  }
   .stage__num {
+    position: relative;
+    z-index: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1856,18 +1848,43 @@
     font-weight: 700;
     font-variant-numeric: tabular-nums;
     flex: none;
+    transition:
+      background-color 0.3s ease-out,
+      color 0.3s ease-out;
+  }
+  /* The grey rail, and the flame fill that grows along it as each stage lights */
+  .stage__rail::before,
+  .stage__rail::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 1.5px);
+    height: 3px;
+    pointer-events: none;
+  }
+  .stage__rail::before {
+    background: var(--color-line);
+  }
+  .stage__rail::after {
+    background: var(--color-flame);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+  .stage:last-child .stage__rail::before,
+  .stage:last-child .stage__rail::after {
+    display: none;
   }
   .stage__art {
-    width: 6rem;
-    height: 6rem;
-    margin: 1rem 0 0.75rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 1.25rem 0 0.85rem;
   }
   .stage__art svg {
     width: 100%;
     height: 100%;
     fill: none;
     stroke: var(--color-ink);
-    stroke-width: 2.2;
+    stroke-width: 2.6;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
@@ -1875,7 +1892,14 @@
     transition: stroke-dashoffset 0.8s ease-out;
     transition-delay: calc(var(--j, 0) * 120ms);
   }
-  /* Hidden strokes only once the motion controller is active */
+  .stage__title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    font-stretch: 105%;
+    line-height: 1.3;
+  }
+
+  /* Lit state. Everything is shown lit unless the motion controller has taken over. */
   .timeline[data-motion] .stage:not(.is-on) .stage__art path {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
@@ -1886,62 +1910,65 @@
   }
   .timeline[data-motion] .stage.is-on .stage__num {
     background: var(--color-flame);
-    color: var(--color-ink);
+    color: var(--color-on-flame);
+  }
+  /* A segment fills once the stage after it has lit, so the rail leads the eye forward */
+  .timeline:not([data-motion]) .stage__rail::after,
+  .timeline[data-motion] .stage.is-done .stage__rail::after {
+    transform: scaleX(1);
   }
 
-  /* Mobile / tablet: vertical timeline, line draws downward */
-  @media (width < 64rem) {
+  /* Stacked: the rail turns and runs down the left */
+  @media (width < 60rem) {
     .timeline__track {
-      display: grid;
-      gap: 2.5rem;
+      gap: 2rem;
+    }
+    .stage {
       padding-left: 3.25rem;
     }
-    .timeline__track::before,
-    .timeline__track::after {
-      left: calc(1.125rem - 1.5px);
-      top: 1.125rem;
-      bottom: 1.125rem;
-      width: 3px;
-    }
-    .timeline__track::after {
-      transform: scaleY(var(--progress));
+    /* No spacer row here: the number is lifted out of the flow, so the title should start at
+       the top of the stage and sit level with it rather than below it. */
+    .stage__rail {
+      position: static;
+      height: 0;
     }
     .stage__num {
       position: absolute;
-      left: -3.25rem;
-      top: 0;
+      left: 0;
+      top: -0.35rem;
+    }
+    .stage__rail::before,
+    .stage__rail::after {
+      top: 1.9rem;
+      bottom: -2rem;
+      left: calc(1.125rem - 1.5px);
+      width: 3px;
+      height: auto;
+    }
+    .stage__rail::after {
+      transform: scaleY(0);
+      transform-origin: center top;
+    }
+    .timeline:not([data-motion]) .stage__rail::after,
+    .timeline[data-motion] .stage.is-done .stage__rail::after {
+      transform: scaleY(1);
+    }
+    .stage__art {
+      display: none;
     }
   }
 
-  /* Desktop: horizontal track that scrolls sideways while the section is pinned */
-  @media (width >= 64rem) {
-    .timeline__viewport {
-      overflow: hidden;
-    }
+  /* All five side by side. 1200px across five columns is tight, so the drawings shrink and
+     the body text drops to the small size rather than the stages being allowed to overflow. */
+  @media (width >= 60rem) {
     .timeline__track {
-      display: flex;
-      gap: 2.5rem;
-      width: max-content;
-      padding: 0 0 1rem;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1.5rem;
     }
-    .stage {
-      width: 21rem;
-      flex: none;
-    }
-    .stage__head {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .timeline__track::before,
-    .timeline__track::after {
-      left: 0;
-      right: 0;
-      top: calc(1.125rem - 1.5px);
-      height: 3px;
-    }
-    .timeline__track::after {
-      transform: scaleX(var(--progress));
+    .stage__rail::before,
+    .stage__rail::after {
+      left: 2.75rem;
+      right: -1.5rem;
     }
   }
 

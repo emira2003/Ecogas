@@ -604,3 +604,34 @@ _None yet. Ideas that come up during the build go here, not into the code._
   fails on any trace of the old price, the old blanket warranty, the dropped services, or
   either long dash. It reports clean. The contrast audit reports zero failures on the home page
   after the rewrite. Build, lint and 18 tests pass.
+
+- **"How the day goes" rebuilt.** It shipped broken and Xhezmi sent a screenshot of it. Two
+  faults, both structural rather than cosmetic.
+
+  **The rail ran through the words.** The connecting line was positioned at the vertical centre
+  of the number marker, and the marker sat *beside* the title in a flex row, so the line crossed
+  every heading as a strikethrough. The number now has a row of its own with the title beneath
+  it, so the rail only ever crosses the numbers it is joining.
+
+  **The track was wider than the page.** All five stages sat on a `max-content` flex row and
+  were only reachable by pinning the section and scrubbing it sideways with GSAP. Stage five was
+  simply not visible until you scrolled far enough to drag it in, which is what the screenshot
+  caught. This is the same scroll hijacking that was taken out of the home page in an earlier
+  pass, for the same reason. All five stages now fit at once in a five column grid, and nothing
+  is pinned.
+
+  **The rail is now per stage, not one line across the track.** Each stage draws its own segment
+  from the right edge of its number into the gap towards the next one, and the last stage draws
+  none. That keeps the rail on the number row at any column width, stops it running off the edge
+  past the final marker, and lets each segment fill independently as its stage lights.
+
+  **GSAP no longer loads on the Boiler Replacement page.** The motion is IntersectionObserver
+  only: a stage lights as it comes into view, its drawing sketches itself in, and the segment
+  *behind* it fills, so the line always leads into the number that has just lit rather than
+  running ahead of it. Under reduced motion nothing hides in the first place.
+
+  Below 60rem the rail turns and runs down the left as a conventional vertical timeline, with
+  the drawings dropped so the stages stay compact on a phone.
+
+  Build, lint, 18 tests, the stale-content sweep across all 25 pages, and a contrast audit of
+  the rebuilt page all pass.

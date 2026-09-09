@@ -78,9 +78,19 @@ const stages: Stage[] = [
 ];
 
 /**
- * "How the day goes" (PLAN.md D3, F2-S3). Boiler Replacement page only. A real sequence,
- * so it is numbered. Desktop: pinned, scrolls sideways, the line draws as you go and each
- * drawing sketches itself in. Mobile: vertical, the line draws downward.
+ * "How the day goes" (PLAN.md D3, F2-S3). Boiler Replacement page only. A real sequence, so
+ * it is numbered.
+ *
+ * Rebuilt after the first version shipped broken. Two faults, both structural:
+ *
+ * 1. The connecting rail sat at the vertical centre of the number, and the number sat beside
+ *    the title, so the rail ran straight through every heading as a strikethrough. The number
+ *    now has a row of its own and the title sits under it, so the rail only ever crosses the
+ *    numbers it is joining.
+ * 2. The track was wider than the page and only reachable by pinning the section and scrubbing
+ *    it sideways. That is the same scroll hijacking that was taken out of the home page, and it
+ *    left stage five off screen for anyone who did not scroll far enough. All five stages now
+ *    fit on screen at once, and nothing is pinned.
  */
 export function DayTimeline() {
   return (
@@ -90,22 +100,21 @@ export function DayTimeline() {
       </Reveal>
       <p className="lead mt-4 max-w-xl text-ink-soft">A like-for-like boiler swap, from knock on the door to handover.</p>
 
-      <div className="timeline__viewport mt-10">
-        <ol className="timeline__track">
-          {stages.map((stage, i) => (
-            <li key={stage.title} className="stage">
-              <div className="stage__head">
-                <span className="stage__num" aria-hidden="true">
-                  {i + 1}
-                </span>
-                <h3 className="h3">{stage.title}</h3>
-              </div>
-              <div className="stage__art">{stage.art}</div>
-              <p className="text-ink-soft">{stage.text}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
+      <ol className="timeline__track mt-10">
+        {stages.map((stage, i) => (
+          <li key={stage.title} className="stage">
+            {/* The rail lives on this row, so it never meets a word */}
+            <div className="stage__rail">
+              <span className="stage__num" aria-hidden="true">
+                {i + 1}
+              </span>
+            </div>
+            <div className="stage__art">{stage.art}</div>
+            <h3 className="stage__title">{stage.title}</h3>
+            <p className="small-text mt-1 text-ink-soft">{stage.text}</p>
+          </li>
+        ))}
+      </ol>
 
       <DayTimelineMotion />
     </Section>
