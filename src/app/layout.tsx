@@ -44,7 +44,23 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#171d26",
+  /**
+   * Lets the page fill the whole screen on a phone with a notch or a rounded top, instead of
+   * being letterboxed below it.
+   *
+   * This is the setting that makes `env(safe-area-inset-*)` return real numbers. Without it
+   * they are all zero, so every rule in globals.css that pads for the notch or the home
+   * indicator quietly does nothing, and the strip beside the status bar gets filled with the
+   * page background instead. Since the page background is now warm paper, that showed up as a
+   * light band above the dark header. Turning this on is what activates those rules.
+   */
+  viewportFit: "cover",
+  /**
+   * Must stay identical to `--color-cast-iron` in globals.css. This is the colour a phone
+   * paints its own status bar, directly above the header. If the two drift apart you get a
+   * band of a slightly different dark above the bar, which reads as a seam.
+   */
+  themeColor: "#1a212c",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -58,12 +74,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {"document.documentElement.classList.add('js');try{if(sessionStorage.getItem('eg-intro'))document.documentElement.classList.add('intro-seen')}catch(e){};if(typeof Node!=='undefined'&&Node.prototype){var r=Node.prototype.removeChild;Node.prototype.removeChild=function(c){if(c&&c.parentNode!==this){return c.parentNode?c.parentNode.removeChild(c):c}return r.call(this,c)};var i=Node.prototype.insertBefore;Node.prototype.insertBefore=function(n,ref){if(ref&&ref.parentNode!==this){return ref.parentNode?ref.parentNode.insertBefore(n,ref):n}return i.call(this,n,ref)};}"}
         </Script>
         <SkipLink />
-        {/* Reading progress. Pure CSS (scroll-driven animation), so it costs no JavaScript
-            and simply does not appear in browsers that don't support it. */}
-        <div className="scroll-progress" aria-hidden="true" />
         <Header />
-        {/* Space for the fixed header: 60px, 72px from 1280px */}
-        <div className="h-[60px] xl:h-[72px]" aria-hidden="true" />
+        {/* Stands in for the fixed header. Its height tracks the header's, safe area included. */}
+        <div className="header-spacer" aria-hidden="true" />
         <main id="main" className="flex-1">
           <PageTransition>{children}</PageTransition>
         </main>

@@ -5,18 +5,14 @@ import { siteConfig } from "@/data/site.config";
 import { isPointerDevice, prefersReducedMotion } from "@/lib/motion";
 
 const INTRO_KEY = "eg-intro";
-/** The CSS choreography starts spreading light this long after first paint (F2-H1: 300ms). */
-const LIGHT_STARTS_MS = 300;
-/** Length of the whole choreography from first paint, after which the hero is simply "lit". */
-const INTRO_LENGTH_MS = 1700;
+/** Length of the whole entrance from first paint, after which the hero is simply "lit". */
+const INTRO_LENGTH_MS = 1400;
 
 /**
- * Controls the Ignition hero (F2-H1). The choreography itself is CSS, running from first
- * paint (see globals.css), so it never waits for JavaScript. This component:
+ * Controls the hero entrance (F2-H1). The sequence itself is CSS, running from first paint
+ * (see globals.css), so it never waits for JavaScript. This component:
  *  - skips it ("lit") when the intro is off, reduced motion is on, or it already played this session
- *  - LCP rule: if it runs before the light starts spreading and the hero image has not decoded
- *    by then, it skips the intro so nothing waits on the photo
- *  - freezes the finished state ("lit") once the choreography is over
+ *  - freezes the finished state ("lit") once the sequence is over
  *  - drives the faint warm glow that follows the pointer on desktop
  */
 export function HeroIgnition({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -42,41 +38,17 @@ export function HeroIgnition({ children, className = "" }: { children: ReactNode
       setIntro("lit");
       markSeen();
     } else {
-      // Light spreads from the flame, so tell CSS exactly where the flame is
-      const anchor = hero.querySelector<HTMLElement>(".hero__flame-anchor");
-      if (anchor) {
-        const a = anchor.getBoundingClientRect();
-        const h = hero.getBoundingClientRect();
-        hero.style.setProperty("--fx", `${Math.round(a.left - h.left + a.width / 2)}px`);
-        hero.style.setProperty("--fy", `${Math.round(a.top - h.top + a.height * 0.62)}px`);
-      }
-
       const firstPaint =
         performance.getEntriesByName("first-contentful-paint")[0]?.startTime ?? performance.now();
       const sincePaint = performance.now() - firstPaint;
-      const img = hero.querySelector<HTMLImageElement>("img.hero__img");
 
-      let settled = false;
-      const play = () => {
-        if (settled) return;
-        settled = true;
-        setIntro("play");
-        timers.push(window.setTimeout(() => setIntro("lit"), Math.max(0, INTRO_LENGTH_MS - sincePaint)));
-      };
-      const skip = () => {
-        if (settled) return;
-        settled = true;
-        setIntro("lit");
-      };
-
-      if (sincePaint < LIGHT_STARTS_MS && img) {
-        // Early enough to apply the LCP rule: play only if the photo is ready before the light starts
-        timers.push(window.setTimeout(skip, LIGHT_STARTS_MS - sincePaint));
-        img.decode().then(play).catch(skip);
-      } else {
-        // The CSS choreography is already under way, so let it finish, then freeze the lit state
-        play();
-      }
+      // The entrance always runs now. It used to be skipped whenever the hero photo had not
+      // decoded within 300ms, because the old version held the entire hero behind a clip-path
+      // and so would have delayed the Largest Contentful Paint by however long it took. In
+      // practice that meant it almost never played. Nothing in this version hides the photo:
+      // it scales, and everything else that moves is text. So there is nothing left to guard.
+      setIntro("play");
+      timers.push(window.setTimeout(() => setIntro("lit"), Math.max(0, INTRO_LENGTH_MS - sincePaint)));
       markSeen();
     }
 

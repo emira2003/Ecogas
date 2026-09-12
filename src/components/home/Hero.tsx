@@ -6,12 +6,16 @@ import { Button } from "@/components/ui/Button";
 import { PriceTag } from "@/components/ui/PriceTag";
 import { UfoFlyby } from "@/components/fun/UfoFlyby";
 import { HeroIgnition } from "./HeroIgnition";
-import { HeroQuickStart } from "./HeroQuickStart";
-import { PilotFlame } from "./PilotFlame";
 
 const TITLE = "Boiler replacement in Bolton, done properly.";
+/**
+ * One sentence. It used to be three, and a wall of grey text is the fastest way to make a hero
+ * look cheap. What survives is the only claim that is genuinely ours: we price the job from a
+ * photograph, before anyone turns up. The prices and the warranties have a whole section of
+ * their own further down and do not need repeating here.
+ */
 const SUBLINE =
-  "Gas Safe engineers since 2000. New boilers from £1,625, fitted properly, with a warranty that comes from the manufacturer. Send us a photo and we will price it before we knock on your door.";
+  "Gas Safe engineers since 2000. Send us a photo of your boiler and we’ll price the job before we knock on your door.";
 
 /**
  * Home hero (PLAN.md D3 §1): 7/5 split on desktop, stacked on mobile.
@@ -24,15 +28,10 @@ export function Hero() {
 
   return (
     <HeroIgnition>
-      <div className="hero__dark" aria-hidden="true" />
-
       <div className="hero__lit">
-        <div className="container-site grid gap-10 py-10 sm:py-14 lg:grid-cols-12 lg:items-center lg:gap-12 lg:py-24">
+        <div className="container-site grid gap-12 py-14 sm:py-20 lg:grid-cols-12 lg:items-stretch lg:gap-16 lg:py-32">
           <div className="hero__copy lg:col-span-7">
             <div className="hero__title-wrap">
-              <span className="hero__flame-anchor" aria-hidden="true">
-                <PilotFlame />
-              </span>
               <h1 id="hero-title" className="h1 max-w-[12ch]">
                 {words.map((word, i) => (
                   <span key={i}>
@@ -47,9 +46,9 @@ export function Hero() {
               </h1>
             </div>
 
-            <p className="lead mt-6 max-w-xl text-plaster-soft">{SUBLINE}</p>
+            <p className="lead mt-7 max-w-lg text-plaster-soft">{SUBLINE}</p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:gap-4">
               <Button href="/estimate" size="lg">
                 Get an instant estimate
               </Button>
@@ -63,8 +62,6 @@ export function Hero() {
                 Call {business.phone}
               </Button>
             </div>
-
-            <HeroQuickStart />
           </div>
 
           <div className="hero__media relative lg:col-span-5">
@@ -80,25 +77,12 @@ export function Hero() {
               <span className="hero__photo-scrim" aria-hidden="true" />
             </div>
             {/*
-              Full tag on desktop; a shorter one on phones so it never overflows the screen.
-              Both read the entry package, so the price and the warranty beside it can never
-              drift apart: this price is the Eco package, and Eco carries five years.
+              One short tag, not a banner. It used to read "New boiler from £1,625 | 5 year
+              warranty", which stretched right across the photograph and looked like a shelf
+              label. The warranties are set out properly in the packages section below.
             */}
             <div className="hero__tag">
-              <PriceTag
-                lead="New boiler from"
-                amount={entry.swapPrice}
-                note={`${entry.warrantyYears} year warranty`}
-                size="lg"
-                className="hidden lg:inline-flex"
-              />
-              <PriceTag
-                lead="from"
-                amount={entry.swapPrice}
-                note={`${entry.warrantyYears} year warranty`}
-                size="md"
-                className="lg:hidden"
-              />
+              <PriceTag lead="from" amount={entry.swapPrice} size="lg" />
             </div>
           </div>
         </div>

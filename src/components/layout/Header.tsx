@@ -53,8 +53,11 @@ export function Header() {
   return (
     <>
       <header className={`site-header ${shrunk ? "is-shrunk" : ""}`.trim()}>
+        {/* Reading progress, on the header's bottom edge. Pure CSS scroll-driven animation, so
+            it costs no JavaScript and simply does not appear where it is unsupported. */}
+        <div className="scroll-progress" aria-hidden="true" />
         <div className="container-site flex h-full items-center justify-between gap-6">
-          <Logo className="site-header__logo" />
+          <Logo className="site-header__logo" priority />
 
           {/* Desktop navigation */}
           <nav className="hidden xl:block" aria-label="Main">

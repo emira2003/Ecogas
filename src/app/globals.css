@@ -72,6 +72,17 @@
    Base
 --------------------------------------------------------------------------- */
 @layer base {
+  /* The fixed header's height, needed by the header itself and by the spacer that reserves
+     room for it. Global rather than scoped to the header, so the two can never disagree. */
+  :root {
+    --header-h: 60px;
+  }
+  @media (width >= 80rem) {
+    :root {
+      --header-h: 72px;
+    }
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
     scrollbar-gutter: stable;
@@ -232,7 +243,9 @@
   width: 100%;
   max-width: calc(var(--container-site) + 3rem);
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  /* Now that the page fills the screen edge to edge (viewport-fit=cover), the gutters have to
+     clear a notch or rounded corner when the phone is held sideways. */
+  padding-inline: max(1.25rem, env(safe-area-inset-left)) max(1.25rem, env(safe-area-inset-right));
   @media (width >= 40rem) {
     padding-inline: 1.5rem;
   }
@@ -435,30 +448,61 @@
   }
 
   /* ---- Header ---- */
+  /*
+   * The bar grows upward into the phone's status bar area and pads its own contents back down,
+   * so the dark background always reaches the very top of the screen. Without this, on a phone
+   * with a notch or a rounded top the bar starts below the inset and the page scrolls through
+   * the strip above it. The bottom sticky bar already did this for the home indicator; the top
+   * one never did.
+   */
   .site-header {
-    --header-h: 60px;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 50;
-    height: var(--header-h);
+    height: calc(var(--header-h) + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
     background: var(--color-cast-iron);
     color: var(--color-white);
     /* The header is fixed, so changing its height cannot move page content (CLS 0).
        This is the only height transition on the site. */
     transition: height 0.25s var(--ease-out-expo);
   }
+  /* The spacer that stands in for the fixed bar has to grow by exactly the same amount. */
+  .header-spacer {
+    height: calc(var(--header-h) + env(safe-area-inset-top));
+  }
+  /* The logo image. Sized by height; the width follows its own 3.16:1 ratio. */
+  .site-logo {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+  }
+  .site-logo__img {
+    height: 2.5rem;
+    width: auto;
+    display: block;
+  }
+  .site-header .site-logo__img {
+    height: 2.35rem;
+  }
+  @media (width >= 80rem) {
+    .site-header .site-logo__img {
+      height: 2.7rem;
+    }
+  }
+  footer .site-logo__img {
+    height: 3rem;
+  }
+
   .site-header__logo {
     transform-origin: left center;
     transition: transform 0.25s var(--ease-out-expo);
   }
   @media (width >= 80rem) {
-    .site-header {
-      --header-h: 72px;
-    }
     .site-header.is-shrunk {
-      height: 60px;
+      height: calc(60px + env(safe-area-inset-top));
     }
     .site-header.is-shrunk .site-header__logo {
       transform: scale(0.88);
@@ -678,14 +722,19 @@
   .scroll-progress {
     display: none;
   }
+  /*
+   * It sits on the header's bottom edge, inside the bar, rather than at the very top of the
+   * screen. Anchored to the top it read as a loose orange strip above the header, which looked
+   * like a gap; and being inside the bar means it follows the header's height automatically,
+   * including when the header shrinks on scroll.
+   */
   @supports (animation-timeline: scroll()) {
     .scroll-progress {
       display: block;
-      position: fixed;
-      top: 0;
+      position: absolute;
       left: 0;
       right: 0;
-      z-index: 51;
+      bottom: 0;
       height: 3px;
       transform: scaleX(0);
       transform-origin: 0 50%;
@@ -810,38 +859,35 @@
      The dim state only exists once JavaScript has run (html.js) and never on a repeat
      visit in the same session (html.intro-seen) or with reduced motion. */
   .hero {
-    --fx: 2.75rem; /* flame position, corrected by JavaScript before the intro plays */
-    --fy: 5.5rem;
     position: relative;
     isolation: isolate;
     overflow: hidden;
     /* Transparent so the page's own light reaches the top of the page */
     background: transparent;
   }
-  @media (width >= 64rem) {
-    .hero {
-      --fx: 2rem;
-      --fy: 9rem;
-    }
-  }
-  .hero__dark {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: none;
-    background:
-      radial-gradient(circle at var(--fx) var(--fy), color-mix(in srgb, var(--color-flame) 32%, transparent), transparent 28%),
-      color-mix(in srgb, var(--color-cast-iron) 88%, var(--color-ember));
-  }
   /*
    * The hero stays Cast Iron while the content bands below it are light. It carries its own
    * text colours rather than inheriting the page's, because `--color-ink` is now dark.
    */
+  /*
+   * Built the same way as `.section--dark`, the site's other dark band: Cast Iron, the same
+   * 68px blueprint grid every band carries, and the same light along the top edge. Before, the
+   * hero was the one band on the page with no grid, which is a large part of why it read as a
+   * separate thing bolted on rather than the top of the same page.
+   */
   .hero__lit {
     position: relative;
     z-index: 1;
-    background: var(--color-cast-iron);
     color: var(--color-white);
+    background-color: var(--color-cast-iron);
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 4.5%) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 4.5%) 1px, transparent 1px),
+      linear-gradient(180deg, rgb(255 255 255 / 7%), transparent 38%);
+    background-size:
+      68px 68px,
+      68px 68px,
+      100% 100%;
   }
   .hero__lit .lead {
     color: var(--color-plaster-soft);
@@ -856,36 +902,25 @@
     pointer-events: none;
     /* Stronger than on the light version: a dark ground swallows a subtle glow */
     background:
-      radial-gradient(65% 75% at 6% 8%, color-mix(in srgb, var(--color-flame) 22%, transparent), transparent 66%),
-      radial-gradient(45% 55% at 98% 96%, color-mix(in srgb, var(--color-water) 9%, transparent), transparent 70%);
+      radial-gradient(70% 80% at 4% 4%, color-mix(in srgb, var(--color-flame) 15%, transparent), transparent 62%),
+      radial-gradient(50% 60% at 99% 98%, color-mix(in srgb, var(--color-water) 6%, transparent), transparent 70%);
+    /* The brand idea is a pilot light. With the flame graphic gone, the warmth itself breathes:
+       one very slow, very small swell, the only thing on the page that never stops. */
+    animation: hero-breathe 14s ease-in-out infinite alternate;
   }
   .hero__lit > * {
     position: relative;
     z-index: 1;
   }
-  .hero__flame-anchor {
-    position: relative;
-    display: block;
-    width: 2.5rem;
-    height: 3.5rem;
-    margin-bottom: 0.75rem;
+  /* The headline now starts on the container edge, in line with every other section. */
+  /* The hero headline carries more than the section headings do, now that it is one of only
+     three things in the hero. Its own size, not the shared .h1 scale. */
+  .hero .h1 {
+    font-size: clamp(2.5rem, 5.6vw, 4.25rem);
+    letter-spacing: -0.025em;
   }
-  @media (width >= 64rem) {
-    /* The text column is indented so the flame can burn in the margin, left of the headline */
-    .hero__copy {
-      padding-left: 3.75rem;
-    }
-    .hero__title-wrap {
-      position: relative;
-    }
-    .hero__flame-anchor {
-      position: absolute;
-      left: -3.75rem;
-      top: 0;
-      width: 3rem;
-      height: 4.5rem;
-      margin: 0;
-    }
+  .hero__title-wrap {
+    position: relative;
   }
   .hero__word {
     display: inline-block;
@@ -903,6 +938,7 @@
     border-radius: 12px;
     overflow: hidden;
     background: var(--color-plaster-deep);
+    will-change: transform;
     /* A photograph should read as an object resting on the page, not a hole cut into it */
     box-shadow:
       0 1px 0 rgb(255 255 255 / 10%) inset,
@@ -952,6 +988,25 @@
       linear-gradient(0deg, rgb(23 29 38 / 62%), rgb(23 29 38 / 6%) 46%, transparent 68%),
       linear-gradient(210deg, color-mix(in srgb, var(--color-flame) 16%, transparent), transparent 58%);
   }
+
+  /*
+   * On desktop the photograph runs off the right edge of the screen and fills the full height
+   * of the hero, so the hero reads as a view into a real job rather than a card parked in a
+   * column. `.hero` clips, so the overshoot past the viewport is safe. The text column sets the
+   * height and the photo matches it, which is why the grid stretches rather than centres.
+   */
+  @media (width >= 64rem) {
+    .hero__media {
+      display: flex;
+      margin-right: calc((min(100vw, calc(var(--container-site) + 3rem)) - 100vw) / 2 - 1.25rem);
+    }
+    .hero__photo {
+      flex: 1;
+      aspect-ratio: auto;
+      min-height: 26rem;
+      border-radius: 14px 0 0 14px;
+    }
+  }
   .hero__tag {
     position: absolute;
     left: 1rem;
@@ -983,14 +1038,21 @@
     opacity: 1;
   }
 
-  /* Dim state (pending): only with JS, first visit, motion allowed */
-  html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__dark,
-  html.js:not(.intro-seen) .hero[data-intro="play"] .hero__dark {
-    display: block;
-  }
-  html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__lit,
-  html.js:not(.intro-seen) .hero[data-intro="play"] .hero__lit {
-    clip-path: circle(3.25rem at var(--fx) var(--fy));
+  /*
+   * The entrance. One orchestrated sequence on first paint, once per visit: the photograph
+   * settles, the headline rises a word at a time, the price stamps on, the chips follow.
+   *
+   * It used to be the "ignition": everything held dark, then light spread outwards from the
+   * pilot flame in the margin. The flame has gone, and light spreading out of nowhere reads as
+   * a fault, so that part was cut and the rest retimed to run about half a second sooner. It is
+   * still pure CSS from first paint, so it never waits for JavaScript.
+   */
+  /* Scale only, never opacity: this photograph is the largest thing on the screen and so it
+     is almost certainly the Largest Contentful Paint. Fading it in from nothing would delay
+     that measurement by the length of the animation. Scaled, it paints immediately. */
+  html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__photo,
+  html.js:not(.intro-seen) .hero[data-intro="play"] .hero__photo {
+    transform: scale(1.045);
   }
   html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__word__inner,
   html.js:not(.intro-seen) .hero[data-intro="play"] .hero__word__inner {
@@ -1007,32 +1069,36 @@
     transform: translateY(12px);
   }
 
-  /* The choreography runs from first paint on the plan's own clock (F2-H1): dim for 300ms,
-     light spreads 300-900ms, words rise as it passes, PriceTag stamps at ~1s, chips follow.
-     It is CSS-driven so it never waits for JavaScript; JavaScript only skips it ("lit")
-     when it can decide early enough, and freezes the final state when it is over. */
-  html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__lit,
-  html.js:not(.intro-seen) .hero[data-intro="play"] .hero__lit {
-    animation: hero-light 0.6s var(--ease-out-expo) 0.3s both;
+  html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__photo,
+  html.js:not(.intro-seen) .hero[data-intro="play"] .hero__photo {
+    animation: hero-photo 0.9s var(--ease-out-expo) 0.05s both;
   }
   html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__word__inner,
   html.js:not(.intro-seen) .hero[data-intro="play"] .hero__word__inner {
-    animation: hero-word 0.6s var(--ease-out-expo) calc(0.45s + var(--i, 0) * 30ms) both;
+    animation: hero-word 0.62s var(--ease-out-expo) calc(0.12s + var(--i, 0) * 45ms) both;
   }
   html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__tag,
   html.js:not(.intro-seen) .hero[data-intro="play"] .hero__tag {
-    animation: hero-stamp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.95s both;
+    animation: hero-stamp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.62s both;
   }
   html.js:not(.intro-seen) .hero[data-intro="pending"] .hero__chip,
   html.js:not(.intro-seen) .hero[data-intro="play"] .hero__chip {
-    animation: hero-chip 0.45s var(--ease-out-expo) calc(1.05s + var(--i, 0) * 40ms) both;
+    animation: hero-chip 0.45s var(--ease-out-expo) calc(0.72s + var(--i, 0) * 45ms) both;
   }
-  @keyframes hero-light {
+  @keyframes hero-photo {
     from {
-      clip-path: circle(3.25rem at var(--fx) var(--fy));
+      transform: scale(1.045);
     }
     to {
-      clip-path: circle(125% at var(--fx) var(--fy));
+      transform: scale(1);
+    }
+  }
+  @keyframes hero-breathe {
+    from {
+      opacity: 0.75;
+    }
+    to {
+      opacity: 1;
     }
   }
   @keyframes hero-word {
@@ -3109,9 +3175,6 @@
     display: none;
   }
   /* Hero: no intro, fully lit, static flame */
-  html.js .hero .hero__dark {
-    display: none;
-  }
   html.js .hero .hero__lit,
   html.js .hero .hero__word__inner,
   html.js .hero .hero__tag,

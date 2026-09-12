@@ -635,3 +635,73 @@ _None yet. Ideas that come up during the build go here, not into the code._
 
   Build, lint, 18 tests, the stale-content sweep across all 25 pages, and a contrast audit of
   the rebuilt page all pass.
+
+- **The client's logo, and the hero rebuilt around losing the flame.**
+
+  **The logo.** Supplied as `logo_plumber.png`, 472x1024 with the mark in a band across the
+  middle and the rest transparent, which makes it impossible to size sensibly. Trimmed to its
+  visible bounds (329x104) and saved as `public/logo-ecogas.png`. It is now in the header,
+  footer, mobile menu and the Google structured data. **It only works on dark backgrounds:**
+  "GAS" is drawn in white, so on the light bands it would vanish. Every place it renders is
+  Cast Iron. The browser tab icon, home-screen icon and social image still use the old
+  pilot-flame mark, because a wide wordmark cannot go in a square; that needs either a square
+  version or the flame on its own from the client.
+
+  **The flame came out of the hero**, at the client's request, and it turned out to be holding
+  three things up.
+
+  1. **The headline indent.** `.hero__copy` carried `padding-left: 3.75rem` on desktop purely so
+     the flame could burn in the margin. That is why the hero headline never lined up with the
+     logo or with any other section on the page. With the flame gone the indent goes, and the
+     hero starts on the same line as everything else.
+  2. **The whole entrance.** Every entrance animation was gated behind the flame ignition, so
+     switching it off left the hero completely static. Worse, it had barely been playing anyway:
+     a guard skipped the entrance whenever the hero photo had not decoded within 300ms of first
+     paint, which protected the Largest Contentful Paint back when the intro held the entire
+     hero behind a clip-path. In practice that meant most visitors never saw it.
+  3. **The easter egg.** Seven clicks on the flame sent the alien across the screen. It was
+     already off, and there is now nothing to click.
+
+  **What replaces it.** The entrance always runs: the photograph settles, the headline rises a
+  word at a time, the price stamps on, the chips follow, all inside 1.4s. Nothing in it hides
+  the photograph, which is the largest thing on screen and almost certainly the LCP element, so
+  the photo scales rather than fades and there is no longer anything to guard against. The
+  guard is gone.
+
+  **And the hero itself was made to belong.** It was the one band on the page with no blueprint
+  grid, which is a large part of why it read as bolted on; it now carries the same grid and top
+  light as `.section--dark`. The photograph bleeds off the right edge of the screen instead of
+  sitting in a contained card, so the hero reads as a view into a job rather than a two-column
+  template. The brand idea is a pilot light, so with the flame graphic gone the warmth itself
+  breathes: one very slow, very small swell over 14s, the only thing on the page that never
+  stops.
+
+  Build, lint, 18 tests, the sweep across all 25 pages and a contrast audit all pass.
+
+- **The hero, stripped back.** Repeated feedback that it was not professional, after several
+  passes that changed the look without changing the problem. The problem was not the styling.
+  It was that the hero held **seven competing things**: a headline, three sentences of grey
+  text, two buttons, a label, five white pill-shaped chips wrapping onto two rows, a photograph,
+  and a bright orange bar across the photograph reading "New boiler from £1,625 | 5 year
+  warranty". Nothing dominated, so nothing looked considered.
+
+  **What came out.** The five chips and their label went entirely: they read as a tag cloud, and
+  the services grid immediately below already covers the same ground. `HeroQuickStart.tsx` is
+  left in the repository, unused, so putting them back is a one-line import. The paragraph went
+  from three sentences to one, keeping only the claim that is genuinely ours: we price the job
+  from a photograph before anyone visits. The prices and warranties were cut from it because
+  they have a whole section of their own further down. The orange banner became a short tag
+  reading just "from £1,625"; at full width across the photo it looked like a shelf label.
+
+  **What is left is three things:** the headline, one sentence, two buttons. That is what lets
+  the rest work.
+
+  **And what got bigger.** With only three elements the headline can carry the hero, so it has
+  its own scale rather than the shared `.h1` one, up to 4.25rem. Vertical padding went from
+  `py-24` to `py-32`, and the columns now stretch rather than centre, so the photograph fills
+  the full height of the hero and its top and bottom line up exactly with the headline and the
+  buttons. It still runs off the right edge of the screen.
+
+  **Deviation from the plan, recorded:** PLAN.md D3 §1 specifies the hero quick-start chips.
+  They are gone. The quality bar in B0 asks for ten perfect moments over a hundred wobbling
+  ones, and five wrapping pills were not one of the ten.

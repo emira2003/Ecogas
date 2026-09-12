@@ -13,8 +13,8 @@ import { formatMoney } from "./format";
 export const absoluteUrl = (path: string): string => new URL(path, siteUrl).toString();
 
 const BUSINESS_ID = absoluteUrl("/#business");
-/** The client's logo file goes in /public as logo-ecogas.png; until then the icon stands in. */
-const LOGO_URL = absoluteUrl("/icon.svg");
+/** The client's logo, cropped from the artwork he supplied. See components/layout/Logo.tsx. */
+const LOGO_URL = absoluteUrl("/logo-ecogas.png");
 const IMAGE_URL = absoluteUrl("/opengraph-image");
 
 const hasText = (value: string) => Boolean(value) && !isPlaceholder(value) && !value.includes("[");

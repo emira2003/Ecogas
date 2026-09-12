@@ -8,10 +8,20 @@ export const siteConfig = {
   /** The small alien plumber illustration on the 404 page. Client to approve before launch. */
   alien404: true,
 
-  /** Clicking the hero pilot flame 7 times sends the alien across the screen in a boiler-shaped UFO. Off until Xhezmi decides. */
+  /**
+   * Clicking the hero pilot flame 7 times sent the alien across the screen in a boiler-shaped
+   * UFO. **The flame has been removed from the hero, so there is nothing left to click.**
+   * Turning this on now does nothing.
+   */
   easterEgg: false,
 
-  /** The "Ignition" hero intro on the home page. Plays once per visit session. */
+  /**
+   * The hero entrance on the home page. Plays once per visit session.
+   *
+   * It used to be the "Ignition": everything held dark and light spread outwards from the pilot
+   * flame. The flame has gone, so that part was cut. What plays now is the photograph settling,
+   * the headline rising a word at a time, the price stamping on and the chips following.
+   */
   heroIntro: true,
 
   /**

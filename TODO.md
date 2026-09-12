@@ -25,7 +25,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 - [ ] Phone number, WhatsApp number, email address, opening hours → `.env.local` and `src/data/business.ts`
 - [ ] Gas Safe registration number → `src/data/business.ts` (`gasSafeNumber`)
 - [ ] Official Gas Safe logo file → footer slot (never draw it ourselves)
-- [ ] Brand logos (Worcester Bosch, Viessmann, Vaillant, Glow-worm, Ideal) if he has approved-installer artwork → `business.ts` (`brands[].logo`)
+- [x] Brand logos are in and showing on the home page strip. Only the Worcester Bosch one is a stand-in (the parent Bosch mark) — see IMAGE-CREDITS.md.
 - [ ] Which review site the 4.9/5 (12 reviews) profile is on, plus the link → `business.ts` (`reviews`)
 - [ ] Which site the "Excellent" 31-rating profile is on, plus the link → `business.ts` (`reviews.secondary`)
 - [ ] Which reviews can be shown; the missing review text for Robin (Stockport) and Damian (Manchester), and Damian's job type → `src/data/reviews.ts`
@@ -85,11 +85,25 @@ here is either an open question or a file the client owes us.
 ## Needed from Xhezmi
 
 - [ ] Google Search Console (after launch, PLAN.md Part H step 5): paste the verification code into the commented `verification` line in `src/app/layout.tsx`, then submit `/sitemap.xml`.
-- [ ] When the logo arrives, also use it in the social-preview image (`src/app/opengraph-image.tsx`), the icons (`src/app/icon.svg`, `src/app/apple-icon.tsx`) and the structured data logo (`src/lib/schema.ts`). Until then the pilot-flame mark stands in.
+- [x] Logo is in the header, footer, mobile menu and the Google structured data.
+- [ ] **Still using the old pilot-flame mark:** the browser tab icon (`src/app/icon.svg`), the
+      home-screen icon (`src/app/apple-icon.tsx`) and the social-preview image
+      (`src/app/opengraph-image.tsx`). The supplied logo is a wide wordmark, so it cannot simply
+      be dropped into a square icon. Ask the client for either a square version or just the
+      flame mark on its own, and these three can be finished.
 - [ ] Structured data leaves out anything still a placeholder (phone, email, map coordinates, opening hours, social links, unconfirmed FAQs). Once the facts are in `business.ts` they appear automatically, except opening hours, which need adding by hand in `src/lib/schema.ts` (there's a note showing the format).
 - [ ] Decide whether to switch the easter egg on (`easterEgg` in `src/data/site.config.ts`): seven mouse clicks on the hero's pilot flame send the alien across the screen in a boiler-shaped UFO.
 
-- [ ] **Logo file** — `logo-ecogas.png` is still not in the project folder. The header and footer show a plain "Eco Gas" wordmark in the site font until it arrives (`src/components/layout/Logo.tsx`). Add it to the project root (and the flyer as `flyer-ecogas.jpg` for reference).
+- [x] **Logo file** received as `logo_plumber.png` and now live. It was 472x1024 with the mark in
+      a band across the middle and the rest transparent, so it is cropped to 329x104 and saved as
+      `public/logo-ecogas.png`. The original is left in the project root untouched.
+- [ ] **The logo only works on dark backgrounds.** "GAS" is drawn in white, so on the light bands
+      it would vanish. Header, footer and mobile menu are all dark, so it is fine everywhere it
+      currently appears. If it is ever needed on a light background, ask the client for a dark
+      version of the wordmark.
+- [ ] The logo reads "ECOGAS" and does not include "North West". The full registered name is
+      still used in the page titles, the footer copyright and the Google listing. Confirm that
+      is what he wants.
 - [x] Component showcase page removed (Phase 9).
 - [ ] The WhatsApp button links to `wa.me/[WHATSAPP NUMBER]` and the call buttons to `tel:[PHONE_TEL]` until the numbers are in `.env.local` — they are the only links on the site that don't work yet.
 - [ ] Web3Forms access key (create at web3forms.com with the client's email) → `.env.local` (`WEB3FORMS_ACCESS_KEY`). Then send one test enquiry from `/contact` and one from `/estimate` and check both emails arrive, with the jobs and total listed in the second one. Until the key is set, the form shows "Email sending isn't switched on yet" with the phone number.
