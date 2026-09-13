@@ -83,7 +83,7 @@ export function MobileNav({ id, open, onClose }: MobileNavProps) {
       aria-hidden={!open}
       onKeyDown={onKeyDown}
     >
-      <div className="container-site flex h-[60px] flex-none items-center justify-between">
+      <div className="container-site flex h-[var(--header-h,60px)] flex-none items-center justify-between">
         <Logo />
         <button
           ref={closeButtonRef}

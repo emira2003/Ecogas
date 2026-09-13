@@ -86,7 +86,8 @@
   html {
     -webkit-text-size-adjust: 100%;
     scrollbar-gutter: stable;
-    color-scheme: light;
+    color-scheme: dark light;
+    background-color: var(--color-cast-iron);
     /* Keep anchors and focused elements clear of the fixed header */
     scroll-padding-top: 5.5rem;
   }
@@ -106,12 +107,7 @@
    * stays put while the page scrolls over it, which is what stops it reading as wallpaper.
    */
   body {
-    background-color: var(--color-surface);
-    background-image:
-      radial-gradient(75% 55% at 10% -5%, color-mix(in srgb, var(--color-flame) 9%, transparent), transparent 62%),
-      radial-gradient(55% 45% at 92% 18%, color-mix(in srgb, var(--color-water) 5%, transparent), transparent 66%),
-      radial-gradient(70% 50% at 60% 108%, color-mix(in srgb, var(--color-flame) 6%, transparent), transparent 68%);
-    background-attachment: fixed;
+    background-color: var(--color-cast-iron);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 17px;
@@ -119,6 +115,31 @@
     font-stretch: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /*
+   * `position: relative` with `z-index: 0` looks pointless and is not. It gives the page body
+   * its own stacking context, which traps everything inside it below the header.
+   *
+   * Without it, the hero photograph escapes. It is on its own compositor layer, because the
+   * parallax animates it and it is a large image, and Safari on iOS will happily paint such a
+   * layer over a sticky sibling even though the sticky one has the higher z-index. That is what
+   * put a band of the hero photo above the header while scrolling: the header never moved, the
+   * photo was being drawn on top of it. Chrome orders the same layers correctly, which is why
+   * it only ever showed up in Safari.
+   *
+   * With a stacking context here, nothing inside the page body can paint above z-index 0, and
+   * the header at 50 is always on top.
+   */
+  main#main {
+    position: relative;
+    z-index: 0;
+    background-color: var(--color-surface);
+    background-image:
+      radial-gradient(75% 55% at 10% -5%, color-mix(in srgb, var(--color-flame) 9%, transparent), transparent 62%),
+      radial-gradient(55% 45% at 92% 18%, color-mix(in srgb, var(--color-water) 5%, transparent), transparent 66%),
+      radial-gradient(70% 50% at 60% 108%, color-mix(in srgb, var(--color-flame) 6%, transparent), transparent 68%);
+    background-attachment: fixed;
   }
 
   h1,
@@ -449,29 +470,55 @@
 
   /* ---- Header ---- */
   /*
-   * The bar grows upward into the phone's status bar area and pads its own contents back down,
-   * so the dark background always reaches the very top of the screen. Without this, on a phone
-   * with a notch or a rounded top the bar starts below the inset and the page scrolls through
-   * the strip above it. The bottom sticky bar already did this for the home indicator; the top
-   * one never did.
+   * Sticky, not fixed, and this is the important bit.
+   *
+   * As `position: fixed` it worked everywhere except Safari on an iPhone, where scrolling down
+   * from the top of the hero left a strip of the page visible above the bar, as though the bar
+   * had been pushed down. That is a known iOS problem: a fixed element is positioned against
+   * the layout viewport and painted by the compositor, and while Safari is collapsing its own
+   * toolbar the two disagree for a moment. Padding it, shielding it with an overhang and
+   * paying attention to the safe area all treated the symptom and none of them cured it.
+   *
+   * Sticky is handled by the scrolling machinery instead. The bar is a real element in the
+   * flow that pins itself to the top of the scroll area, so it cannot drift away from the
+   * content. It also means no spacer element is needed to hold its place, because it occupies
+   * real space until it pins.
    */
   .site-header {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 50;
     height: calc(var(--header-h) + env(safe-area-inset-top));
     padding-top: env(safe-area-inset-top);
     background: var(--color-cast-iron);
     color: var(--color-white);
-    /* The header is fixed, so changing its height cannot move page content (CLS 0).
+    border-bottom: 1px solid color-mix(in srgb, var(--color-white) 10%, transparent);
+    /* Changing the height of a pinned bar cannot move page content (CLS 0).
        This is the only height transition on the site. */
     transition: height 0.25s var(--ease-out-expo);
   }
-  /* The spacer that stands in for the fixed bar has to grow by exactly the same amount. */
-  .header-spacer {
-    height: calc(var(--header-h) + env(safe-area-inset-top));
+  /*
+   * A slab of the bar's own colour, hanging off the top of it and a whole screen tall.
+   *
+   * Safari on iOS collapses its address bar as you scroll, and while that animates, the pinned
+   * bar and the page disagree about where the top of the screen is for a few frames. The bar
+   * appears to sit low and the page shows through above it. Chrome does not do this, which is
+   * why it only ever went wrong on one browser.
+   *
+   * The mismatch itself cannot be prevented from CSS. This makes it invisible: the slab belongs
+   * to the bar and moves with it, so whatever gap opens up above the bar is already filled with
+   * the same dark colour. When nothing is wrong it sits off the top of the screen and costs
+   * nothing. It paints only upwards, so it can never cover content below.
+   */
+  .site-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 100vh;
+    background: var(--color-cast-iron);
+    pointer-events: none;
   }
   /* The logo image. Sized by height; the width follows its own 3.16:1 ratio. */
   .site-logo {
@@ -574,12 +621,16 @@
   /* ---- Mobile menu (G7) ---- */
   .mobile-nav {
     position: fixed;
-    inset: 0;
+    top: -100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 60;
     display: flex;
     flex-direction: column;
     background: var(--color-cast-iron);
     color: var(--color-white);
+    padding-top: calc(100px + env(safe-area-inset-top));
     transform: translateY(-100%);
     visibility: hidden;
     transition:
@@ -938,7 +989,10 @@
     border-radius: 12px;
     overflow: hidden;
     background: var(--color-plaster-deep);
-    will-change: transform;
+    /* No `will-change: transform` here. It was added as a hint for the entrance and bought
+       nothing, because this element only animates once on load, but it did force the photo onto
+       its own compositor layer permanently, which is half the reason it was fighting the header
+       for paint order on Safari. */
     /* A photograph should read as an object resting on the page, not a hole cut into it */
     box-shadow:
       0 1px 0 rgb(255 255 255 / 10%) inset,
