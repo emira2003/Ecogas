@@ -492,7 +492,18 @@
     padding-top: env(safe-area-inset-top);
     background: var(--color-cast-iron);
     color: var(--color-white);
-    border-bottom: 1px solid color-mix(in srgb, var(--color-white) 10%, transparent);
+    /*
+     * The hairline under the bar is a shadow, NOT a border, and that is the fix for the strip
+     * above the header on an iPhone.
+     *
+     * Since iOS 26, Safari draws the page right up under the clock and battery, and ignores
+     * `theme-color`. To colour that strip it samples the fixed or sticky element touching the
+     * top of the screen, and if that element has a bottom border it takes the border's colour
+     * instead of the background. Ours was 10% white, which is nearly transparent, so Safari
+     * left the strip see-through and the page scrolled visibly behind the status bar. With no
+     * border, it samples the solid Cast Iron background and the strip matches the bar.
+     */
+    box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--color-white) 10%, transparent);
     /* Changing the height of a pinned bar cannot move page content (CLS 0).
        This is the only height transition on the site. */
     transition: height 0.25s var(--ease-out-expo);
@@ -955,9 +966,20 @@
     background:
       radial-gradient(70% 80% at 4% 4%, color-mix(in srgb, var(--color-flame) 15%, transparent), transparent 62%),
       radial-gradient(50% 60% at 99% 98%, color-mix(in srgb, var(--color-water) 6%, transparent), transparent 70%);
-    /* The brand idea is a pilot light. With the flame graphic gone, the warmth itself breathes:
-       one very slow, very small swell, the only thing on the page that never stops. */
-    animation: hero-breathe 14s ease-in-out infinite alternate;
+  }
+  /*
+   * The brand idea is a pilot light. With the flame graphic gone, the warmth itself breathes:
+   * one very slow, very small swell, the only thing on the page that never stops.
+   *
+   * Pointer devices only, and the same goes for the two movements on the photograph below.
+   * See the note on `.hero__img`: on a phone these three never-ending animations were the
+   * cause of the strip above the header in Safari, and none of them can be seen on a phone
+   * anyway.
+   */
+  @media (pointer: fine) {
+    .hero__lit::before {
+      animation: hero-breathe 14s ease-in-out infinite alternate;
+    }
   }
   .hero__lit > * {
     position: relative;
@@ -1007,14 +1029,35 @@
    */
   .hero__img {
     transform: scale(1.08);
-    animation: hero-drift 28s ease-in-out infinite alternate;
   }
-  /* The whole media group, so the price tag travels with the photo it sits on */
-  @supports (animation-timeline: view()) {
-    .hero__media {
-      animation: hero-parallax linear both;
-      animation-timeline: view(block);
-      animation-range: entry 20% exit 100%;
+  /*
+   * Both movements are for pointer devices only, and this is the fix for the strip that kept
+   * appearing above the header on an iPhone.
+   *
+   * An element with a transform animation running is put on its own compositor layer and kept
+   * there. Two of them, one never-ending and one driven by the scroll, sat on the largest
+   * image on the page, directly below a sticky bar. Safari orders composited layers by working
+   * out which ones overlap, and when it gets that wrong the animated layer is drawn last, over
+   * the top of the bar. That is what was showing through: not a gap above the header, but the
+   * hero being painted over it. Chrome resolves the same layers correctly, which is why it
+   * only ever went wrong on one browser.
+   *
+   * Neither movement is worth anything on a phone. A 28 second drift of one percent is
+   * invisible on a screen held at arm's length, and parallax on a touch screen mostly reads as
+   * the page struggling to keep up. Off there, the hero is a plain image again, nothing is
+   * composited, and there is nothing left that can outrank the header.
+   */
+  @media (pointer: fine) {
+    .hero__img {
+      animation: hero-drift 28s ease-in-out infinite alternate;
+    }
+    /* The whole media group, so the price tag travels with the photo it sits on */
+    @supports (animation-timeline: view()) {
+      .hero__media {
+        animation: hero-parallax linear both;
+        animation-timeline: view(block);
+        animation-range: entry 20% exit 100%;
+      }
     }
   }
   @keyframes hero-drift {

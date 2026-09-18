@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
  * It measures the real header on the real device, because the preview used during development
  * has no notch, no collapsing address bar and no pinch zoom, and reports zero for all of them.
  */
-const STAMP = "stacking-fix";
+const STAMP = "safari26-tint";
 
 export function HeaderDiagnostic() {
   const [rows, setRows] = useState<[string, string][]>([]);
@@ -24,37 +24,50 @@ export function HeaderDiagnostic() {
       "padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);";
     document.body.appendChild(probe);
 
+    // Scroll events on iOS are coarse and stop firing mid-flick, so the worst moment was
+    // never being caught. Sampling every frame and keeping the high-water mark does catch it.
+    let worstGap = 0;
+    let worstOffset = 0;
+    let frame = 0;
+    // Redrawing the panel every frame would itself cost enough to change what is being
+    // measured. Measure every frame, repaint the numbers four times a second.
+    let lastPaint = 0;
+    let rowsPainted = false;
+
     const read = () => {
       const header = document.querySelector("header");
       const r = header?.getBoundingClientRect();
       const cs = header ? getComputedStyle(header) : null;
       const probeCs = getComputedStyle(probe);
       const vv = window.visualViewport;
+      if (r) worstGap = Math.max(worstGap, r.top);
+      if (vv) worstOffset = Math.max(worstOffset, vv.offsetTop);
+      const now = performance.now();
+      if (now - lastPaint < 250 && rowsPainted) {
+        frame = requestAnimationFrame(read);
+        return;
+      }
+      lastPaint = now;
+      rowsPainted = true;
       setRows([
         ["build", STAMP],
         ["header position", cs?.position ?? "?"],
         ["header top", r ? `${Math.round(r.top)}px` : "?"],
-        ["GAP ABOVE BAR", r ? `${Math.round(Math.max(0, r.top))}px` : "?"],
+        ["WORST GAP SEEN", `${Math.round(worstGap)}px`],
         ["safe-area top", probeCs.paddingTop],
         ["scrollY", `${Math.round(window.scrollY)}px`],
         ["window height", `${window.innerHeight}px`],
         ["visual vp height", vv ? `${Math.round(vv.height)}px` : "n/a"],
         ["visual vp offsetTop", vv ? `${Math.round(vv.offsetTop)}px` : "n/a"],
+        ["worst vp offsetTop", `${Math.round(worstOffset)}px`],
         ["ZOOM (should be 1.00)", vv ? vv.scale.toFixed(2) : "n/a"],
       ]);
+      frame = requestAnimationFrame(read);
     };
 
     read();
-    const opts = { passive: true } as const;
-    window.addEventListener("scroll", read, opts);
-    window.addEventListener("resize", read);
-    window.visualViewport?.addEventListener("resize", read);
-    window.visualViewport?.addEventListener("scroll", read);
     return () => {
-      window.removeEventListener("scroll", read);
-      window.removeEventListener("resize", read);
-      window.visualViewport?.removeEventListener("resize", read);
-      window.visualViewport?.removeEventListener("scroll", read);
+      cancelAnimationFrame(frame);
       probe.remove();
     };
   }, []);

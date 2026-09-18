@@ -242,7 +242,9 @@ Mobile: the H1, sub-line and two buttons stack first (visible in the first scree
 4. Once, then quiet — reveals play once; idle animations pause off-screen and in hidden tabs.
 5. Reduced motion wins — `prefers-reduced-motion: reduce` removes every reveal, marquee, shimmer and intro; user-driven interactions keep 150ms transitions.
 6. Budget — home page client JS ≤ 220 KB gzipped; GSAP only on pages that need it, loaded dynamically; Lenis on pointer devices only.
-7. Timing — micro 150–250ms; reveals 400–700ms; entrance easing `cubic-bezier(0.22, 1, 0.36, 1)`, exits `ease-out`.
+7. Nothing large animates underneath the header on a touch screen. An element with a running transform animation is given a compositor layer and kept on it; Safari on iOS then has to decide, frame by frame, whether that layer overlaps the pinned bar, and when it gets that wrong the layer is drawn over the top. The hero photograph carried two such animations, a 28 second drift and a scroll parallax, and both are now `@media (pointer: fine)` only. Neither can be seen on a phone. Anything new that moves near the top of the page follows the same rule.
+   The header itself has a rule of its own: **no `border` on `.site-header`**. Safari on iOS 26 ignores `theme-color` and colours the strip behind the clock and battery by sampling the sticky element at the top of the screen, and it takes a bottom border's colour in preference to the background. A near-transparent border left that strip see-through, with the page scrolling behind it. The hairline is an inset `box-shadow` for that reason.
+8. Timing — micro 150–250ms; reveals 400–700ms; entrance easing `cubic-bezier(0.22, 1, 0.36, 1)`, exits `ease-out`.
 
 ## 8. Tells being avoided (checked against the plan and the design skill)
 
