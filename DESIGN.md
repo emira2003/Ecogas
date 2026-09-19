@@ -41,7 +41,7 @@ brightness. So the page is built in layers instead:
 3. **A fine blueprint grid on every band**, 68px, drawn with repeating gradients so it costs
    nothing. This is deliberate rather than decorative: it is the same drawing language as the
    illustrations, so the background belongs to an engineering business.
-4. **Grain over the whole page** at 3%, so nothing is a perfectly smooth digital surface.
+4. **Grain over the whole page** at 5.5%, so nothing is a perfectly smooth digital surface.
 
 The base tones were also lifted and given a blue-slate cast (`#1b212b` rather than `#16191f`);
 flat neutral black felt heavy and dead.
@@ -242,8 +242,8 @@ Mobile: the H1, sub-line and two buttons stack first (visible in the first scree
 4. Once, then quiet — reveals play once; idle animations pause off-screen and in hidden tabs.
 5. Reduced motion wins — `prefers-reduced-motion: reduce` removes every reveal, marquee, shimmer and intro; user-driven interactions keep 150ms transitions.
 6. Budget — home page client JS ≤ 220 KB gzipped; GSAP only on pages that need it, loaded dynamically; Lenis on pointer devices only.
-7. Nothing large animates underneath the header on a touch screen. An element with a running transform animation is given a compositor layer and kept on it; Safari on iOS then has to decide, frame by frame, whether that layer overlaps the pinned bar, and when it gets that wrong the layer is drawn over the top. The hero photograph carried two such animations, a 28 second drift and a scroll parallax, and both are now `@media (pointer: fine)` only. Neither can be seen on a phone. Anything new that moves near the top of the page follows the same rule.
-   The header itself has a rule of its own: **no `border` on `.site-header`**. Safari on iOS 26 ignores `theme-color` and colours the strip behind the clock and battery by sampling the sticky element at the top of the screen, and it takes a bottom border's colour in preference to the background. A near-transparent border left that strip see-through, with the page scrolling behind it. The hairline is an inset `box-shadow` for that reason.
+7. Nothing large animates underneath the header on a touch screen. The hero photograph carried a 28 second drift and a scroll parallax, and both are now `@media (pointer: fine)` only. Neither can be seen on a phone, and off there nothing large is kept on its own compositor layer under the pinned bar.
+   The header itself has a rule of its own: **nothing fixed may sit above `.site-header` at the top edge of the screen, and that includes the page grain (`body::after`, z-index 45, which must stay between 41 and 49).** Safari on iOS 26 and later ignores `theme-color` once the page has scrolled. It colours the strip behind the clock and battery by testing one point 4px below the top of the screen, ignoring `pointer-events`, and extending the background colour of the fixed or sticky element it finds there. A hit on a pseudo-element resolves to its host, so when the grain sat above the header the test found `<body>`, which is neither fixed nor sticky; Safari drew no colour and the page scrolled visibly above the header. Nothing the header does can cover that strip, because Safari clips pinned elements at the top of the page area. The header must therefore keep a solid, opaque `background-color` on the element itself, the full width of the screen, with no `backdrop-filter`. (An earlier note here blamed the header's bottom border, and before that the hero animations. Both were wrong.)
 8. Timing — micro 150–250ms; reveals 400–700ms; entrance easing `cubic-bezier(0.22, 1, 0.36, 1)`, exits `ease-out`.
 
 ## 8. Tells being avoided (checked against the plan and the design skill)
@@ -339,7 +339,7 @@ _None yet. Ideas that come up during the build go here, not into the code._
   - Console, CLS and Lighthouse targets: see Phase 7 (unchanged by this phase's fixes; re-checked on the home page: 96 / 100 / 100 / 100).
 - **After Phase 10 — depth pass.** Feedback: the design looked plain and the backgrounds flat. It was: the palette is white and Plaster, and large areas of flat colour with no light in them read as unpainted rather than minimal. Four changes, all inside the existing palette — no new hues, no decorative gradient washes:
 
-  1. **A fine grain over the whole page** (fixed overlay, 4.5% opacity, `feTurbulence`). This is the single biggest change. It gives white and Plaster a surface to catch light on, so empty areas stop looking like bare background. It cannot be clicked through, and native `<dialog>` renders above it so the lightbox is unaffected.
+  1. **A fine grain over the whole page** (fixed overlay, 5.5% opacity, `feTurbulence`). This is the single biggest change. It gives white and Plaster a surface to catch light on, so empty areas stop looking like bare background. It cannot be clicked through, and native `<dialog>` renders above it so the lightbox is unaffected. It sits over every section and the footer but under the header and the mobile menu (z-index 45): see §7 rule 7 for why it must never be raised above the header.
   2. **Warm ambient light in the hero**, top-left, as though the pilot flame is lighting the room, with a cool counterweight bottom-right.
   3. **Sections read as stacked surfaces**: each band is lit slightly from above with a hairline edge, instead of being a flat block of colour butted against the next one.
   4. **Real elevation on cards.** Service tiles and package cards now sit *on* the page with a soft resting shadow (warming to orange on hover for the tiles) rather than looking cut out of it.

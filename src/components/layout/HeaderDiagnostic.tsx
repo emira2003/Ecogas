@@ -9,7 +9,28 @@ import { useEffect, useState } from "react";
  * It measures the real header on the real device, because the preview used during development
  * has no notch, no collapsing address bar and no pinch zoom, and reports zero for all of them.
  */
-const STAMP = "safari26-tint";
+const STAMP = "grain-z45";
+
+/**
+ * Whether Safari (iOS 26 and later) would accept the header as the element that colours the
+ * strip behind the clock. Mirrors the checks in WebKit's `fixedContainerEdges`. Returns "yes"
+ * or the first reason it would be turned down.
+ */
+function headerCandidate(header: Element | null): string {
+  if (!header) return "no header";
+  const r = header.getBoundingClientRect();
+  const cs = getComputedStyle(header);
+  if (cs.position !== "sticky" && cs.position !== "fixed") return `position ${cs.position}`;
+  if (r.width < (window.innerWidth - 8) * 0.9) return "narrower than 90% of screen";
+  if (r.height <= 10) return "10px tall or less";
+  if (Number(cs.opacity) < 0.1) return "opacity under 0.1";
+  const filter = cs.getPropertyValue("backdrop-filter") || cs.getPropertyValue("-webkit-backdrop-filter");
+  if (filter && filter !== "none") return "has backdrop-filter";
+  const bg = cs.backgroundColor;
+  if (bg === "transparent" || /,\s*0\)$/.test(bg)) return "no background colour";
+  if (/^rgba\(/.test(bg)) return `background not opaque: ${bg}`;
+  return "yes";
+}
 
 export function HeaderDiagnostic() {
   const [rows, setRows] = useState<[string, string][]>([]);
@@ -49,8 +70,34 @@ export function HeaderDiagnostic() {
       }
       lastPaint = now;
       rowsPainted = true;
+
+      // The decisive facts for the strip behind the clock. JavaScript cannot read the colour
+      // Safari paints there, so these report the conditions for it instead: the pass or fail
+      // itself is what you see on the phone.
+      const ua = navigator.userAgent;
+      const version = ua.match(/Version\/(\d+\.\d+)/)?.[1];
+      const otherBrowser = /CriOS|FxiOS|EdgiOS/.test(ua);
+      const standalone =
+        (navigator as Navigator & { standalone?: boolean }).standalone === true ||
+        window.matchMedia("(display-mode: standalone)").matches;
+      const grain = getComputedStyle(document.body, "::after");
+      const grainZ = Number.parseInt(grain.zIndex, 10);
+      const headerZ = cs ? Number.parseInt(cs.zIndex, 10) : NaN;
+      const grainFixed = grain.position === "fixed" && grain.display !== "none";
+      const grainVerdict = !grainFixed
+        ? "not fixed, OK"
+        : grainZ < headerZ
+          ? `z ${grainZ} under header ${headerZ}, OK`
+          : `z ${grainZ} OVER header ${headerZ}, BLOCKS`;
+      const overflowX = document.documentElement.scrollWidth - window.innerWidth;
+
       setRows([
         ["build", STAMP],
+        ["safari", otherBrowser ? "not Safari" : version ? `${version} (strip rule: 26+)` : "?"],
+        ["mode", standalone ? "home-screen app" : "safari tab"],
+        ["GRAIN vs HEADER", grainVerdict],
+        ["header qualifies", headerCandidate(header)],
+        ["sideways overflow", overflowX > 0 ? `${overflowX}px (should be 0)` : "0px"],
         ["header position", cs?.position ?? "?"],
         ["header top", r ? `${Math.round(r.top)}px` : "?"],
         ["WORST GAP SEEN", `${Math.round(worstGap)}px`],
@@ -74,12 +121,15 @@ export function HeaderDiagnostic() {
 
   if (!on) return null;
 
+  // Kept clear of the top and bottom edges of the screen on purpose. Safari tests a point 4px
+  // inside each of those edges to pick the colour for its own bars, and ignores
+  // `pointer-events` when it does, so a panel sitting on one would change what it measures.
   return (
     <div
       style={{
         position: "fixed",
         left: 8,
-        bottom: 8,
+        bottom: 16,
         zIndex: 9999,
         background: "rgba(0,0,0,0.88)",
         color: "#fff",

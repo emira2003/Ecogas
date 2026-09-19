@@ -52,28 +52,24 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   /**
-   * `viewportFit: "cover"` is deliberately NOT set.
+   * `viewportFit: "cover"` is deliberately NOT set. It was tried for the strip above the header
+   * on an iPhone; it makes the header pad itself down by the safe-area inset, which pushed the
+   * whole bar down the screen, and it is not what fills that strip anyway.
    *
-   * It was tried, to fix a light strip appearing above the header on an iPhone. It did fix
-   * that, by letting the page run up under the status bar. But it also makes
-   * `env(safe-area-inset-top)` return the real inset, and the header pads itself down by that
-   * amount so its contents clear the Dynamic Island. On a modern iPhone that is around 59
-   * points, which pushed the whole bar noticeably down the screen.
-   *
-   * Without it the phone letterboxes the page below the status bar, the header sits right at
-   * the top of the page area, and the bar stays compact. The strip beside the status bar is
-   * then painted with the page background, which is why `body` is Cast Iron and only `main` is
-   * warm paper: the strip comes out the same dark as the header and there is nothing to see.
-   * That, plus a matching `themeColor`, solves the original problem without the height cost.
+   * What colours the strip behind the clock and battery, on an iPhone:
+   *  - At the top of the page, and on iOS 18 and earlier: the page background and `themeColor`.
+   *    That is why `html` and `body` are Cast Iron and only `main` is warm paper.
+   *  - Once scrolled, on iOS 26 and later: Safari ignores `themeColor` and extends the colour
+   *    of the sticky header up behind the clock. That only works while nothing fixed sits
+   *    above the header at the top edge of the screen. See `body::after` in globals.css.
    */
   /**
-   * The colour a phone paints its own status bar, directly above the header. Must stay
-   * identical to `--color-cast-iron` in globals.css: if the two drift apart you get a band of
-   * a slightly different dark above the bar, which reads as a seam.
+   * Must stay identical to `--color-cast-iron` in globals.css: if the two drift apart you get
+   * a band of a slightly different dark above the bar, which reads as a seam.
    *
    * One unconditional value, deliberately. Written as a light/dark pair it emits two tags that
    * each carry a `media` attribute, and Safari on iOS does not reliably honour `theme-color`
-   * when it is qualified that way. It ignores them and samples the page instead.
+   * when it is qualified that way.
    */
   themeColor: "#1a212c",
 };

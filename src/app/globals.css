@@ -119,17 +119,8 @@
 
   /*
    * `position: relative` with `z-index: 0` looks pointless and is not. It gives the page body
-   * its own stacking context, which traps everything inside it below the header.
-   *
-   * Without it, the hero photograph escapes. It is on its own compositor layer, because the
-   * parallax animates it and it is a large image, and Safari on iOS will happily paint such a
-   * layer over a sticky sibling even though the sticky one has the higher z-index. That is what
-   * put a band of the hero photo above the header while scrolling: the header never moved, the
-   * photo was being drawn on top of it. Chrome orders the same layers correctly, which is why
-   * it only ever showed up in Safari.
-   *
-   * With a stacking context here, nothing inside the page body can paint above z-index 0, and
-   * the header at 50 is always on top.
+   * its own stacking context, so nothing inside it can paint above z-index 0: the grain (45)
+   * and the header (50) are always on top of every section, whatever z-index a section uses.
    */
   main#main {
     position: relative;
@@ -191,12 +182,28 @@
    * surface: it gives white and Plaster something to catch, so large empty areas stop looking
    * like unpainted background. Very low opacity, fixed so it never scrolls, and it cannot be
    * clicked through. Native <dialog> renders above it, so the lightbox is unaffected.
+   *
+   * Its z-index MUST stay between 41 and 49, under the header (50), and this is the fix for the
+   * strip of page that showed above the header on an iPhone.
+   *
+   * Since iOS 26, Safari no longer paints the strip behind the clock and battery itself. It
+   * tests one point, 4px below the top of the screen and ignoring `pointer-events`, looks for
+   * a fixed or sticky element there, and extends that element's background colour up behind
+   * the clock. When this grain sat above the header (it was 200) that test hit the grain
+   * first. A hit on a pseudo-element resolves to its host, <body>, which is neither fixed nor
+   * sticky, so Safari found nothing, drew no colour, and the page scrolled visibly above the
+   * header. Nothing the header does can cover that strip: Safari clips everything belonging to
+   * a pinned element at the top of the page area. Only its own colour band can fill it.
+   *
+   * Under 41 the white sticky bar at the bottom would become the bottom sample instead, and
+   * Safari would tint its toolbar area white. The header and the open menu lose their grain,
+   * which at this opacity on Cast Iron cannot be seen.
    */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: 200;
+    z-index: 45;
     pointer-events: none;
     /* Paper needs more tooth than a dark ground did, or the light bands go flat */
     opacity: 0.055;
@@ -264,8 +271,9 @@
   width: 100%;
   max-width: calc(var(--container-site) + 3rem);
   margin-inline: auto;
-  /* Now that the page fills the screen edge to edge (viewport-fit=cover), the gutters have to
-     clear a notch or rounded corner when the phone is held sideways. */
+  /* Clears a notch or rounded corner when the phone is held sideways. `viewport-fit=cover` is
+     off (see layout.tsx), so these insets read zero in a Safari tab; they matter when the
+     site is opened from the home screen. */
   padding-inline: max(1.25rem, env(safe-area-inset-left)) max(1.25rem, env(safe-area-inset-right));
   @media (width >= 40rem) {
     padding-inline: 1.5rem;
@@ -470,19 +478,19 @@
 
   /* ---- Header ---- */
   /*
-   * Sticky, not fixed, and this is the important bit.
+   * Sticky: a real element in the flow that pins itself to the top of the scroll area, so it
+   * needs no spacer to hold its place.
    *
-   * As `position: fixed` it worked everywhere except Safari on an iPhone, where scrolling down
-   * from the top of the hero left a strip of the page visible above the bar, as though the bar
-   * had been pushed down. That is a known iOS problem: a fixed element is positioned against
-   * the layout viewport and painted by the compositor, and while Safari is collapsing its own
-   * toolbar the two disagree for a moment. Padding it, shielding it with an overhang and
-   * paying attention to the safe area all treated the symptom and none of them cured it.
+   * On an iPhone (iOS 26 and later) this bar is also what colours the strip behind the clock
+   * and battery: Safari takes that colour from the fixed or sticky element at the top of the
+   * screen. See the note on `body::after` for how that goes wrong. For Safari to pick this bar
+   * up it has to keep, on this element itself: a solid, fully opaque `background-color`, the
+   * full width of the screen, and no `backdrop-filter`. Nothing fixed or sticky may sit above
+   * it at the top edge of the screen.
    *
-   * Sticky is handled by the scrolling machinery instead. The bar is a real element in the
-   * flow that pins itself to the top of the scroll area, so it cannot drift away from the
-   * content. It also means no spacer element is needed to hold its place, because it occupies
-   * real space until it pins.
+   * Do not try to cover that strip from here (an overhang, a tall slab, a negative `top`).
+   * Safari clips everything belonging to a pinned element at the top of the page area, so
+   * none of it can ever paint there.
    */
   .site-header {
     position: sticky;
@@ -492,44 +500,11 @@
     padding-top: env(safe-area-inset-top);
     background: var(--color-cast-iron);
     color: var(--color-white);
-    /*
-     * The hairline under the bar is a shadow, NOT a border, and that is the fix for the strip
-     * above the header on an iPhone.
-     *
-     * Since iOS 26, Safari draws the page right up under the clock and battery, and ignores
-     * `theme-color`. To colour that strip it samples the fixed or sticky element touching the
-     * top of the screen, and if that element has a bottom border it takes the border's colour
-     * instead of the background. Ours was 10% white, which is nearly transparent, so Safari
-     * left the strip see-through and the page scrolled visibly behind the status bar. With no
-     * border, it samples the solid Cast Iron background and the strip matches the bar.
-     */
+    /* The hairline under the bar */
     box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--color-white) 10%, transparent);
     /* Changing the height of a pinned bar cannot move page content (CLS 0).
        This is the only height transition on the site. */
     transition: height 0.25s var(--ease-out-expo);
-  }
-  /*
-   * A slab of the bar's own colour, hanging off the top of it and a whole screen tall.
-   *
-   * Safari on iOS collapses its address bar as you scroll, and while that animates, the pinned
-   * bar and the page disagree about where the top of the screen is for a few frames. The bar
-   * appears to sit low and the page shows through above it. Chrome does not do this, which is
-   * why it only ever went wrong on one browser.
-   *
-   * The mismatch itself cannot be prevented from CSS. This makes it invisible: the slab belongs
-   * to the bar and moves with it, so whatever gap opens up above the bar is already filled with
-   * the same dark colour. When nothing is wrong it sits off the top of the screen and costs
-   * nothing. It paints only upwards, so it can never cover content below.
-   */
-  .site-header::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 100%;
-    height: 100vh;
-    background: var(--color-cast-iron);
-    pointer-events: none;
   }
   /* The logo image. Sized by height; the width follows its own 3.16:1 ratio. */
   .site-logo {
@@ -630,18 +605,18 @@
   }
 
   /* ---- Mobile menu (G7) ---- */
+  /* Exactly the size of the screen, no overhang. Safari on an iPhone clips an overhang away, and
+     a panel more than 5% taller than the screen stops counting as a full-screen one when it
+     picks the colour for the strip behind the clock. */
   .mobile-nav {
     position: fixed;
-    top: -100px;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     z-index: 60;
     display: flex;
     flex-direction: column;
     background: var(--color-cast-iron);
     color: var(--color-white);
-    padding-top: calc(100px + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
     transform: translateY(-100%);
     visibility: hidden;
     transition:
@@ -972,9 +947,7 @@
    * one very slow, very small swell, the only thing on the page that never stops.
    *
    * Pointer devices only, and the same goes for the two movements on the photograph below.
-   * See the note on `.hero__img`: on a phone these three never-ending animations were the
-   * cause of the strip above the header in Safari, and none of them can be seen on a phone
-   * anyway.
+   * See the note on `.hero__img`: none of them can be seen on a phone anyway.
    */
   @media (pointer: fine) {
     .hero__lit::before {
@@ -1031,21 +1004,13 @@
     transform: scale(1.08);
   }
   /*
-   * Both movements are for pointer devices only, and this is the fix for the strip that kept
-   * appearing above the header on an iPhone.
+   * Both movements are for pointer devices only. Neither is worth anything on a phone: a 28
+   * second drift of one percent is invisible on a screen held at arm's length, and parallax on
+   * a touch screen mostly reads as the page struggling to keep up. Off there, the hero is a
+   * plain image and nothing large is kept on its own compositor layer under the header.
    *
-   * An element with a transform animation running is put on its own compositor layer and kept
-   * there. Two of them, one never-ending and one driven by the scroll, sat on the largest
-   * image on the page, directly below a sticky bar. Safari orders composited layers by working
-   * out which ones overlap, and when it gets that wrong the animated layer is drawn last, over
-   * the top of the bar. That is what was showing through: not a gap above the header, but the
-   * hero being painted over it. Chrome resolves the same layers correctly, which is why it
-   * only ever went wrong on one browser.
-   *
-   * Neither movement is worth anything on a phone. A 28 second drift of one percent is
-   * invisible on a screen held at arm's length, and parallax on a touch screen mostly reads as
-   * the page struggling to keep up. Off there, the hero is a plain image again, nothing is
-   * composited, and there is nothing left that can outrank the header.
+   * (This was once thought to be the cause of the strip above the header on an iPhone. It was
+   * not: see the note on `body::after`.)
    */
   @media (pointer: fine) {
     .hero__img {
