@@ -1069,6 +1069,77 @@
       border-radius: 14px 0 0 14px;
     }
   }
+  /*
+   * The makes we fit, in the hero's right-hand column. A light card on the dark band, because
+   * the logos are the makers' own colours and several (Honeywell's grey, the Bosch ring) all
+   * but disappear on Cast Iron. It keeps the photograph's shadow and entrance, but not its
+   * bleed off the right edge of the screen: a card of logos wants to read as a whole object.
+   */
+  .hero__makes {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.75rem 1.5rem 4.75rem;
+    background: var(--color-surface);
+    color: var(--color-ink);
+  }
+  .hero__makes-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-stretch: 110%;
+    line-height: 1.2;
+  }
+  .hero__makes-sub {
+    margin-top: -0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-ink-soft);
+  }
+  .hero__makes-label {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-ink-mute);
+  }
+  .hero__makes-list {
+    display: grid;
+    border-top: 1px solid var(--color-line);
+  }
+  .hero__makes-list--boiler {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .hero__makes-list--controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .hero__makes-item {
+    display: grid;
+    place-items: center;
+    min-height: 4.5rem;
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .hero__makes-item + .hero__makes-item {
+    border-left: 1px solid var(--color-line);
+  }
+  .hero__makes-logo {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    /* Each make's own height from business.ts, scaled to the card */
+    height: calc(var(--logo-h, 2.75rem) * 0.56);
+    object-fit: contain;
+  }
+  @media (width >= 64rem) {
+    .hero__media--makes {
+      margin-right: 0;
+    }
+    .hero__media--makes .hero__makes {
+      min-height: 0;
+      justify-content: center;
+      border-radius: 14px;
+    }
+  }
   .hero__tag {
     position: absolute;
     left: 1rem;

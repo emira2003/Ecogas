@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Phone } from "lucide-react";
 import type { CSSProperties } from "react";
 import { business, telHref } from "@/data/business";
@@ -25,6 +24,10 @@ const SUBLINE =
 export function Hero() {
   const words = TITLE.split(" ");
   const entry = business.packages[0];
+  const makeGroups = [
+    { kind: "boiler", label: "Boilers", brands: business.brands.filter((b) => b.kind === "boiler") },
+    { kind: "controls", label: "Smart controls", brands: business.brands.filter((b) => b.kind === "controls") },
+  ];
 
   return (
     <HeroIgnition>
@@ -64,17 +67,40 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="hero__media relative lg:col-span-5">
-            <div className="hero__photo">
-              <Image
-                src="/images/photos/hero-boiler-service.jpg"
-                alt="A gas engineer’s gloved hands working inside an open combi boiler, with the pump and control panel visible"
-                fill
-                priority
-                sizes="(min-width: 1024px) 40vw, 100vw"
-                className="hero__img object-cover"
-              />
-              <span className="hero__photo-scrim" aria-hidden="true" />
+          {/*
+            The makes we fit, where the stock photograph used to be. Still, not moving: the same
+            logos drift past in a strip further down the page, and a second moving row this close
+            to the headline would compete with it. Grouped because the difference matters to a
+            customer: three boiler makers, two makers of controls.
+          */}
+          <div className="hero__media hero__media--makes relative lg:col-span-5">
+            <div className="hero__photo hero__makes">
+              <p className="hero__makes-title">The makes we fit</p>
+              <p className="hero__makes-sub">Installed, serviced and repaired, with the warranty registered in your name.</p>
+              {makeGroups.map((group) => (
+                <div key={group.label} className="hero__makes-group">
+                  <p className="hero__makes-label">{group.label}</p>
+                  <ul className={`hero__makes-list hero__makes-list--${group.kind}`}>
+                    {group.brands.map((brand) => (
+                      <li key={brand.name} className="hero__makes-item">
+                        {brand.logo ? (
+                          /* eslint-disable-next-line @next/next/no-img-element --
+                             local vector files of a few KB, as in the brand strip (Brands.tsx) */
+                          <img
+                            src={brand.logo}
+                            alt={brand.name}
+                            decoding="async"
+                            className="hero__makes-logo"
+                            style={{ "--logo-h": `${brand.logoHeight}px` } as CSSProperties}
+                          />
+                        ) : (
+                          <span className="font-bold">{brand.name}</span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
             {/*
               One short tag, not a banner. It used to read "New boiler from £1,625 | 5 year
