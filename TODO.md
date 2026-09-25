@@ -26,9 +26,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 - [ ] Which days the 7am to 7pm hours apply to (also needed for the Google listing data)
 - [ ] Official Gas Safe logo file → footer slot (never draw it ourselves)
 - [x] Brand logos are in and showing on the home page strip. Only the Worcester Bosch one is a stand-in (the parent Bosch mark) — see IMAGE-CREDITS.md.
-- [ ] Which review site the 4.9/5 (12 reviews) profile is on, plus the link → `business.ts` (`reviews`)
-- [ ] Which site the "Excellent" 31-rating profile is on, plus the link → `business.ts` (`reviews.secondary`)
-- [ ] Which reviews can be shown; the missing review text for Robin (Stockport) and Damian (Manchester), and Damian's job type → `src/data/reviews.ts`
+- [x] Reviews: 10 real ones from MyBuilder and Google (25 Sep 2026), no score or count shown anywhere, by the client's choice. See `src/data/reviews.ts`.
 - [ ] Confirmed prices for every estimate item (see table below); VAT included or not; any call-out fee
 - [ ] Exactly what is included in the £1,999 and £2,500 offers → `business.ts` (`offers`)
 - [x] First real photos and videos received 15 September 2026 and in: 7 gallery photos, 1
@@ -56,8 +54,8 @@ here is either an open question or a file the client owes us.
       one thing BOXT cannot match (theirs is 12 months). Confirm it means exactly that.
 - [ ] **No fix, no fee:** confirmed as nothing to pay if the boiler cannot be repaired. Confirm
       whether a visit that diagnoses but does not repair is also free.
-- [ ] **VAT:** are the six package prices including or excluding VAT? Still marked
-      [CLIENT TO CONFIRM] on the boiler page.
+- [ ] **VAT:** are the package prices including or excluding VAT? The unconfirmed line was taken off the
+      site (25 Sep 2026); add the right wording back once known.
 - [ ] **£600 gravity to combi:** worth a second look. It is tight for tanks out, cylinder out and
       new pipework, and the "no hidden extras" promise means it has to hold once agreed.
 - [ ] **Underfloor heating:** wet only, or electric mats too? Retrofit into existing rooms, or
@@ -76,7 +74,7 @@ here is either an open question or a file the client owes us.
       titles still end "| Eco Gas" to stay inside Google's 60 character limit. Confirm that split
       is right.
 - [ ] Facebook page link (and Instagram if any) → `business.ts` (`social`)
-- [ ] How customers pay (for the "How do I pay?" FAQ) → `src/data/faqs.ts`
+- [ ] How customers pay: the FAQ was removed until there is an answer (`src/data/faqs.ts`)
 - [x] Domain `www.ecogas.ltd` live on Vercel, `NEXT_PUBLIC_SITE_URL` set (25 Sep 2026)
 - [ ] Approval (or not) for the 404 alien plumber → `src/data/site.config.ts` (`alien404`). See it at any wrong address, e.g. /nothing-here.
 - [ ] Privacy policy: rewritten for phone and WhatsApp only (25 Sep 2026), so the retention question is gone. Note the Google map on the contact page may set Google's own cookies; the policy says so. If the client would rather have no third-party cookies at all, the map can be replaced by a plain link to Google Maps.

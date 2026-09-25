@@ -10,14 +10,13 @@ interface ReviewCardProps {
 
 /** A review: no border, a 3px Flame rule on the left (DESIGN.md §3.4). */
 export function ReviewCard({ review, revealStars = false, className = "" }: ReviewCardProps) {
+  const who = review.town ? `${review.name}, ${review.town}` : review.name;
   return (
-    <article className={`review-card ${className}`.trim()} aria-label={`Review from ${review.name}, ${review.town}`}>
+    <article className={`review-card ${className}`.trim()} aria-label={`Review from ${who}`}>
       <Stars rating={review.rating} size={16} reveal={revealStars} />
       <p className="mt-3">{review.text}</p>
-      <p className="mt-4 font-semibold leading-snug">
-        {review.name}, {review.town}
-      </p>
-      <p className="small-text text-ink-soft">{review.jobType}</p>
+      <p className="mt-4 font-semibold leading-snug">{who}</p>
+      {review.jobType ? <p className="small-text text-ink-soft">{review.jobType}</p> : null}
       <p className="small-text text-ink-mute">via {review.platform}</p>
     </article>
   );

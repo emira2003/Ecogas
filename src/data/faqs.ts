@@ -43,10 +43,4 @@ export const homeFaqs: Faq[] = [
     answer:
       "Pick your job from the list and you’ll see our typical price straight away. It’s an estimate, not a bill: we confirm the exact price once we’ve seen the job, and there’s no obligation.",
   },
-  {
-    id: "payment",
-    question: "How do I pay?",
-    answer:
-      "[CLIENT TO CONFIRM - e.g. bank transfer or card on completion; deposit for boiler installs?]",
-  },
 ];

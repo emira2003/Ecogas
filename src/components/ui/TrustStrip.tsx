@@ -69,16 +69,8 @@ export function TrustStrip({ bg = "white", className = "" }: TrustStripProps) {
     {
       icon: Star,
       iconClass: "text-flame",
-      title: (
-        <>
-          Rated <CountUp value={business.reviews.rating} decimals={1} />/{business.reviews.outOf}
-        </>
-      ),
-      detail: (
-        <>
-          <CountUp value={business.reviews.count} /> reviews on {business.reviews.platform}
-        </>
-      ),
+      title: "5 star reviews",
+      detail: "On MyBuilder and Google",
     },
   ];
 

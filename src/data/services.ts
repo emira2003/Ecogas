@@ -102,7 +102,6 @@ export const services: Service[] = [
       "All prices are from, and confirmed once we have seen photos of your existing boiler. Once we agree a price, that is the price.",
       "Moving the boiler to a different position is priced separately, because it depends where it is now and where it is going. A vertical flue kit starts at £300 depending on the length of the run.",
       "Manufacturers require an annual service to keep the warranty valid. We can do that for you from £65.",
-      "Prices [include / exclude - CLIENT TO CONFIRM] VAT.",
     ],
     price: { type: "from", amount: 1625, confirmed: true },
     estimateCategory: "boilers",
@@ -298,7 +297,7 @@ export const services: Service[] = [
     },
     intro: [
       "Underfloor heating warms a room from the floor up rather than from one hot panel on the wall, which means an even temperature, no radiators taking up wall space, and a lower flow temperature than radiators need. That last part matters: a boiler running cooler runs more efficiently, so a well set up floor circuit costs less to run than the radiators it replaced.",
-      "We fit wet underfloor heating, the kind that runs off your boiler rather than off the electrics, along with the manifold, the zone valves and the controls that go with it. It is at its most straightforward in an extension, a new kitchen or anywhere the floor is coming up anyway. We work across Bolton, Horwich, Westhoughton and the surrounding towns. [CLIENT TO CONFIRM: retrofit into existing rooms, and whether electric mat systems are offered.]",
+      "We fit wet underfloor heating, the kind that runs off your boiler rather than off the electrics, along with the manifold, the zone valves and the controls that go with it. It is at its most straightforward in an extension, a new kitchen or anywhere the floor is coming up anyway. We work across Bolton, Horwich, Westhoughton and the surrounding towns.",
     ],
     included: [
       "Floor circuits designed and set out room by room",
@@ -312,7 +311,7 @@ export const services: Service[] = [
       "Underfloor heating suits a floor that is being lifted or laid anyway, which is why it usually goes in with an extension or a new kitchen.",
       "It runs at a lower temperature than radiators, so it takes longer to warm up and longer to cool down. It is best left on a steady schedule rather than switched on and off.",
       "It can run alongside radiators elsewhere in the house, on its own zone, rather than replacing everything at once.",
-      "Priced on the job. [CLIENT TO CONFIRM: a starting price, if there is one.]",
+      "Priced on the job, once we have seen the room and the floor it is going into.",
     ],
     price: { type: "quote", confirmed: false },
     estimateCategory: "heating",

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { mapTowns } from "@/data/areas";
-import { business, isPlaceholder } from "@/data/business";
+import { business } from "@/data/business";
 import { homeFaqs } from "@/data/faqs";
 import { faqJsonLd } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -28,9 +28,6 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const { reviews } = business;
-  const ratingText = `${reviews.rating} out of ${reviews.outOf} on ${reviews.platform}`;
-
   return (
     <>
       <JsonLd data={[faqJsonLd(homeFaqs)]} />
@@ -69,23 +66,16 @@ export default function HomePage() {
       <Section id="reviews" bg="plaster" contained={false} aria-labelledby="reviews-title">
         <div className="container-site">
           <Reveal as="h2" split id="reviews-title" className="h2">
-            What customers say
+            Some of our reviews
           </Reveal>
         </div>
         <div className="mt-10">
           <ReviewsMarquee />
         </div>
-        <div className="container-site mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+        <div className="container-site mt-8">
           <Button href="/reviews" variant="secondary">
             Read more reviews
           </Button>
-          {isPlaceholder(reviews.url) ? (
-            <p className="text-ink-soft">{ratingText}</p>
-          ) : (
-            <a href={reviews.url} className="text-ink-soft underline hover:text-ember" rel="noopener">
-              {ratingText}
-            </a>
-          )}
         </div>
       </Section>
 

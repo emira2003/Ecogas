@@ -177,26 +177,10 @@ export const business = {
     },
   ],
 
-  /** Review profile facts. TODO: confirm which platform and get the links. */
-  reviews: {
-    rating: 4.9,
-    outOf: 5,
-    count: 12,
-    platform: "[REVIEW PLATFORM]",
-    url: "[REVIEW URL]",
-    /** Second profile, only shown once confirmed. */
-    secondary: {
-      label: "Excellent",
-      count: 31,
-      platform: "[TBC]",
-      url: "[TBC]",
-      confirmed: false,
-    },
-  },
-
+  /** Left empty until there is a link: an empty value is simply not shown. */
   social: {
-    facebook: "[FACEBOOK URL]",
-    instagram: "[TBC]",
+    facebook: "",
+    instagram: "",
   },
 
   /** Used in the Areas section and FAQ. */

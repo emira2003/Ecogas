@@ -50,7 +50,7 @@ export const localBusinessJsonLd = (): JsonLd => {
   if (hasText(business.email)) data.email = business.email;
   if (business.geo) data.geo = { "@type": "GeoCoordinates", latitude: business.geo.lat, longitude: business.geo.lng };
 
-  const sameAs = [business.social.facebook, business.social.instagram, business.reviews.url].filter(hasText);
+  const sameAs = [business.social.facebook, business.social.instagram].filter(hasText);
   if (sameAs.length > 0) data.sameAs = sameAs;
 
   // Opening hours: added once the client confirms them (see TODO.md), needs day-by-day times,

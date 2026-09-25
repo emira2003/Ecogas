@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 };
 
 const photos = [
-  { src: "/images/placeholders/engineer.svg", alt: "An Eco Gas engineer at work", width: 800, height: 1000, note: "Owner / engineer photo to follow" },
-  { src: "/images/placeholders/team.svg", alt: "The Eco Gas van outside a customer’s home", width: 800, height: 1000, note: "Van photo to follow" },
-  { src: "/images/placeholders/workshop.svg", alt: "The workshop and stock of parts", width: 800, height: 600, note: "Workshop photo to follow" },
+  { src: "/images/placeholders/engineer.svg", alt: "An Eco Gas engineer at work", width: 800, height: 1000 },
+  { src: "/images/placeholders/team.svg", alt: "The Eco Gas van outside a customer’s home", width: 800, height: 1000 },
+  { src: "/images/placeholders/workshop.svg", alt: "The workshop and stock of parts", width: 800, height: 600 },
 ];
 
 /* A real sequence, so numbered (PLAN.md D3 About) */
@@ -40,7 +40,7 @@ const steps = [
   },
   {
     title: "Warranty registered",
-    text: "Your manufacturer’s warranty is [registered by us - CLIENT TO CONFIRM], so you’re covered from day one.",
+    text: "We register your manufacturer’s warranty in your name, so you’re covered from day one.",
   },
 ];
 
@@ -87,7 +87,6 @@ export default function AboutPage() {
                 <div className="overflow-hidden rounded-xl bg-plaster-deep">
                   <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="(min-width: 1024px) 25vw, 50vw" className="h-auto w-full" />
                 </div>
-                <figcaption className="small-text mt-2 text-ink-mute">{photo.note}</figcaption>
               </figure>
             ))}
           </Reveal>
