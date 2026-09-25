@@ -11,8 +11,6 @@ import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
-// TEMPORARY: remove with HeaderDiagnostic.tsx once the iPhone header question is settled.
-import { HeaderDiagnostic } from "@/components/layout/HeaderDiagnostic";
 import "./globals.css";
 
 // One family only (DESIGN.md §3.2): Archivo variable, with its width axis for the wide headlines.
@@ -33,11 +31,6 @@ export const metadata: Metadata = {
   description:
     "Gas Safe registered boiler replacement, central heating and servicing in Bolton since 2000. New boilers from £1,625 with 5, 10 or 12 year manufacturer warranties. Get an instant estimate.",
   applicationName: business.name,
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "black-translucent",
-    title: business.name,
-  },
   openGraph: {
     type: "website",
     siteName: business.name,
@@ -94,7 +87,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <StickyMobileBar />
         <SmoothScroll />
-        <HeaderDiagnostic />
         {/* Google structured data about the business, on every page (PLAN.md Part G) */}
         <JsonLd data={[localBusinessJsonLd()]} />
         {/* Vercel's cookie-free analytics: only on Vercel, where its script exists (avoids a 404 locally) */}

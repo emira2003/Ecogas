@@ -22,8 +22,8 @@ Everything still needed before launch, in one place. Updated at the end of every
 
 ## Needed from the client (mirrors Part J of the plan)
 
-- [ ] Phone number, WhatsApp number, email address, opening hours → `.env.local` and `src/data/business.ts`
-- [ ] Gas Safe registration number → `src/data/business.ts` (`gasSafeNumber`)
+- [x] Phone and WhatsApp 07792 763467, email ecogassafe@gmail.com, Gas Safe 510928, hours 7am to 7pm (received 25 Sep 2026, in `src/data/business.ts`)
+- [ ] Which days the 7am to 7pm hours apply to (also needed for the Google listing data)
 - [ ] Official Gas Safe logo file → footer slot (never draw it ourselves)
 - [x] Brand logos are in and showing on the home page strip. Only the Worcester Bosch one is a stand-in (the parent Bosch mark) — see IMAGE-CREDITS.md.
 - [ ] Which review site the 4.9/5 (12 reviews) profile is on, plus the link → `business.ts` (`reviews`)
@@ -31,8 +31,14 @@ Everything still needed before launch, in one place. Updated at the end of every
 - [ ] Which reviews can be shown; the missing review text for Robin (Stockport) and Damian (Manchester), and Damian's job type → `src/data/reviews.ts`
 - [ ] Confirmed prices for every estimate item (see table below); VAT included or not; any call-out fee
 - [ ] Exactly what is included in the £1,999 and £2,500 offers → `business.ts` (`offers`)
-- [ ] Photos and videos (shot list in PLAN.md Part K). The 12 Our Work photos and the before/after
-      pairs are still drawings, and they are what makes the lower half of the home page look empty.
+- [x] First real photos and videos received 15 September 2026 and in: 7 gallery photos, 1
+      before/after pair and one job on film (5 clips) on Our Work; "Recent jobs" on the home page
+      now shows real work. Listed in `IMAGE-CREDITS.md`.
+- [ ] Still wanted (shot list in PLAN.md Part K): **the town for each job** (captions name no
+      place until we are told), more before/after pairs, heating and controls jobs (every photo
+      so far is a boiler, so the Controls filter is hidden), and the team / van / About photos.
+- [ ] Confirm with the client: the customer whose cupboard appears in the film is happy for it
+      to be shown. Framed pictures on their wall are visible at the edge of three clips.
 
 ## From the pricing update (8 September 2026)
 
@@ -72,7 +78,7 @@ here is either an open question or a file the client owes us.
 - [ ] Facebook page link (and Instagram if any) → `business.ts` (`social`)
 - [ ] How customers pay (for the "How do I pay?" FAQ) → `src/data/faqs.ts`
 - [ ] How long enquiry emails are kept (for the privacy policy)
-- [ ] The domain name → `.env.local` (`NEXT_PUBLIC_SITE_URL`)
+- [x] Domain `www.ecogas.ltd` live on Vercel, `NEXT_PUBLIC_SITE_URL` set (25 Sep 2026)
 - [ ] Approval (or not) for the 404 alien plumber → `src/data/site.config.ts` (`alien404`). See it at any wrong address, e.g. /nothing-here.
 - [ ] Privacy policy: how long enquiry emails are kept (`src/app/privacy-policy/page.tsx`, currently "[12 months — CLIENT TO CONFIRM]"). Note the Google map on the contact page may set Google's own cookies; the policy says so. If the client would rather have no third-party cookies at all, the map can be replaced by a plain link to Google Maps.
 - [ ] About page photo slots: owner/engineer, van, workshop (`src/app/about/page.tsx`), and confirm the "Warranty registered" step.
@@ -105,7 +111,6 @@ here is either an open question or a file the client owes us.
       still used in the page titles, the footer copyright and the Google listing. Confirm that
       is what he wants.
 - [x] Component showcase page removed (Phase 9).
-- [ ] The WhatsApp button links to `wa.me/[WHATSAPP NUMBER]` and the call buttons to `tel:[PHONE_TEL]` until the numbers are in `.env.local` — they are the only links on the site that don't work yet.
 - [ ] Web3Forms access key (create at web3forms.com with the client's email) → `.env.local` (`WEB3FORMS_ACCESS_KEY`). Then send one test enquiry from `/contact` and one from `/estimate` and check both emails arrive, with the jobs and total listed in the second one. Until the key is set, the form shows "Email sending isn't switched on yet" with the phone number.
 - [ ] Optional: a site or template he likes as a layout reference (PLAN.md Part F)
 
@@ -153,7 +158,7 @@ Service-page hero prices that are examples: central heating from £3,500 · boil
 - Page-speed numbers were measured with tiny SVG files in every slot, so they will have changed now
   that real photographs are in — re-run the Phase 7 checks (method and numbers to beat are in
   DESIGN.md).
-- Gallery (`src/data/gallery.ts`): all captions and towns are made-up examples until real photos arrive.
+- Gallery (`src/data/gallery.ts`): real photos now. Captions describe only what is visible and name no town yet.
 - The "Why Eco Gas" photo is a placeholder for a team/van photo (PLAN.md Part K).
 - The coverage map (`src/components/home/CoverageMap.tsx`) uses a simplified, stylised outline of the North West — it is a diagram, not an accurate map. Town positions are real (from map coordinates).
 - One-line job descriptions in the estimate catalogue were written by us — client to check they're accurate.

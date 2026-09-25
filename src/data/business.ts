@@ -6,8 +6,9 @@
  * phone number stay identical everywhere (character for character).
  *
  * Anything in [SQUARE BRACKETS] is a placeholder waiting on the client. See TODO.md.
- * Phone, WhatsApp and the site address come from environment variables
- * (see .env.example) so they can be changed without touching code.
+ * Phone, WhatsApp and the site address can be overridden by environment variables
+ * (see .env.example); the values written here are the real ones and are used when those
+ * variables are not set.
  *
  * Rule: never invent a number, year, price or accreditation here.
  */
@@ -39,19 +40,19 @@ export const business = {
   /** Map pin for structured data. TODO: take from Google Maps (right-click the pin → copy coordinates). */
   geo: null as { lat: number; lng: number } | null,
 
-  /** Display phone, e.g. "01204 000000". Set NEXT_PUBLIC_PHONE in .env.local. */
-  phone: fromEnv(process.env.NEXT_PUBLIC_PHONE, "[PHONE]"),
-  /** tel: link version, e.g. "+441204000000". Set NEXT_PUBLIC_PHONE_TEL in .env.local. */
-  phoneTel: fromEnv(process.env.NEXT_PUBLIC_PHONE_TEL, "[PHONE_TEL]"),
-  /** WhatsApp number in international format without "+", e.g. "447700900000". Set NEXT_PUBLIC_WHATSAPP. */
-  whatsapp: fromEnv(process.env.NEXT_PUBLIC_WHATSAPP, "[WHATSAPP NUMBER]"),
+  /** Display phone, grouped the way UK mobiles are read out. Confirmed 25 Sep 2026. */
+  phone: fromEnv(process.env.NEXT_PUBLIC_PHONE, "07792 763467"),
+  /** tel: link version of the same number, international format. */
+  phoneTel: fromEnv(process.env.NEXT_PUBLIC_PHONE_TEL, "+447792763467"),
+  /** WhatsApp, same number: international format without "+" or spaces, as wa.me needs it. */
+  whatsapp: fromEnv(process.env.NEXT_PUBLIC_WHATSAPP, "447792763467"),
   /** Pre-filled text when someone taps the WhatsApp button. */
   whatsappMessage: "Hi Eco Gas, I’d like to ask about ",
 
-  email: "[EMAIL]",
-  gasSafeNumber: "[GAS SAFE NUMBER]",
-  /** Plain-English opening hours, e.g. "Mon to Fri 8am to 6pm, Sat 9am to 1pm". */
-  openingHours: "[HOURS]",
+  email: "ecogassafe@gmail.com",
+  gasSafeNumber: "510928",
+  /** Plain-English opening hours. Days not yet confirmed, so none are named. */
+  openingHours: "7am to 7pm",
 
   /** Public website address (www is the primary). Set NEXT_PUBLIC_SITE_URL in .env.local / Vercel. */
   siteUrl: fromEnv(process.env.NEXT_PUBLIC_SITE_URL, "https://www.[DOMAIN]"),
@@ -152,7 +153,7 @@ export const business = {
     {
       title: "Expert installation by Gas Safe engineers",
       detail:
-        "Every job is done by a Gas Safe registered engineer, registration number [GAS SAFE NUMBER]. You can check us on the Gas Safe Register.",
+        "Every job is done by a Gas Safe registered engineer, registration number 510928. You can check us on the Gas Safe Register.",
     },
     {
       title: "Warranties that come from the manufacturer",

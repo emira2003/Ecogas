@@ -64,6 +64,12 @@ export function GalleryGrid({ images, pairs }: GalleryGridProps) {
     window.dispatchEvent(new Event(FILTER_EVENT));
   };
 
+  // A filter with nothing behind it is a dead end, so only the kinds of job we have photos of
+  // are offered. "All" always is.
+  const filters = FILTERS.filter(
+    (f) => f.id === "all" || images.some((img) => img.category === f.id) || pairs.some((p) => p.before.category === f.id),
+  );
+
   const visible = images.filter((img) => filter === "all" || img.category === filter);
   const visiblePairs = pairs.filter((p) => filter === "all" || p.before.category === filter);
 
@@ -83,7 +89,7 @@ export function GalleryGrid({ images, pairs }: GalleryGridProps) {
   return (
     <div>
       <div className="filters" role="group" aria-label="Show jobs of one kind">
-        {FILTERS.map((f) => (
+        {filters.map((f) => (
           <button key={f.id} type="button" className="filters__btn" aria-pressed={filter === f.id} onClick={() => applyFilter(f.id)}>
             {f.label}
           </button>
@@ -96,7 +102,7 @@ export function GalleryGrid({ images, pairs }: GalleryGridProps) {
             Before and after
           </h2>
           <p className="mt-2 text-ink-soft">Drag the handle, or use the arrow keys, to compare.</p>
-          <Reveal as="div" className="mt-6 grid gap-8 lg:grid-cols-2">
+          <Reveal as="div" className={visiblePairs.length > 1 ? "mt-6 grid gap-8 lg:grid-cols-2" : "mt-6 max-w-xl"}>
             {visiblePairs.map((p) => (
               <BeforeAfter key={p.pairId} before={p.before} after={p.after} caption={p.after.caption} />
             ))}

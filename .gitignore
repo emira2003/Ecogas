@@ -20,6 +20,9 @@
 # production
 /build
 
+# the client's original photos and videos: the web-ready copies live in /public
+/Photos_and_videos/
+
 # misc
 .DS_Store
 *.pem

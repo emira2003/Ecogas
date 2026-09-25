@@ -93,9 +93,22 @@ cookies and works offline. To regenerate it, see the note at the top of `src/dat
 
 Listed here once received, so it is clear which images belong to Eco Gas.
 
+All of these were sent by the client over WhatsApp on 15 September 2026. The originals are kept
+in `/Photos_and_videos` (not published, not in git). The photos arrived as phone screenshots with
+black bars above and below, which were cropped off; nothing else was altered. The clips were
+re-encoded smaller with the sound removed, and two were trimmed.
+
 | File | What it shows | Received on |
 |---|---|---|
-| _none yet_ | | |
+| `public/images/work/loft-before.jpg`, `loft-after.jpg` | The same loft wall before and after a boiler replacement (Worcester Bosch badge legible on the new one). Cut to one size for the slider. | 15 Sep 2026 |
+| `public/images/work/worcester-loft.jpg` | The full frame of the "after" photo | 15 Sep 2026 |
+| `public/images/work/copper-pipework-backboard.jpg` | New boiler, copper pipework on a timber backboard | 15 Sep 2026 |
+| `public/images/work/system-boiler-cylinder.jpg` | Boiler beside an unvented cylinder | 15 Sep 2026 |
+| `public/images/work/vaillant-kitchen-cupboard.jpg` | Vaillant boiler in a kitchen cupboard (badge legible) | 15 Sep 2026 |
+| `public/images/work/boiler-airing-cupboard.jpg` | Boiler in an airing cupboard | 15 Sep 2026 |
+| `public/images/work/condensate-pipe-lagged.jpg` | Lagged condensate pipe on an outside wall | 15 Sep 2026 |
+| `public/images/work/boiler-cover-off.jpg` | Boiler in a kitchen cupboard, cover off | 15 Sep 2026 |
+| `public/video/job-1-frame.mp4` to `job-5-finished.mp4`, with `public/images/work/job-*-poster.jpg` | One Worcester Bosch installation in five clips: frame and pipework, flow and return close up, boiler on, flue gas analyser, finished | 15 Sep 2026 |
 
 ## Added with the boiler specific rebuild
 
