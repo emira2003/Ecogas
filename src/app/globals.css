@@ -1070,74 +1070,151 @@
     }
   }
   /*
-   * The makes we fit, in the hero's right-hand column. A light card on the dark band, because
-   * the logos are the makers' own colours and several (Honeywell's grey, the Bosch ring) all
-   * but disappear on Cast Iron. It keeps the photograph's shadow and entrance, but not its
-   * bleed off the right edge of the screen: a card of logos wants to read as a whole object.
+   * The hero's right-hand side: a new boiler on the wall (HeroBoiler.tsx). It is an object in
+   * the scene, lit by the same warm light as the headline and throwing a shadow on the band,
+   * rather than a panel laid over it. The badges on the boiler and the thermostat turn through
+   * the makes we fit by opacity alone, one every three seconds; the names beneath light up
+   * with them.
    */
-  .hero__makes {
-    aspect-ratio: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    padding: 1.75rem 1.5rem 4.75rem;
-    background: var(--color-surface);
-    color: var(--color-ink);
+  .hero-boiler {
+    position: relative;
+    width: 100%;
+    max-width: 25rem;
+    margin-inline: auto;
   }
-  .hero__makes-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    font-stretch: 110%;
-    line-height: 1.2;
-  }
-  .hero__makes-sub {
-    margin-top: -0.75rem;
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    color: var(--color-ink-soft);
-  }
-  .hero__makes-label {
-    margin-bottom: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-ink-mute);
-  }
-  .hero__makes-list {
-    display: grid;
-    border-top: 1px solid var(--color-line);
-  }
-  .hero__makes-list--boiler {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .hero__makes-list--controls {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .hero__makes-item {
-    display: grid;
-    place-items: center;
-    min-height: 4.5rem;
-    padding: 0.75rem 0.5rem;
-    border-bottom: 1px solid var(--color-line);
-  }
-  .hero__makes-item + .hero__makes-item {
-    border-left: 1px solid var(--color-line);
-  }
-  .hero__makes-logo {
+  .hero-boiler__svg {
     display: block;
-    width: auto;
-    max-width: 100%;
-    /* Each make's own height from business.ts, scaled to the card */
-    height: calc(var(--logo-h, 2.75rem) * 0.56);
-    object-fit: contain;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .hero-boiler__body {
+    filter: drop-shadow(0 26px 28px rgb(0 0 0 / 45%)) drop-shadow(0 2px 3px rgb(0 0 0 / 30%));
+  }
+  .hero-boiler__lcd {
+    fill: var(--color-flame);
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-boiler__led {
+    fill: #3ecf7a;
+  }
+  .hero-boiler__logo {
+    opacity: 0;
+    animation: hb-makes-3 9s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 3s - 0.6s);
+  }
+  .hero-boiler__logo--controls {
+    animation-name: hb-makes-2;
+    animation-duration: 6s;
+  }
+  @keyframes hb-makes-3 {
+    0% {
+      opacity: 0;
+    }
+    6% {
+      opacity: 1;
+    }
+    30% {
+      opacity: 1;
+    }
+    36% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes hb-makes-2 {
+    0% {
+      opacity: 0;
+    }
+    9% {
+      opacity: 1;
+    }
+    45% {
+      opacity: 1;
+    }
+    54% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  .hero-boiler__makes {
+    display: grid;
+    gap: 0.375rem;
+    margin-top: 0.25rem;
+    font-size: 0.9375rem;
+  }
+  .hero-boiler__makes p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+  }
+  .hero-boiler__kind {
+    min-width: 7.5rem;
+    font-size: 0.8125rem;
+    color: var(--color-plaster-soft);
+  }
+  .hero-boiler__name {
+    font-weight: 600;
+    color: var(--color-white);
+    opacity: 0.45;
+    animation: hb-name-3 9s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 3s - 0.6s);
+  }
+  .hero-boiler__name--controls {
+    animation-name: hb-name-2;
+    animation-duration: 6s;
+  }
+  @keyframes hb-name-3 {
+    0%,
+    36%,
+    100% {
+      opacity: 0.45;
+    }
+    6%,
+    30% {
+      opacity: 1;
+    }
+  }
+  @keyframes hb-name-2 {
+    0%,
+    54%,
+    100% {
+      opacity: 0.45;
+    }
+    9%,
+    45% {
+      opacity: 1;
+    }
   }
   @media (width >= 64rem) {
-    .hero__media--makes {
+    .hero__media--boiler {
       margin-right: 0;
+      align-self: center;
     }
-    .hero__media--makes .hero__makes {
-      min-height: 0;
-      justify-content: center;
-      border-radius: 14px;
+  }
+  /* The price tag sits on the lower left of the boiler, not the corner of a photo */
+  .hero__media--boiler .hero__tag {
+    top: 52%;
+    bottom: auto;
+    left: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-boiler__logo,
+    .hero-boiler__name {
+      animation: none;
+    }
+    .hero-boiler__logo[data-first] {
+      opacity: 1;
+    }
+    .hero-boiler__name {
+      opacity: 1;
     }
   }
   .hero__tag {

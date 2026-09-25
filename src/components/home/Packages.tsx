@@ -82,7 +82,7 @@ export function Packages() {
         <div className="max-w-2xl">
           <h3 className="font-bold">Choice of manufacturer on request</h3>
           <p className="mt-1 text-ink-soft">
-            Prefer a particular make? We can fit {makesText}. Give us a call or message us on WhatsApp for more
+            We can fit {makesText}. Prefer a particular make? Give us a call or message us on WhatsApp for more
             information.
           </p>
         </div>
