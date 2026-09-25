@@ -16,7 +16,7 @@ import { business } from "@/data/business";
  * nothing moves or resizes. With reduced motion the first make of each kind simply stays up.
  */
 const BADGE = { cx: 180, cy: 150, w: 150 };
-const DIAL = { cx: 345, cy: 212, w: 46, h: 36 };
+const DIAL = { cx: 350, cy: 214, w: 64, h: 40 };
 
 export function HeroBoiler() {
   const boilers = business.brands.filter((b) => b.kind === "boiler" && b.logo);
@@ -126,8 +126,8 @@ export function HeroBoiler() {
 
         {/* Wall thermostat, with the makers of controls */}
         <g className="hero-boiler__body">
-          <circle cx={DIAL.cx} cy={DIAL.cy} r="36" fill="url(#hb-dial)" />
-          <circle cx={DIAL.cx} cy={DIAL.cy} r="30" fill="none" stroke="#1a212c" strokeOpacity="0.1" />
+          <circle cx={DIAL.cx} cy={DIAL.cy} r="44" fill="url(#hb-dial)" />
+          <circle cx={DIAL.cx} cy={DIAL.cy} r="37" fill="none" stroke="#1a212c" strokeOpacity="0.1" />
           {controls.map((b, i) => (
             <image
               key={b.name}
@@ -148,7 +148,7 @@ export function HeroBoiler() {
       {/* The real list. Each name lights up while its badge is showing. */}
       <div className="hero-boiler__makes">
         <p>
-          <span className="hero-boiler__kind">Boilers we fit</span>
+          <span className="hero-boiler__kind">Boilers</span>
           {boilers.map((b, i) => (
             <span key={b.name} className="hero-boiler__name" style={{ "--i": i } as CSSProperties}>
               {b.name}

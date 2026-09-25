@@ -1079,7 +1079,7 @@
   .hero-boiler {
     position: relative;
     width: 100%;
-    max-width: 25rem;
+    max-width: 29rem;
     margin-inline: auto;
   }
   .hero-boiler__svg {
@@ -1156,7 +1156,7 @@
     gap: 0.25rem 1rem;
   }
   .hero-boiler__kind {
-    min-width: 7.5rem;
+    min-width: 4.75rem;
     font-size: 0.8125rem;
     color: var(--color-plaster-soft);
   }
