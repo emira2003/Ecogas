@@ -7,7 +7,7 @@ import { PriceTag } from "@/components/ui/PriceTag";
 import { UfoFlyby } from "@/components/fun/UfoFlyby";
 import { HeroIgnition } from "./HeroIgnition";
 
-const TITLE = "Boiler replacement in Bolton, done properly.";
+const TITLE = "Boiler replacement in the North West, done properly.";
 /**
  * One sentence. It used to be three, and a wall of grey text is the fastest way to make a hero
  * look cheap. What survives is the only claim that is genuinely ours: we price the job from a
