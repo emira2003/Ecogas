@@ -185,7 +185,7 @@ export const business = {
 
   /** Used in the Areas section and FAQ. */
   coverageSentence:
-    "Based in Bolton, covering Greater Manchester, Lancashire, Merseyside and Cheshire.",
+    "Based in Bolton, covering the whole of Greater Manchester and the towns around it.",
 } as const;
 
 export type Business = typeof business;

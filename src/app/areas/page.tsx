@@ -24,8 +24,9 @@ export default function AreasPage() {
           Areas we cover
         </Reveal>
         <p className="lead mt-6 max-w-2xl text-ink-soft">
-          {business.coverageSentence} Our base is on Plodder Lane in Bolton, and from there we work across nine
-          postcode areas. Pick your town to see what we do there, how far we travel, and what customers nearby have said.
+          {business.coverageSentence} Our base is on Plodder Lane in Bolton, and everywhere within about 22 miles
+          of it is our patch, which is all of Greater Manchester plus Preston, Blackburn and Warrington. Pick your town
+          to see what we do there, how far we travel, and what customers nearby have said.
           Wherever you are, a new boiler starts from £1,625, with a warranty that comes from the boiler manufacturer and the price is
           confirmed after a free look at the job.
         </p>

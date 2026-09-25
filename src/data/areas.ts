@@ -1,5 +1,7 @@
 /**
- * The nine areas Eco Gas covers. Each one becomes a page at /areas/[slug].
+ * The areas Eco Gas covers: all ten boroughs of Greater Manchester, then the towns beyond it.
+ * Each one becomes a page at /areas/[slug]. The order here is the order of the list beside
+ * the coverage map, which is grouped by `region`.
  *
  * To add an area: copy a block, give it a new unique `slug` (lowercase, no spaces),
  * add its position on the map drawing, and write a fresh intro. Never copy another town’s.
@@ -9,13 +11,18 @@
 export type AreaSlug =
   | "bolton"
   | "manchester"
-  | "blackburn"
+  | "salford"
+  | "bury"
+  | "rochdale"
   | "oldham"
+  | "tameside"
   | "stockport"
-  | "warrington"
+  | "trafford"
   | "wigan"
-  | "liverpool"
-  | "preston";
+  | "blackburn"
+  | "preston"
+  | "warrington"
+  | "liverpool";
 
 export interface Area {
   slug: AreaSlug;
@@ -77,20 +84,52 @@ export const areas: Area[] = [
       "Boiler replacement, heating repairs and landlord gas safety certificates across Manchester, from Salford to Didsbury. Gas Safe engineers since 2000.",
   },
   {
-    slug: "blackburn",
-    town: "Blackburn",
-    postcodeArea: "BB",
-    region: "Lancashire",
-    map: { x: 333, y: 130 },
+    slug: "salford",
+    town: "Salford",
+    postcodeArea: "M",
+    region: "Greater Manchester",
+    map: { x: 412, y: 307 },
     intro: [
-      "Blackburn and Darwen sit north of Bolton up the M65, and the BB postcodes are a regular part of our week. Stone terraces around Mill Hill and Ewood, semis in Feniscowles and the newer homes on the edge of Darwen all need heating that copes with a Lancashire winter, and many of the older houses still have systems that were fitted decades ago.",
-      "That’s where we come in: replacing tired boilers with A-rated Vaillant, Worcester Bosch or Viessmann boilers from £1,625, flushing systems that have silted up over the years, and fitting new radiators and controls. We also do annual gas safety certificates for Blackburn landlords. The price is confirmed once we have seen photos of the existing boiler, and the manufacturer warranty applies here just as it does in Bolton.",
+      "Salford starts almost at our door: Little Hulton and Walkden are only a few minutes from our base on Plodder Lane. From there we cover the whole city, through Worsley, Swinton and Pendlebury to Eccles, Irlam and Cadishead, and in towards Salford Quays. The housing runs from Worsley’s large detached homes to the terraced streets of Eccles and the new apartments by the Quays, and each one needs a different approach to heating.",
+      "New boilers start from £1,625, with a warranty that comes from the boiler manufacturer. We also fit full central heating systems, service and repair boilers, set up smart heating controls and provide landlord gas safety certificates for Salford’s rented flats and houses, with the price confirmed after a free look at the job.",
     ],
-    travelNote: "About 12 miles from Bolton via the M65.",
-    h1: h1For("Blackburn"),
-    metaTitle: metaTitleFor("Blackburn"),
+    travelNote: "Right next door: Walkden and Little Hulton are a few minutes from our base.",
+    h1: h1For("Salford"),
+    metaTitle: metaTitleFor("Salford"),
     metaDescription:
-      "Boiler replacement, servicing and heating in Blackburn and Darwen, from Mill Hill to Feniscowles. Gas Safe engineers based in Bolton.",
+      "Boiler replacement, servicing and heating in Salford, Walkden, Worsley, Swinton and Eccles. New boilers from £1,625 fitted by Gas Safe engineers.",
+  },
+  {
+    slug: "bury",
+    town: "Bury",
+    postcodeArea: "BL",
+    region: "Greater Manchester",
+    map: { x: 410, y: 235 },
+    intro: [
+      "Bury is the next town east of Bolton along the A58, so the BL8 and BL9 postcodes are close to home for us. We cover the town and the places around it: Ramsbottom and Tottington to the north, Radcliffe to the south, and Whitefield and Prestwich down towards Manchester. Stone terraces, big Victorian houses near the town centre and plenty of 1960s and 1970s estates mean we see every kind of heating system here, from old back boilers to modern combis.",
+      "Being this close, a free look at the job is easy to arrange and a straightforward boiler swap is usually done in a day. New boilers start from £1,625, with a warranty that comes from the boiler manufacturer; we also fit full heating systems and radiators, service and repair boilers, and provide landlord gas safety certificates across the borough.",
+    ],
+    travelNote: "About 6 miles east of Bolton along the A58.",
+    h1: h1For("Bury"),
+    metaTitle: metaTitleFor("Bury"),
+    metaDescription:
+      "Boiler replacement, servicing and heating in Bury, Ramsbottom, Radcliffe and Whitefield. New boilers from £1,625 fitted by Gas Safe engineers from Bolton.",
+  },
+  {
+    slug: "rochdale",
+    town: "Rochdale",
+    postcodeArea: "OL",
+    region: "Greater Manchester",
+    map: { x: 466, y: 224 },
+    intro: [
+      "Rochdale sits in the north-east corner of Greater Manchester, where the town climbs into the Pennine foothills. We cover the OL postcodes from Heywood and Middleton out to Milnrow, Littleborough and Wardle, where older stone houses on exposed hillsides lose heat quickly and need a boiler and radiators sized for the house rather than guessed at. Nearer the town centre it is mostly terraces and inter-war semis, many still running systems that are long overdue an upgrade.",
+      "We replace boilers from £1,625, with a warranty that comes from the boiler manufacturer, fit full heating systems, flush tired pipework and provide landlord gas safety certificates for Rochdale’s many rented homes. The price is confirmed after a free look at the job, and once we have agreed it, it does not change.",
+    ],
+    travelNote: "About 13 miles from Bolton, by the A58 or the M62.",
+    h1: h1For("Rochdale"),
+    metaTitle: metaTitleFor("Rochdale"),
+    metaDescription:
+      "Boiler replacement, central heating and servicing in Rochdale, Heywood, Middleton and Littleborough. New boilers from £1,625 by Gas Safe engineers.",
   },
   {
     slug: "oldham",
@@ -109,6 +148,22 @@ export const areas: Area[] = [
       "Boiler replacement, central heating and repairs across Oldham, Chadderton, Royton and Saddleworth. New boilers from £1,625 fitted by Gas Safe engineers.",
   },
   {
+    slug: "tameside",
+    town: "Tameside",
+    postcodeArea: "OL and SK",
+    region: "Greater Manchester",
+    map: { x: 491, y: 305 },
+    intro: [
+      "Tameside is on the eastern side of Greater Manchester, and we cover all nine of its towns: Ashton-under-Lyne, Stalybridge, Hyde, Denton, Droylsden, Dukinfield, Audenshaw, Mossley and Longdendale. The OL and SK postcodes here take in everything from mill-town terraces to stone cottages on the hills around Mossley, where winters are colder and a properly sized boiler makes a real difference to what the heating costs to run.",
+      "New boilers start from £1,625, with a warranty that comes from the boiler manufacturer. We also fit full heating systems, service and repair boilers and provide landlord gas safety certificates across the borough. The price is confirmed after a free look at the job, and once we have agreed it, it does not change.",
+    ],
+    travelNote: "About 18 miles from Bolton, round the M60.",
+    h1: h1For("Tameside"),
+    metaTitle: metaTitleFor("Tameside"),
+    metaDescription:
+      "Boiler replacement, central heating and servicing in Ashton-under-Lyne, Hyde, Stalybridge and Denton. New boilers from £1,625 by Gas Safe engineers.",
+  },
+  {
     slug: "stockport",
     town: "Stockport",
     postcodeArea: "SK",
@@ -125,20 +180,20 @@ export const areas: Area[] = [
       "Boiler replacement and relocation, heating repairs and servicing in Stockport, Cheadle and Bramhall. Gas Safe engineers, new boilers from £1,625.",
   },
   {
-    slug: "warrington",
-    town: "Warrington",
-    postcodeArea: "WA",
-    region: "Cheshire",
-    map: { x: 289, y: 372 },
+    slug: "trafford",
+    town: "Trafford",
+    postcodeArea: "M and WA",
+    region: "Greater Manchester",
+    map: { x: 400, y: 349 },
     intro: [
-      "Warrington sits between Manchester and Liverpool where the M6 and M62 cross, which makes it an easy trip from Bolton. We cover the WA postcodes: Stockton Heath and Lymm to the south, Birchwood and Great Sankey either side of the town, and out to Widnes and Runcorn. A lot of the housing is 1960s to 1990s estates, where the original boilers and radiators are now well past their best.",
-      "We replace those boilers with A-rated models from £1,625, with a warranty that comes from the boiler manufacturer, upgrade radiators and controls, and flush systems that have never been cleaned. We also do servicing, repairs and landlord gas safety certificates. The price is confirmed after a free look at the job, and we tell you how long the work will take before we start.",
+      "Trafford runs down the south-west side of Manchester, from Stretford and Old Trafford through Urmston and Sale to Altrincham, Timperley and Hale. We cover its M and WA postcodes, which take in Edwardian and inter-war semis, large period homes around Altrincham and Hale, and plenty of newer estates. Bigger houses often mean more radiators and more call for hot water, so we look carefully at whether a combi or a system boiler with a cylinder suits the house best.",
+      "New boilers start from £1,625, with a warranty that comes from the boiler manufacturer. We also fit full heating systems and smart controls, service and repair boilers, and provide landlord gas safety certificates across the borough, with the price confirmed after a free look at the job.",
     ],
-    travelNote: "About 15 miles from Bolton via the M61 and M6.",
-    h1: h1For("Warrington"),
-    metaTitle: metaTitleFor("Warrington"),
+    travelNote: "About 14 miles from Bolton, round the M60.",
+    h1: h1For("Trafford"),
+    metaTitle: metaTitleFor("Trafford"),
     metaDescription:
-      "Boiler replacement from £1,625, heating upgrades and servicing in Warrington, Stockton Heath, Lymm and Birchwood. Gas Safe engineers based in Bolton.",
+      "Boiler replacement, servicing and heating in Trafford: Stretford, Urmston, Sale and Altrincham. New boilers from £1,625 fitted by Gas Safe engineers.",
   },
   {
     slug: "wigan",
@@ -157,20 +212,20 @@ export const areas: Area[] = [
       "Boiler replacement, servicing and heating in Wigan, Standish, Leigh and Atherton. New boilers from £1,625 fitted by Gas Safe engineers from Bolton.",
   },
   {
-    slug: "liverpool",
-    town: "Liverpool",
-    postcodeArea: "L",
-    region: "Merseyside",
-    map: { x: 131, y: 360 },
+    slug: "blackburn",
+    town: "Blackburn",
+    postcodeArea: "BB",
+    region: "Lancashire",
+    map: { x: 333, y: 130 },
     intro: [
-      "Liverpool and the L postcodes are the western edge of the area we cover, reached from Bolton along the M58 and M57. We work across the city from Crosby and Bootle in the north to Aigburth and Woolton in the south, with plenty of Wavertree and Anfield terraces in between. Liverpool has a huge stock of Victorian and Edwardian houses, and their heating systems often need more thought than a straight swap.",
-      "We plan Liverpool jobs in advance so the free look at the job and the work itself are done efficiently. We fit new boilers from £1,625, with a warranty that comes from the boiler manufacturer, install full heating systems, flush old pipework and provide landlord gas safety certificates for the city’s many rented houses and flats.",
+      "Blackburn and Darwen sit north of Bolton up the M65, and the BB postcodes are a regular part of our week. Stone terraces around Mill Hill and Ewood, semis in Feniscowles and the newer homes on the edge of Darwen all need heating that copes with a Lancashire winter, and many of the older houses still have systems that were fitted decades ago.",
+      "That’s where we come in: replacing tired boilers with A-rated Vaillant, Worcester Bosch or Viessmann boilers from £1,625, flushing systems that have silted up over the years, and fitting new radiators and controls. We also do annual gas safety certificates for Blackburn landlords. The price is confirmed once we have seen photos of the existing boiler, and the manufacturer warranty applies here just as it does in Bolton.",
     ],
-    travelNote: "Around 28 miles from Bolton via the M58 and M57, so we plan these visits ahead.",
-    h1: h1For("Liverpool"),
-    metaTitle: metaTitleFor("Liverpool"),
+    travelNote: "About 12 miles from Bolton via the M65.",
+    h1: h1For("Blackburn"),
+    metaTitle: metaTitleFor("Blackburn"),
     metaDescription:
-      "Boiler replacement from £1,625, central heating and landlord gas safety certificates across Liverpool, Crosby, Aigburth and Woolton. Gas Safe engineers.",
+      "Boiler replacement, servicing and heating in Blackburn and Darwen, from Mill Hill to Feniscowles. Gas Safe engineers based in Bolton.",
   },
   {
     slug: "preston",
@@ -188,13 +243,45 @@ export const areas: Area[] = [
     metaDescription:
       "Boiler replacement, central heating and servicing in Preston, Fulwood and Leyland. New boilers from £1,625 fitted by Gas Safe engineers from Bolton.",
   },
+  {
+    slug: "warrington",
+    town: "Warrington",
+    postcodeArea: "WA",
+    region: "Cheshire",
+    map: { x: 289, y: 372 },
+    intro: [
+      "Warrington sits between Manchester and Liverpool where the M6 and M62 cross, which makes it an easy trip from Bolton. We cover the WA postcodes: Stockton Heath and Lymm to the south, Birchwood and Great Sankey either side of the town, and out to Widnes and Runcorn. A lot of the housing is 1960s to 1990s estates, where the original boilers and radiators are now well past their best.",
+      "We replace those boilers with A-rated models from £1,625, with a warranty that comes from the boiler manufacturer, upgrade radiators and controls, and flush systems that have never been cleaned. We also do servicing, repairs and landlord gas safety certificates. The price is confirmed after a free look at the job, and we tell you how long the work will take before we start.",
+    ],
+    travelNote: "About 15 miles from Bolton via the M61 and M6.",
+    h1: h1For("Warrington"),
+    metaTitle: metaTitleFor("Warrington"),
+    metaDescription:
+      "Boiler replacement from £1,625, heating upgrades and servicing in Warrington, Stockton Heath, Lymm and Birchwood. Gas Safe engineers based in Bolton.",
+  },
+  {
+    slug: "liverpool",
+    town: "Liverpool",
+    postcodeArea: "L",
+    region: "Merseyside",
+    map: { x: 131, y: 360 },
+    intro: [
+      "Liverpool and the L postcodes are the western edge of the area we cover, reached from Bolton along the M58 and M57. We work across the city from Crosby and Bootle in the north to Aigburth and Woolton in the south, with plenty of Wavertree and Anfield terraces in between. Liverpool has a huge stock of Victorian and Edwardian houses, and their heating systems often need more thought than a straight swap.",
+      "We plan Liverpool jobs in advance so the free look at the job and the work itself are done efficiently. We fit new boilers from £1,625, with a warranty that comes from the boiler manufacturer, install full heating systems, flush old pipework and provide landlord gas safety certificates for the city’s many rented houses and flats.",
+    ],
+    travelNote: "Around 28 miles from Bolton via the M58 and M57, so we plan these visits ahead.",
+    h1: h1For("Liverpool"),
+    metaTitle: metaTitleFor("Liverpool"),
+    metaDescription:
+      "Boiler replacement from £1,625, central heating and landlord gas safety certificates across Liverpool, Crosby, Aigburth and Woolton. Gas Safe engineers.",
+  },
 ];
 
 /** Find an area by its URL slug. */
 export const findArea = (slug: string): Area | undefined => areas.find((a) => a.slug === slug);
 
 /** Only the fields the coverage map needs, so the page copy never reaches the browser bundle. */
-export type MapTown = Pick<Area, "slug" | "town" | "postcodeArea" | "isBase" | "map">;
+export type MapTown = Pick<Area, "slug" | "town" | "postcodeArea" | "region" | "isBase" | "map">;
 
 export const mapTowns = (): MapTown[] =>
-  areas.map(({ slug, town, postcodeArea, isBase, map }) => ({ slug, town, postcodeArea, isBase, map }));
+  areas.map(({ slug, town, postcodeArea, region, isBase, map }) => ({ slug, town, postcodeArea, region, isBase, map }));

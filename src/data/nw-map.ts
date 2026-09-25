@@ -18,18 +18,22 @@ export interface District {
   d: string;
 }
 
-/** The nine districts Eco Gas covers, drawn in a warmer tone than their neighbours. */
-export const COVERED_DISTRICTS = new Set([
+/** The ten boroughs of Greater Manchester: the main area Eco Gas covers, tinted strongest. */
+export const GREATER_MANCHESTER = new Set([
   "Bolton",
+  "Bury",
   "Manchester",
-  "Blackburn with Darwen",
   "Oldham",
+  "Rochdale",
+  "Salford",
   "Stockport",
-  "Warrington",
+  "Tameside",
+  "Trafford",
   "Wigan",
-  "Liverpool",
-  "Preston",
 ]);
+
+/** Districts beyond Greater Manchester that we also cover, tinted more lightly. */
+export const COVERED_BEYOND = new Set(["Blackburn with Darwen", "Preston", "Warrington", "Liverpool"]);
 
 export const districts: District[] = [
   { name: "Halton", d: "M277.2 396.2L275.3 402.0L282.3 400.9L285.3 404.1L280.3 412.1L282.0 413.6L283.8 412.5L289.9 417.9L284.3 424.8L283.9 420.8L281.2 419.1L279.5 420.1L280.8 422.1L278.3 426.6L274.9 427.9L269.9 426.1L271.3 429.6L253.7 422.7L247.5 429.0L238.4 424.1L232.7 428.5L226.8 423.0L223.0 416.3L222.9 411.1L227.2 405.4L224.0 408.8L226.3 403.8L240.4 402.8L248.0 394.9L258.0 396.9L275.7 389.9L277.2 396.2ZM234.0 365.4L241.7 366.4L242.7 372.0L245.8 374.7L251.6 375.6L248.8 379.7L250.5 391.4L245.6 391.7L240.3 395.8L236.4 396.3L234.1 400.9L228.8 398.9L224.3 399.7L221.9 395.9L224.1 399.6L220.2 402.3L216.4 411.0L214.0 408.5L216.7 413.3L211.8 417.9L200.1 410.8L197.0 411.7L194.7 407.9L200.2 406.2L200.2 400.7L204.1 395.9L212.8 395.1L217.1 378.5L220.1 376.6L224.7 378.7L223.7 376.3L228.6 373.3L227.5 369.9L230.4 368.9L229.7 364.3L234.0 365.4Z" },
