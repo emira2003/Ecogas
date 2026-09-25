@@ -1,21 +1,21 @@
 "use client";
 
+import { MessageCircle, Phone } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { business, telHref, whatsappLink } from "@/data/business";
 import { estimateCatalogue, findEstimateCategory, type EstimateCategoryId } from "@/data/estimate-catalogue";
 import {
   calculateTotal,
   clampQty,
-  formatLine,
-  formatTotal,
+  estimateMessage,
   isCategoryId,
   linesFrom,
   sanitizeSelections,
   type Selections,
 } from "@/lib/estimate";
-import { prefersReducedMotion, scrollToElement } from "@/lib/motion";
+import { prefersReducedMotion } from "@/lib/motion";
 import { Button } from "@/components/ui/Button";
 import { CategoryCard } from "./CategoryCard";
-import { EnquiryForm } from "./EnquiryForm";
 import { EstimateSummary } from "./EstimateSummary";
 import { JobRow } from "./JobRow";
 import { RunningTotal } from "./RunningTotal";
@@ -67,10 +67,8 @@ export function EstimateWizardInner() {
     phase: "idle",
     dir: "forward",
   });
-  const [showForm, setShowForm] = useState(false);
   const [restored, setRestored] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const formRef = useRef<HTMLDivElement>(null);
   const focusedStep = useRef<Step>(1);
 
   // Restore saved progress or a deep link (reads storage now, applies right after this render)
@@ -126,16 +124,6 @@ export function EstimateWizardInner() {
     headingRef.current?.focus();
   }, [shown.step]);
 
-  // When the visitor asks to send the quote, bring the hand-off panel into view.
-  // Routed through the smooth scroller when it is running, so the two don't fight each other.
-  useEffect(() => {
-    if (!showForm) return;
-    const id = requestAnimationFrame(() => {
-      if (formRef.current) scrollToElement(formRef.current);
-    });
-    return () => cancelAnimationFrame(id);
-  }, [showForm]);
-
   const lines = linesFrom(state.selections);
   const total = calculateTotal(lines);
   const count = lines.length;
@@ -152,19 +140,10 @@ export function EstimateWizardInner() {
   const setQty = (id: string, delta: 1 | -1) =>
     setState((s) => ({ ...s, selections: { ...s.selections, [id]: clampQty((s.selections[id] ?? 1) + delta) } }));
   const anotherCategory = () => setState((s) => ({ ...s, step: 1 }));
-  const somethingElse = () => {
-    setShowForm(true);
-    setState((s) => ({ ...s, somethingElse: true, step: 3 }));
-  };
-  const seeEstimate = () => {
-    setShowForm(false);
-    setState((s) => ({ ...s, somethingElse: false, step: 3 }));
-  };
+  const somethingElse = () => setState((s) => ({ ...s, somethingElse: true, step: 3 }));
+  const seeEstimate = () => setState((s) => ({ ...s, somethingElse: false, step: 3 }));
   const back = () => setState((s) => ({ ...s, step: s.step === 3 && s.category ? 2 : 1 }));
-  const startAgain = () => {
-    setShowForm(false);
-    setState({ step: 1, category: null, selections: {}, somethingElse: false });
-  };
+  const startAgain = () => setState({ step: 1, category: null, selections: {}, somethingElse: false });
 
   const panelClass =
     shown.phase === "out" ? `step-panel--out-${shown.dir}` : shown.phase === "in" ? `step-panel--in-${shown.dir}` : "";
@@ -250,15 +229,29 @@ export function EstimateWizardInner() {
             {state.somethingElse ? (
               <div className="mt-4 max-w-2xl">
                 <p className="lead text-ink-soft">
-                  No problem. Describe the job in your own words and we’ll come back to you with a price. If it’s
-                  quicker, call or WhatsApp us.
+                  No problem. Tell us about it on WhatsApp, or give us a call, and we’ll come back to you with a
+                  price.
                 </p>
                 {count > 0 ? (
                   <p className="mt-4 text-ink-soft">
-                    The {count} {count === 1 ? "job" : "jobs"} you’ve already picked will come with your message.
+                    The {count} {count === 1 ? "job" : "jobs"} you’ve already picked will be in the WhatsApp message,
+                    ready to send.
                   </p>
                 ) : null}
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+                  <Button
+                    href={whatsappLink(estimateMessage(lines, total, true))}
+                    rel="noopener"
+                    size="lg"
+                    icon={<MessageCircle size={20} strokeWidth={1.75} aria-hidden="true" />}
+                  >
+                    WhatsApp us
+                  </Button>
+                  <Button href={telHref} variant="secondary" size="lg" icon={<Phone size={20} strokeWidth={1.75} aria-hidden="true" />}>
+                    Call {business.phone}
+                  </Button>
+                </div>
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   <Button variant="ghost" onClick={back} magnetic={false}>
                     Back
                   </Button>
@@ -269,34 +262,10 @@ export function EstimateWizardInner() {
               </div>
             ) : (
               <div className="mt-6">
-                <EstimateSummary lines={lines} total={total} onSend={() => setShowForm(true)} onStartAgain={startAgain} />
+                <EstimateSummary lines={lines} total={total} onStartAgain={startAgain} />
               </div>
             )}
 
-            {showForm ? (
-              <div ref={formRef} id="enquiry" className="mt-10 rounded-lg border border-ink bg-plaster p-6 sm:p-8">
-                <h3 className="h3">{state.somethingElse ? "Send us your enquiry" : "Send us this estimate"}</h3>
-                <p className="mt-2 max-w-xl text-ink-soft">
-                  {state.somethingElse
-                    ? "Your details and your message, and we’ll call you back with a price."
-                    : "Your details and the jobs above, and we’ll call you back to confirm the price."}
-                </p>
-                <EnquiryForm
-                  mode="estimate"
-                  page="/estimate"
-                  className="mt-6"
-                  messagePrompt={state.somethingElse ? "Describe the job" : "Anything else we should know?"}
-                  estimate={
-                    count > 0
-                      ? {
-                          lines: lines.map((l) => ({ name: l.item.name, qty: l.qty, price: formatLine(l) })),
-                          total: formatTotal(total),
-                        }
-                      : undefined
-                  }
-                />
-              </div>
-            ) : null}
           </section>
         ) : null}
       </div>

@@ -128,6 +128,25 @@ export const formatLine = (line: LineItem): string => {
   }
 };
 
+/**
+ * The estimate written out as a WhatsApp message, so the visitor can send it to us in one tap.
+ * It ends on an unfinished line ("My postcode is ", "I also need: ") so the cursor lands where
+ * the one thing we still need from them goes.
+ */
+export const estimateMessage = (lines: LineItem[], total: EstimateTotal, somethingElse = false): string => {
+  if (lines.length === 0) return "Hi Eco Gas, I’d like a price for: ";
+  const jobs = lines.map((l) => `• ${l.item.name}${l.qty > 1 ? ` x ${l.qty}` : ""}: ${formatLine(l)}`);
+  return [
+    "Hi Eco Gas, I’ve used the instant estimate on your website.",
+    "",
+    ...jobs,
+    "",
+    `${formatTotal(total)}.`,
+    "",
+    somethingElse ? "I also need: " : "My postcode is ",
+  ].join("\n");
+};
+
 /** Keep only valid selections, with sane quantities. Used when restoring saved state. */
 export const sanitizeSelections = (input: unknown): Selections => {
   if (!input || typeof input !== "object") return {};

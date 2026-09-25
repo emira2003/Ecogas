@@ -203,16 +203,11 @@ Put real photos in `public/images/hero/`, `public/images/services/` or `public/i
 
 The client also has the option of a short video in the home hero instead of a photo (a slow pan across a finished install, see the shot list in `PLAN.md` Part K). That needs a small code change in `Hero.tsx`; ask for it when the video exists.
 
-### Enquiry emails (Web3Forms)
+### Enquiries
 
-The contact and estimate forms send email through Web3Forms, which is free.
-
-1. Go to web3forms.com and create an access key using the **client's** email address. The key is emailed to that address.
-2. On your computer: put it in `.env.local` as `WEB3FORMS_ACCESS_KEY=…` (copy `.env.example` if the file doesn't exist) and restart `npm run dev`.
-3. Online: in Vercel, open the project → Settings → Environment Variables, add `WEB3FORMS_ACCESS_KEY`, then redeploy.
-4. Send one test enquiry from `/contact` and one from `/estimate` and check both emails arrive.
-
-Until the key is set, the form tells the visitor that email sending isn't switched on yet and shows the phone number.
+There is no enquiry form, by the client's choice (25 September 2026): customers call or WhatsApp. The instant
+estimate ends with a "Send this estimate on WhatsApp" button that opens WhatsApp with the jobs and total already
+typed out (`estimateMessage` in `src/lib/estimate.ts`). Nothing is sent to a server and nothing needs setting up.
 
 ---
 
@@ -220,10 +215,9 @@ Until the key is set, the form tells the visitor that email sending isn't switch
 
 1. **GitHub.** Create a private repository called `ecogas-website` and push this folder's `main` branch to it.
 2. **Vercel.** Add New → Project → import the repository. Vercel recognises Next.js by itself. Before deploying, add the environment variables from `.env.example`:
-   - `WEB3FORMS_ACCESS_KEY`
    - `NEXT_PUBLIC_SITE_URL` (with `https://www.` and no trailing slash)
    - `NEXT_PUBLIC_PHONE`, `NEXT_PUBLIC_PHONE_TEL`, `NEXT_PUBLIC_WHATSAPP`
-3. **Test the preview on a real phone.** Call button, WhatsApp button, the estimate tool, the form (an email must arrive), the hero intro on 4G, and once with "reduce motion" switched on.
+3. **Test the preview on a real phone.** Call button, WhatsApp button, the estimate tool and its WhatsApp button (the message must arrive with the jobs in it), the hero intro on 4G, and once with "reduce motion" switched on.
 4. **Domain.** In Vercel add the domain and its `www` version, set `www` as the primary, and add the DNS records Vercel shows at the domain registrar (an A record for the root, a CNAME for `www`; leave any MX/email records alone). Then update `NEXT_PUBLIC_SITE_URL` to the real address and redeploy. This also fixes the canonical links and sitemap, which use that value.
 5. **Google Search Console.** Add the site, choose the "HTML tag" method, paste the code into the commented `verification` line in `src/app/layout.tsx`, redeploy, verify, then submit `https://www.[domain]/sitemap.xml`.
 6. **Google Business Profile.** The client sets this up (free) using exactly the same name, address and phone as the website, adds the site link, and asks happy customers for reviews. This is what wins the map results.
@@ -236,8 +230,7 @@ After any later change: commit, push to GitHub, and Vercel redeploys automatical
 
 - `src/app/` — one folder per page. `layout.tsx` is the frame around every page (header, footer, structured data).
 - `src/components/` — the building blocks: `ui` (buttons, price tag, sections), `layout` (header, footer, mobile menu), `home`, `services`, `estimate`, `work`, `fun` (the alien), `seo`.
-- `src/lib/` — the estimate maths (`estimate.ts`, with tests), form rules (`validation.ts`), Google structured data (`schema.ts`), motion helpers (`motion.ts`), money formatting (`format.ts`).
-- `src/app/api/enquiry/route.ts` — receives the form and sends the email.
+- `src/lib/` — the estimate maths and its WhatsApp message (`estimate.ts`, with tests), Google structured data (`schema.ts`), motion helpers (`motion.ts`), money formatting (`format.ts`).
 - `src/app/globals.css` — colours, type and all the motion, with the design tokens at the top.
 
 Motion follows `PLAN.md` Part F2: it is a layer on top of a page that already works, everything respects "reduce motion", and the heavy animation library only loads on the two pages that use it.

@@ -8,6 +8,7 @@ import type { EstimateItem } from "@/data/estimate-catalogue";
 import {
   calculateTotal,
   clampQty,
+  estimateMessage,
   formatLine,
   formatTotal,
   isCategoryId,
@@ -115,5 +116,25 @@ describe("real catalogue", () => {
     assert.equal(isCategoryId("gas-safety"), true);
     assert.equal(isCategoryId("kitchens"), false);
     assert.equal(isCategoryId(null), false);
+  });
+});
+
+describe("estimateMessage", () => {
+  it("lists each job with its price and ends on the total and a prompt for the postcode", () => {
+    const lines = [lineFor(fixed, 1), lineFor(each, 2)];
+    const msg = estimateMessage(lines, calculateTotal(lines));
+    assert.match(msg, /• Service: £90/);
+    assert.match(msg, /• Radiator x 2: from £360/);
+    assert.match(msg, /Estimated from £450\./);
+    assert.ok(msg.endsWith("My postcode is "));
+  });
+
+  it("asks what else is needed on the 'something else' route", () => {
+    const lines = [lineFor(fixed, 1)];
+    assert.ok(estimateMessage(lines, calculateTotal(lines), true).endsWith("I also need: "));
+  });
+
+  it("still makes sense with no jobs picked", () => {
+    assert.equal(estimateMessage([], calculateTotal([])), "Hi Eco Gas, I’d like a price for: ");
   });
 });

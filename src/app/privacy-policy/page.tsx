@@ -7,12 +7,12 @@ import { Section } from "@/components/ui/Section";
 
 export const metadata: Metadata = {
   title: { absolute: "Privacy Policy | Eco Gas" },
-  description: "How Eco Gas uses the details you send through this website, how long we keep them, and your rights.",
+  description: "How Eco Gas uses the details you give us when you call, WhatsApp or email, how long we keep them, and your rights.",
   alternates: { canonical: "/privacy-policy" },
 };
 
 /** Update this when the policy changes. */
-const LAST_UPDATED = "5 September 2026";
+const LAST_UPDATED = "25 September 2026";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -27,15 +27,16 @@ export default function PrivacyPolicyPage() {
         <div className="prose-eco max-w-[70ch]">
           <h2 className="h3">Who we are</h2>
           <p>
-            {business.name}, {business.address.full}. We are the “data controller” for any personal details you give us
-            through this website. You can reach us on {business.phone} or at {business.email}.
+            {business.name}, {business.address.full}. We are the “data controller” for any personal details you give us.
+            You can reach us on {business.phone} or at {business.email}.
           </p>
 
           <h2 className="h3">What we collect</h2>
           <p>
-            Only what you type into our enquiry form: your name, phone number, email address, postcode, the service
-            you’re asking about, when you’d like us to call, your message, and, if you used the instant estimate tool,
-            the jobs and estimated total you chose. Nothing is collected from you just by visiting the site.
+            This website has no forms, and nothing is collected from you just by visiting it. The instant estimate tool
+            works entirely in your browser: nothing you pick is sent to us unless you choose to send it on WhatsApp.
+            When you call, WhatsApp or email us, we have the details you choose to give us, usually your name, phone
+            number, address and what the job is.
           </p>
 
           <h2 className="h3">Why we collect it</h2>
@@ -46,23 +47,22 @@ export default function PrivacyPolicyPage() {
 
           <h2 className="h3">How long we keep it</h2>
           <p>
-            Enquiry emails are kept for [12 months - CLIENT TO CONFIRM] and then deleted, unless you become a customer,
-            in which case the details we need for your job, warranty and any legal record (such as a gas safety
-            certificate) are kept for as long as those require.
+            Only as long as we need them to answer your enquiry, unless you become a customer, in which case the details
+            we need for your job, warranty and any legal record (such as a gas safety certificate) are kept for as long
+            as those require.
           </p>
 
           <h2 className="h3">Who handles it for us</h2>
           <ul>
             <li>
-              <strong>Web3Forms</strong> delivers your enquiry to our email inbox. It processes the message in order to
-              send it and does not use it for anything else.
+              <strong>WhatsApp</strong> carries any message you send us there, under WhatsApp’s own privacy policy.
             </li>
             <li>
               <strong>Vercel</strong> hosts this website and provides simple visitor statistics that do not use cookies
               and cannot identify you.
             </li>
             <li>
-              <strong>Google</strong> provides the map on our contact page. When that map loads, Google may set its own
+              <strong>Google</strong> provides our email and the map on our contact page. When that map loads, Google may set its own
               cookies under Google’s privacy policy. The rest of the site sets no tracking cookies, so there is no cookie
               banner.
             </li>

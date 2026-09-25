@@ -1,9 +1,9 @@
 "use client";
 
-import { Phone } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import type { CSSProperties } from "react";
-import { business, telHref } from "@/data/business";
-import { formatLine, type EstimateTotal, type LineItem } from "@/lib/estimate";
+import { business, telHref, whatsappLink } from "@/data/business";
+import { estimateMessage, formatLine, type EstimateTotal, type LineItem } from "@/lib/estimate";
 import { Button } from "@/components/ui/Button";
 import { PriceTag } from "@/components/ui/PriceTag";
 import { useRollingNumber } from "./useRollingNumber";
@@ -11,7 +11,6 @@ import { useRollingNumber } from "./useRollingNumber";
 interface EstimateSummaryProps {
   lines: LineItem[];
   total: EstimateTotal;
-  onSend: () => void;
   onStartAgain: () => void;
 }
 
@@ -19,7 +18,7 @@ interface EstimateSummaryProps {
  * Step 3 (PLAN.md D4, F2-E4): the table of chosen jobs cascades in, the total rolls up from 0,
  * the PriceTag seals with one soft glow ring, and the disclaimer fades in last.
  */
-export function EstimateSummary({ lines, total, onSend, onStartAgain }: EstimateSummaryProps) {
+export function EstimateSummary({ lines, total, onStartAgain }: EstimateSummaryProps) {
   // Rolls up from 0 when the summary appears (F2-E4)
   const low = useRollingNumber(total.low, 700, 0);
   const high = useRollingNumber(total.high, 700, 0);
@@ -68,8 +67,14 @@ export function EstimateSummary({ lines, total, onSend, onStartAgain }: Estimate
       </p>
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
-        <Button onClick={onSend} size="lg">
-          Send me this quote
+        {/* Opens WhatsApp with the jobs and the total already typed out, ready to send */}
+        <Button
+          href={whatsappLink(estimateMessage(lines, total))}
+          rel="noopener"
+          size="lg"
+          icon={<MessageCircle size={20} strokeWidth={1.75} aria-hidden="true" />}
+        >
+          Send this estimate on WhatsApp
         </Button>
         <Button href={telHref} variant="secondary" size="lg" icon={<Phone size={20} strokeWidth={1.75} aria-hidden="true" />}>
           Call to discuss {business.phone}

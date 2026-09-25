@@ -13,7 +13,7 @@ Everything still needed before launch, in one place. Updated at the end of every
 | 2 | Home page | Done |
 | 3 | Services and Areas | Done |
 | 4 | Instant Estimate tool | Done |
-| 5 | Enquiry form and email | Built and tested locally. **Live email test still to do** — needs `WEB3FORMS_ACCESS_KEY` in `.env.local` (see below) |
+| 5 | Enquiry form and email | Removed at the client's request (25 Sep 2026). Enquiries are by phone and WhatsApp; the estimate sends itself on WhatsApp. |
 | 6 | Remaining pages | Done |
 | 7 | Motion polish and performance budget | Done — Lighthouse numbers in DESIGN.md. Re-run once real photos replace the tiny placeholders. |
 | 8 | SEO | Done |
@@ -77,10 +77,9 @@ here is either an open question or a file the client owes us.
       is right.
 - [ ] Facebook page link (and Instagram if any) → `business.ts` (`social`)
 - [ ] How customers pay (for the "How do I pay?" FAQ) → `src/data/faqs.ts`
-- [ ] How long enquiry emails are kept (for the privacy policy)
 - [x] Domain `www.ecogas.ltd` live on Vercel, `NEXT_PUBLIC_SITE_URL` set (25 Sep 2026)
 - [ ] Approval (or not) for the 404 alien plumber → `src/data/site.config.ts` (`alien404`). See it at any wrong address, e.g. /nothing-here.
-- [ ] Privacy policy: how long enquiry emails are kept (`src/app/privacy-policy/page.tsx`, currently "[12 months — CLIENT TO CONFIRM]"). Note the Google map on the contact page may set Google's own cookies; the policy says so. If the client would rather have no third-party cookies at all, the map can be replaced by a plain link to Google Maps.
+- [ ] Privacy policy: rewritten for phone and WhatsApp only (25 Sep 2026), so the retention question is gone. Note the Google map on the contact page may set Google's own cookies; the policy says so. If the client would rather have no third-party cookies at all, the map can be replaced by a plain link to Google Maps.
 - [ ] About page photo slots: owner/engineer, van, workshop (`src/app/about/page.tsx`), and confirm the "Warranty registered" step.
 - [ ] Map coordinates for the address (for Google structured data) → `business.ts` (`geo`)
 - [ ] Confirm: does the £1,999 offer *always* include the 10-year warranty? (FAQ 3 and "Why choose us")
@@ -111,7 +110,6 @@ here is either an open question or a file the client owes us.
       still used in the page titles, the footer copyright and the Google listing. Confirm that
       is what he wants.
 - [x] Component showcase page removed (Phase 9).
-- [ ] Web3Forms access key (create at web3forms.com with the client's email) → `.env.local` (`WEB3FORMS_ACCESS_KEY`). Then send one test enquiry from `/contact` and one from `/estimate` and check both emails arrive, with the jobs and total listed in the second one. Until the key is set, the form shows "Email sending isn't switched on yet" with the phone number.
 - [ ] Optional: a site or template he likes as a layout reference (PLAN.md Part F)
 
 ## Example prices — NOT confirmed by the client

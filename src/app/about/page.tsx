@@ -28,7 +28,7 @@ const photos = [
 const steps = [
   {
     title: "Tell us the job",
-    text: "Call, WhatsApp, use the form or the instant estimate tool. Tell us what’s wrong, or what you’d like done.",
+    text: "Call or WhatsApp us, or use the instant estimate tool and send us the result. Tell us what’s wrong, or what you’d like done.",
   },
   {
     title: "We confirm the price",

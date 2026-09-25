@@ -213,8 +213,12 @@ export const isPlaceholder = (value: string): boolean =>
 /** tel: link for the business phone. */
 export const telHref = `tel:${business.phoneTel}`;
 
-/** WhatsApp chat link with the pre-filled greeting. */
-export const whatsappHref = `https://wa.me/${business.whatsapp}?text=${encodeURIComponent(business.whatsappMessage)}`;
+/** A WhatsApp chat with Eco Gas, with `text` already typed in the message box. */
+export const whatsappLink = (text: string): string =>
+  `https://wa.me/${business.whatsapp}?text=${encodeURIComponent(text)}`;
+
+/** WhatsApp chat link with the standard greeting. */
+export const whatsappHref = whatsappLink(business.whatsappMessage);
 
 /** Public site URL that is always a valid URL (falls back to localhost until the domain is set). */
 export const siteUrl = isPlaceholder(business.siteUrl)
