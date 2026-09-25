@@ -1,5 +1,5 @@
-import { Check } from "lucide-react";
-import { business } from "@/data/business";
+import { Check, MessageCircle, Phone } from "lucide-react";
+import { business, telHref, whatsappLink } from "@/data/business";
 import { formatMoney } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
@@ -24,6 +24,9 @@ import { Section } from "@/components/ui/Section";
  */
 export function Packages() {
   const { packages, packageIncludes, promises } = business;
+  // "Vaillant, Worcester Bosch or Viessmann", from the one list of makes we fit
+  const makes = business.brands.filter((b) => b.kind === "boiler").map((b) => b.name);
+  const makesText = makes.length > 1 ? `${makes.slice(0, -1).join(", ")} or ${makes[makes.length - 1]}` : makes[0];
 
   return (
     <Section id="packages" aria-labelledby="packages-title">
@@ -72,6 +75,30 @@ export function Packages() {
             </div>
           </article>
         ))}
+      </Reveal>
+
+      {/* Choice of make, right under the prices it applies to */}
+      <Reveal as="div" className="mt-8 flex flex-col gap-5 rounded-lg border border-line bg-plaster p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="max-w-2xl">
+          <h3 className="font-bold">Choice of manufacturer on request</h3>
+          <p className="mt-1 text-ink-soft">
+            Prefer a particular make? We can fit {makesText}. Give us a call or message us on WhatsApp for more
+            information.
+          </p>
+        </div>
+        <div className="flex flex-none flex-col gap-3 sm:flex-row">
+          <Button href={telHref} variant="secondary" icon={<Phone size={18} strokeWidth={1.75} aria-hidden="true" />}>
+            Call {business.phone}
+          </Button>
+          <Button
+            href={whatsappLink("Hi Eco Gas, I’d like to ask about the choice of boiler manufacturer. ")}
+            variant="secondary"
+            rel="noopener"
+            icon={<MessageCircle size={18} strokeWidth={1.75} aria-hidden="true" />}
+          >
+            WhatsApp us
+          </Button>
+        </div>
       </Reveal>
 
       {/* Identical in all three packages, so said once rather than three times. */}

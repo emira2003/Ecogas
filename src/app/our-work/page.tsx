@@ -37,8 +37,8 @@ export default function OurWorkPage() {
           One job, start to finish
         </Reveal>
         <p className="lead mt-4 max-w-2xl text-plaster-soft">
-          The same boiler from bare wall to finished cupboard, filmed on the day. No sound, a few
-          seconds each.
+          One boiler replacement, from the old boiler to the new one finished, filmed on the day. No
+          sound, a few seconds each.
         </p>
         <JobFilm clips={jobFilm} />
       </Section>

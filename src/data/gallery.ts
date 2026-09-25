@@ -137,7 +137,7 @@ export const galleryPairs = (): { pairId: string; before: GalleryImage; after: G
 };
 
 /**
- * One job on film: the same Worcester Bosch installation from bare wall to finished cupboard,
+ * One job on film: a boiler replacement from the old boiler to the finished cupboard,
  * in five short silent clips (JobFilm.tsx). They are in the order the work was done.
  *
  * To add or swap a clip: a portrait MP4, H.264, no audio track, 576px wide, a few seconds
@@ -157,6 +157,16 @@ export interface JobClip {
 }
 
 export const jobFilm: JobClip[] = [
+  {
+    id: "old-boiler",
+    src: "/video/job-3-boiler-on.mp4",
+    poster: "/images/work/job-3-boiler-on-poster.jpg",
+    width: 576,
+    height: 1024,
+    title: "Old boiler, ready to be replaced",
+    text: "Where the job starts: the old boiler in its cupboard, cover off, dust sheets down, ready to come out.",
+    alt: "The old boiler in a cupboard with its front cover off, dust sheets laid over the surface below, ready to be replaced",
+  },
   {
     id: "frame",
     src: "/video/job-1-frame.mp4",
@@ -178,16 +188,6 @@ export const jobFilm: JobClip[] = [
     alt: "A gloved hand pointing out the copper heating flow and return pipes where they meet the labelled connections on the mounting frame",
   },
   {
-    id: "boiler-on",
-    src: "/video/job-3-boiler-on.mp4",
-    poster: "/images/work/job-3-boiler-on-poster.jpg",
-    width: 576,
-    height: 1024,
-    title: "Boiler on",
-    text: "The boiler is hung and connected, and everything inside is checked over before the cover goes back.",
-    alt: "The new boiler mounted in the cupboard with its front cover off, showing the expansion vessel, heat exchanger and controls",
-  },
-  {
     id: "analyser",
     src: "/video/job-4-analyser.mp4",
     poster: "/images/work/job-4-analyser-poster.jpg",
@@ -198,13 +198,13 @@ export const jobFilm: JobClip[] = [
     alt: "A flue gas analyser resting on the open boiler, its probe in the flue, taking combustion readings",
   },
   {
-    id: "finished",
-    src: "/video/job-5-finished.mp4",
-    poster: "/images/work/job-5-finished-poster.jpg",
+    id: "cupboard-tidy",
+    src: "/video/job-5-cupboard-tidy.mp4",
+    poster: "/images/work/job-5-cupboard-tidy-poster.jpg",
     width: 576,
     height: 1024,
     title: "Cover on, cupboard tidy",
-    text: "The finished Worcester Bosch, in its cupboard, ready to use.",
-    alt: "The finished Worcester Bosch boiler with its cover on, inside a timber-lined cupboard",
+    text: "The new boiler running, the thermostat on the worktop, and the cupboard doors closed on a finished job.",
+    alt: "A smart thermostat on a wooden worktop, then the new boiler running in its cupboard, then the cupboard doors closing over it",
   },
 ];

@@ -108,7 +108,8 @@ re-encoded smaller with the sound removed, and two were trimmed.
 | `public/images/work/boiler-airing-cupboard.jpg` | Boiler in an airing cupboard | 15 Sep 2026 |
 | `public/images/work/condensate-pipe-lagged.jpg` | Lagged condensate pipe on an outside wall | 15 Sep 2026 |
 | `public/images/work/boiler-cover-off.jpg` | Boiler in a kitchen cupboard, cover off | 15 Sep 2026 |
-| `public/video/job-1-frame.mp4` to `job-5-finished.mp4`, with `public/images/work/job-*-poster.jpg` | One Worcester Bosch installation in five clips: frame and pipework, flow and return close up, boiler on, flue gas analyser, finished | 15 Sep 2026 |
+| `public/video/job-1-frame.mp4`, `job-2-pipework.mp4`, `job-3-boiler-on.mp4`, `job-4-analyser.mp4`, with `public/images/work/job-*-poster.jpg` | One boiler replacement: the old boiler, frame and pipework, flow and return close up, flue gas analyser | 15 Sep 2026 |
+| `public/video/job-5-cupboard-tidy.mp4` and its poster | The same job finished: thermostat, new boiler running, cupboard doors closed. Sound removed. | 25 Sep 2026 |
 
 ## Added with the boiler specific rebuild
 
